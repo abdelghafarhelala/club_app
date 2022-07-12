@@ -40,7 +40,9 @@ class LoginScreen extends StatelessWidget {
           }
         },
         builder: (context, state) {
+          double screenHeight = MediaQuery.of(context).size.height;
           return Scaffold(
+            resizeToAvoidBottomInset: false,
             body: Center(
               child: Padding(
                 padding: const EdgeInsets.all(10.0),
