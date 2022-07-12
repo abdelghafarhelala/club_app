@@ -40,7 +40,6 @@ class LoginScreen extends StatelessWidget {
           }
         },
         builder: (context, state) {
-          double screenHeight = MediaQuery.of(context).size.height;
           return Scaffold(
             resizeToAvoidBottomInset: false,
             body: Center(
@@ -83,7 +82,7 @@ class LoginScreen extends StatelessWidget {
                               prefix: Icons.email_outlined,
                               validate: (String value) {
                                 if (value.isEmpty) {
-                                  return 'يجب ان تدخل رقم الهاتف';
+                                  return 'E-mail can\'t be empty ';
                                 }
                               },
                               context: context,
@@ -109,7 +108,7 @@ class LoginScreen extends StatelessWidget {
                               isSecure: LoginCubit.get(context).isPass,
                               validate: (String value) {
                                 if (value.isEmpty) {
-                                  return 'يجب ان تدخل كلمه السر';
+                                  return 'Password can\'t be empty ';
                                 }
                               },
                               context: context,
@@ -174,7 +173,9 @@ class LoginScreen extends StatelessWidget {
                           height: 40,
                         ),
                         MaterialButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            navigateAndFinish(context, RegisterScreen());
+                          },
                           hoverColor: primaryColor,
                           shape: const RoundedRectangleBorder(
                               borderRadius:

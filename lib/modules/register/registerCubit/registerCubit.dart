@@ -29,7 +29,8 @@ class RegisterCubit extends Cubit<RegisterStates> {
     required String phone,
     required String name,
     required String password,
-    required String confirmPassword,
+    required String jobTitle,
+    required int departmentId,
   }) {
     emit(RegisterLoadingState());
     DioHelper.postDataWithoutToken(url: registerUrl, data: {
@@ -37,7 +38,8 @@ class RegisterCubit extends Cubit<RegisterStates> {
       'mobile': phone,
       'name': name,
       'password': password,
-      'c_password': confirmPassword,
+      'department_id': departmentId,
+      'job_title': jobTitle,
     }).then((value) {
       registerModel = UserModel.fromJson(value.data);
       // print(registerModel!.data!.name);
