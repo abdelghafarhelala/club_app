@@ -1,6 +1,7 @@
 // ignore_for_file: avoid_print
 
 import 'package:club_app/models/userModel/userModel.dart';
+import 'package:club_app/modules/club_details/club_details.dart';
 import 'package:club_app/network/endpoints.dart';
 import 'package:club_app/network/local/cache_Helper.dart';
 import 'package:club_app/network/remote/dio_helper.dart';

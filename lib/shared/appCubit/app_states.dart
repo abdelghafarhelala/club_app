@@ -14,3 +14,10 @@ class AppGetUserDataSuccessState extends AppStates {}
 class AppGetUserDataErrorState extends AppStates {}
 
 class AppGetUserDataLoadingState extends AppStates {}
+
+//get club details data states
+class AppGetClubDetailsDataSuccessState extends AppStates {}
+
+class AppGetClubDetailsDataErrorState extends AppStates {}
+
+class AppGetClubDetailsDataLoadingState extends AppStates {}

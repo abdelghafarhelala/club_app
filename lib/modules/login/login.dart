@@ -10,6 +10,7 @@ import 'package:club_app/shared/const.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -116,7 +117,24 @@ class LoginScreen extends StatelessWidget {
                                 type: TextInputType.visiblePassword),
                           ),
                           const SizedBox(
-                            height: 33,
+                            height: 10,
+                          ),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.end,
+                            children: [
+                              TextButton(
+                                  onPressed: () {},
+                                  child: Text(
+                                    'Forget password ?',
+                                    style: TextStyle(
+                                      color: HexColor('#707070'),
+                                      fontSize: 16,
+                                    ),
+                                  ))
+                            ],
+                          ),
+                          const SizedBox(
+                            height: 20,
                           ),
                           ConditionalBuilder(
                             condition: state is! LoginLoadingState,
