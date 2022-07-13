@@ -39,3 +39,7 @@ class AppGetProjectSuccessState extends AppStates {}
 class AppGetProjectErrorState extends AppStates {}
 
 class AppGetProjectLoadingState extends AppStates {}
+
+
+class AppGetChangeDropState extends AppStates {}
+

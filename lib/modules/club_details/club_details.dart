@@ -1,3 +1,4 @@
+import 'package:club_app/models/clubModel/clubs.dart';
 import 'package:club_app/shared/appCubit/app_cubit.dart';
 import 'package:club_app/shared/appCubit/app_states.dart';
 import 'package:flutter/material.dart';
@@ -5,11 +6,14 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class ClubDetails extends StatelessWidget {
-  const ClubDetails({Key? key}) : super(key: key);
+  // const ClubDetails({Key? key}) : super(key: key);
 
+ Data? Model;
+ ClubDetails({required this.Model});
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
+     
       listener: (context, state) {},
       builder: (context, state) {
         return Scaffold(
@@ -53,10 +57,10 @@ class ClubDetails extends StatelessWidget {
                           const SizedBox(
                             width: 35,
                           ),
-                          const Expanded(
+                           Expanded(
                             child: Center(
                               child: Text(
-                                'City club - Madinaty Cairo ',
+                                'City club - Madinaty Cairo ${Model!.city} ',
                                 style: TextStyle(
                                   fontWeight: FontWeight.w300,
                                   fontSize: 25,
@@ -80,20 +84,20 @@ class ClubDetails extends StatelessWidget {
                         Container(
                           width: double.infinity,
                           height: 170,
-                          decoration: const BoxDecoration(
+                          decoration:  BoxDecoration(
                               color: Colors.red,
                               image: DecorationImage(
                                   image: NetworkImage(
-                                      'https://estadat.ivas.com.eg/uploads/clubs/pibhY5i2NmqbOwhQDlWOuG6MtcR17FJdLc8SQCs2.png'),
+                                      '${Model!.image}'),
                                   fit: BoxFit.fill)),
                         ),
                         Container(
                           color: HexColor('#6f6f6f'),
                           height: 51,
                           width: double.infinity,
-                          child: const Center(
+                          child:  Center(
                             child: Text(
-                              '45,000 Squre meter',
+                              '${Model!.area} ',
                               style: TextStyle(
                                   fontSize: 24,
                                   color: Colors.white,
@@ -156,7 +160,7 @@ class ClubDetails extends StatelessWidget {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          '85 %',
+                                          '${Model!.constructionRatio}',
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           textAlign: TextAlign.center,
@@ -218,7 +222,7 @@ class ClubDetails extends StatelessWidget {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          '5000',
+                                          '${Model!.membershipsNumber}',
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           textAlign: TextAlign.center,
@@ -286,7 +290,7 @@ class ClubDetails extends StatelessWidget {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          '20000',
+                                          '${Model!.membersNumber}',
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           textAlign: TextAlign.center,
@@ -349,7 +353,7 @@ class ClubDetails extends StatelessWidget {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            '10',
+                                            '${Model!.employeesNumber}',
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             textAlign: TextAlign.center,
@@ -481,7 +485,7 @@ class ClubDetails extends StatelessWidget {
                                     children: [
                                       Expanded(
                                         child: Text(
-                                          '112',
+                                          '${Model!.employeesNumber}',
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                           textAlign: TextAlign.center,
@@ -813,7 +817,7 @@ class ClubDetails extends StatelessWidget {
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                children: const [
+                                children:  [
                                   Text(
                                     'General Manager ',
                                     maxLines: 1,
@@ -826,7 +830,7 @@ class ClubDetails extends StatelessWidget {
                                     height: 5,
                                   ),
                                   Text(
-                                    'Mohammed Ibrahim Ali',
+                                    '${Model!.managerName}',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -867,7 +871,7 @@ class ClubDetails extends StatelessWidget {
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                children: const [
+                                children:  [
                                   Text(
                                     'Security Manager ',
                                     maxLines: 1,
@@ -880,7 +884,7 @@ class ClubDetails extends StatelessWidget {
                                     height: 5,
                                   ),
                                   Text(
-                                    'Mohammed Ibrahim Ali',
+                                    '${Model!.securityManagerName}',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(
@@ -921,7 +925,7 @@ class ClubDetails extends StatelessWidget {
                             Expanded(
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.center,
-                                children: const [
+                                children:  [
                                   Text(
                                     'Remarks and follow-up ',
                                     maxLines: 1,
@@ -934,7 +938,7 @@ class ClubDetails extends StatelessWidget {
                                     height: 5,
                                   ),
                                   Text(
-                                    'Mohammed Ibrahim Ali',
+                                    '${Model!.managerName}',
                                     maxLines: 1,
                                     overflow: TextOverflow.ellipsis,
                                     style: TextStyle(

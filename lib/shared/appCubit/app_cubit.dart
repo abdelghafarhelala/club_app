@@ -114,5 +114,11 @@ emit(AppGetClubsErrorState());
     });
   }
 
+  String ?Drop_Down_Value;
+  void set_drop({required String? x}){
+    Drop_Down_Value=x;
+    emit(AppGetChangeDropState());
+  }
+
 }
 
