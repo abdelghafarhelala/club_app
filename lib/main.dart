@@ -61,7 +61,8 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => AppCubit()
         ..changeAppTheme(fromCache: isDark)
-        ..getUserData(),
+        ..getUserData()
+        ..getgovernorates(),
       // ..getCategoryData()
       // ..getMainServicesData()
       // ..getSocialData()
@@ -87,7 +88,7 @@ class MyApp extends StatelessWidget {
             themeMode:
                 AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             // home: startWidget,
-            home: ClubDetails(),
+            home: LoginScreen(),
           );
         },
       ),

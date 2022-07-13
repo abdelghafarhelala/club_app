@@ -1,3 +1,4 @@
+import 'package:club_app/modules/myDrawer/myDrawer.dart';
 import 'package:club_app/shared/colors.dart';
 import 'package:club_app/shared/colors.dart';
 import 'package:flutter/cupertino.dart';
@@ -49,7 +50,7 @@ Widget defaultTextField({
   bool isSecure = false,
   required TextInputType type,
   var controller,
-  Function? ontap,
+  // Function? ontap,
   // Function? onChange,
 }) =>
     TextFormField(
@@ -70,7 +71,7 @@ Widget defaultTextField({
       },
       controller: controller,
       onTap: () {
-        ontap!();
+        // ontap!();
       },
       // onChanged: (String s){
       //     onChange!(s);
@@ -105,16 +106,16 @@ Color? toastColor(ToastStates state) {
   return color;
 }
 
-// Widget defaultDrawer(context) => Drawer(
-//       child: SingleChildScrollView(
-//         child: Column(
-//           children: [
-//             const MyDrawer(),
-//             const MyDrawer().myDrawerList(context),
-//           ],
-//         ),
-//       ),
-//     );
+Widget defaultDrawer(context) => Drawer(
+      child: SingleChildScrollView(
+        child: Column(
+          children: [
+            const MyDrawer(),
+            const MyDrawer().myDrawerList(context),
+          ],
+        ),
+      ),
+    );
 
 PreferredSizeWidget defaultAppBar(context, String title, isFirst) => AppBar(
       title: Text(title),
