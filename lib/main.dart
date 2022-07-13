@@ -1,3 +1,4 @@
+import 'package:club_app/modules/club_details/club_details.dart';
 import 'package:club_app/modules/home/home_screen.dart';
 import 'package:club_app/modules/login/login.dart';
 import 'package:club_app/network/local/cache_Helper.dart';
@@ -86,7 +87,7 @@ class MyApp extends StatelessWidget {
             themeMode:
                 AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             // home: startWidget,
-            home: LoginScreen(),
+            home: ClubDetails(),
           );
         },
       ),

@@ -1,12 +1,15 @@
 import 'package:club_app/shared/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 ThemeData lightTheme = ThemeData(
-  appBarTheme: const AppBarTheme(
+  appBarTheme: AppBarTheme(
+    systemOverlayStyle: SystemUiOverlayStyle(
+        statusBarColor: Colors.white, statusBarIconBrightness: Brightness.dark),
+    backgroundColor: Colors.white,
     iconTheme: IconThemeData(color: lightTextColor),
     titleTextStyle: TextStyle(
         color: lightTextColor, fontSize: 20, fontWeight: FontWeight.bold),
-    color: primaryColor,
     toolbarTextStyle: TextStyle(
       color: lightTextColor,
     ),
