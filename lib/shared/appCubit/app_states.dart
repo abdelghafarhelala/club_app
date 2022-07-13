@@ -21,3 +21,21 @@ class AppGetClubDetailsDataSuccessState extends AppStates {}
 class AppGetClubDetailsDataErrorState extends AppStates {}
 
 class AppGetClubDetailsDataLoadingState extends AppStates {}
+
+class AppGetClubsSuccessState extends AppStates {}
+
+class AppGetClubsErrorState extends AppStates {}
+
+class AppGetClubsLoadingState extends AppStates {}
+
+class AppGetgovernoratesSuccessState extends AppStates {}
+
+class AppGetgovernoratesErrorState extends AppStates {}
+
+class AppGetgovernoratesLoadingState extends AppStates {}
+
+class AppGetProjectSuccessState extends AppStates {}
+
+class AppGetProjectErrorState extends AppStates {}
+
+class AppGetProjectLoadingState extends AppStates {}

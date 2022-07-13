@@ -1,5 +1,9 @@
 // ignore_for_file: avoid_print
 
+
+import 'package:club_app/models/clubModel/clubs.dart';
+import 'package:club_app/models/governoratesModel/governorates.dart';
+import 'package:club_app/models/projectModel/project.dart';
 import 'package:club_app/models/userModel/userModel.dart';
 import 'package:club_app/modules/club_details/club_details.dart';
 import 'package:club_app/network/endpoints.dart';
@@ -68,4 +72,47 @@ class AppCubit extends Cubit<AppStates> {
       print(error.toString());
     });
   }
+  clubsModel ?club;
+  void getClubs(){
+emit(AppGetClubsLoadingState());
+ DioHelper.getData(url: CLUBS,token:token).then((value) {
+club=clubsModel.fromJson(value.data);
+
+// print(club!.data![0].city);
+emit(AppGetClubsSuccessState());
+ }).catchError((onError){
+emit(AppGetClubsErrorState());
+
+  print(onError);
+ });
+  }
+  governoratesModel?  governorate;
+  void getgovernorates(){
+    emit(AppGetgovernoratesLoadingState());
+    DioHelper.getData(url: GOVERNORATES,token: token).then((value){
+      governorate=governoratesModel.fromJson(value.data);
+      print(governorate!.data![0].nameEn);
+    emit(AppGetgovernoratesSuccessState());
+
+    }).catchError((onError){
+      
+    emit(AppGetgovernoratesErrorState());
+
+    });
+  }
+  projects ?project;
+  void getproject(){
+    emit(AppGetProjectLoadingState());
+    DioHelper.getData(url: PROJECTS,token: token).then((value){
+      project=projects.fromJson(value.data);
+    emit(AppGetProjectSuccessState());
+
+    }).catchError((onError){
+      
+    emit(AppGetProjectErrorState());
+
+    });
+  }
+
 }
+

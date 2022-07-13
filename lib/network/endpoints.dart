@@ -10,3 +10,9 @@ const String bookingUrl = 'store_bookings';
 const String sliderUrl = 'advertising/t/ar/sponser';
 const String aboutUsUrl = 'static_page/1';
 const String imagesLink = 'https://alrwad.masool.net/uploads/';
+const String CLUBS='clubs' ;
+const String GOVERNORATES='governorates' ;
+const String PROJECTS='projects' ;
+
+
+
