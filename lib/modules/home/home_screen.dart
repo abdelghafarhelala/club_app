@@ -18,6 +18,8 @@ class HomeScreen extends StatelessWidget {
     String? x;
 
     AppCubit.get(context).getClubs();
+    AppCubit.get(context).getproject();
+
 
     return BlocConsumer<AppCubit, AppStates>(
       builder: (BuildContext context, state) {
@@ -124,15 +126,10 @@ class HomeScreen extends StatelessWidget {
                               onChanged: (newValue) {
                                 x = newValue;
                               },
-                              items: <String>[
-                                'One',
-                                'Two',
-                                'Free',
-                                'Four'
-                              ].map<DropdownMenuItem<String>>((String value) {
+                              items: AppCubit.get(context).project!.data!.map<DropdownMenuItem<String>>((e) {
                                 return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
+                                  value: e.name,
+                                 child: Text("${e.name}"),
                                 );
                               }).toList(),
                             ),
@@ -288,7 +285,7 @@ class HomeScreen extends StatelessWidget {
             ),
           );
               },
-              condition: AppCubit.get(context).club!=null&&AppCubit.get(context).governorate!=null,
+              condition: AppCubit.get(context).club!=null&&AppCubit.get(context).governorate!=null&&AppCubit.get(context).project!=null,
               fallback: (BuildContext context) {
                 return Center(child: CircularProgressIndicator());
               },
@@ -319,7 +316,7 @@ if(int.parse(Model.constructionRatio.toString().substring(0,2))<=100&&int.parse(
           children: [
             InkWell(
               onTap: (){
-                
+
               },
               child: Container(
                 height: 100,
