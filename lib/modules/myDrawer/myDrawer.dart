@@ -95,7 +95,7 @@ class MyDrawer extends StatelessWidget {
               context, 'assets/images/user.png', ' Add Users', HomeScreen(),
               index: 2),
           menuItem(context, 'assets/images/noti.png', ' Notifications',
-               HomeScreen()),
+              HomeScreen()),
           menuItem(context, 'assets/images/lang.png', 'Language ', HomeScreen(),
               index: 2),
           Spacer(),
@@ -133,7 +133,7 @@ class MyDrawer extends StatelessWidget {
                   image: AssetImage(
                     icon,
                   ),
-                  height: 25,
+                  height: 30,
                 )),
                 // SizedBox(
                 //   width: 10,

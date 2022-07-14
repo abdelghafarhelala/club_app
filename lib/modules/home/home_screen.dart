@@ -23,8 +23,8 @@ class HomeScreen extends StatelessWidget {
 
     return BlocConsumer<AppCubit, AppStates>(
       builder: (BuildContext context, state) {
-var height = AppBar().preferredSize.height;
-final double screenHeight = MediaQuery.of(context).size.height;
+        var height = AppBar().preferredSize.height;
+        final double screenHeight = MediaQuery.of(context).size.height;
         return Scaffold(
             key: scaffoldKey,
             drawer: defaultDrawer(context),
@@ -225,7 +225,7 @@ final double screenHeight = MediaQuery.of(context).size.height;
                         height: 5,
                       ),
                       Container(
-                        height: screenHeight-(height+340),
+                        height: screenHeight - (height + 350),
                         child: ListView.separated(
                           shrinkWrap: true,
                           physics: BouncingScrollPhysics(),
