@@ -12,7 +12,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class HomeScreen extends StatelessWidget {
-  const HomeScreen({Key? key}) : super(key: key);
+  // const HomeScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -23,6 +23,8 @@ class HomeScreen extends StatelessWidget {
 
     return BlocConsumer<AppCubit, AppStates>(
       builder: (BuildContext context, state) {
+var height = AppBar().preferredSize.height;
+final double screenHeight = MediaQuery.of(context).size.height;
         return Scaffold(
             key: scaffoldKey,
             drawer: defaultDrawer(context),
@@ -119,6 +121,8 @@ class HomeScreen extends StatelessWidget {
                               // alignment:Alignment.bottomRight ,
                               autofocus: false, iconSize: 30,
                               isExpanded: true,
+                              // menuMaxHeight: 100,
+                              itemHeight: 50,
 
                               value: AppCubit.get(context).Drop_Down_Value,
                               // icon: const Icon(Icons.arrow_downward),
@@ -150,20 +154,23 @@ class HomeScreen extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        children: const [
-                          Image(
-                              image:
-                                  AssetImage('assets/images/Path 10227.png')),
-                          SizedBox(
-                            width: 15,
-                          ),
-                          Text(
-                            "Select targeted area",
-                            style: TextStyle(
-                                fontSize: 20, fontWeight: FontWeight.bold),
-                          ),
-                        ],
+                      Container(
+                        height: 25,
+                        child: Row(
+                          children: const [
+                            Image(
+                                image:
+                                    AssetImage('assets/images/Path 10227.png')),
+                            SizedBox(
+                              width: 15,
+                            ),
+                            Text(
+                              "Select targeted area",
+                              style: TextStyle(
+                                  fontSize: 20, fontWeight: FontWeight.bold),
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(
                         height: 10,
@@ -192,29 +199,33 @@ class HomeScreen extends StatelessWidget {
                       const SizedBox(
                         height: 10,
                       ),
-                      Row(
-                        children: const [
-                          Image(
-                              image:
-                                  AssetImage('assets/images/Path 10228.png')),
-                          SizedBox(
-                            width: 4,
-                          ),
-                          Text(
-                            "Projects",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                          Spacer(),
-                          Text(
-                            "ViewAll",
-                            style: TextStyle(fontSize: 20),
-                          ),
-                        ],
+                      Container(
+                        height: 20,
+                        child: Row(
+                          children: const [
+                            Image(
+                                image:
+                                    AssetImage('assets/images/Path 10228.png')),
+                            SizedBox(
+                              width: 4,
+                            ),
+                            Text(
+                              "Projects",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                            Spacer(),
+                            Text(
+                              "ViewAll",
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ],
+                        ),
                       ),
                       const SizedBox(
                         height: 5,
                       ),
                       Container(
+                        height: screenHeight-(height+340),
                         child: ListView.separated(
                           shrinkWrap: true,
                           physics: BouncingScrollPhysics(),

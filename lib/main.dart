@@ -1,6 +1,7 @@
 import 'package:club_app/modules/Security/Security.dart';
 import 'package:club_app/modules/home/home_screen.dart';
 import 'package:club_app/modules/login/login.dart';
+import 'package:club_app/modules/remarker/remarker.dart';
 import 'package:club_app/modules/reset_password/reset_password.dart';
 import 'package:club_app/modules/update_profile/update_profile.dart';
 import 'package:club_app/network/local/cache_Helper.dart';

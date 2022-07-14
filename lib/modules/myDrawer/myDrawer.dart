@@ -95,7 +95,7 @@ class MyDrawer extends StatelessWidget {
               context, 'assets/images/user.png', ' Add Users', HomeScreen(),
               index: 2),
           menuItem(context, 'assets/images/noti.png', ' Notifications',
-              const HomeScreen()),
+               HomeScreen()),
           menuItem(context, 'assets/images/lang.png', 'Language ', HomeScreen(),
               index: 2),
           Spacer(),

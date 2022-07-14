@@ -12,7 +12,9 @@ class Remarker extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit,AppStates>(
       builder: (BuildContext context, state) {
-        return Scaffold();
+        return Scaffold(
+          // appBar: ,
+        );
       },
       listener: (BuildContext context, Object? state) {},
     );
