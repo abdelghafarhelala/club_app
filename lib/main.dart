@@ -1,3 +1,4 @@
+import 'package:club_app/modules/Security/Security.dart';
 import 'package:club_app/modules/home/home_screen.dart';
 import 'package:club_app/modules/login/login.dart';
 import 'package:club_app/modules/reset_password/reset_password.dart';

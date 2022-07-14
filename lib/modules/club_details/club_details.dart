@@ -1,6 +1,8 @@
 import 'package:club_app/models/clubModel/clubs.dart';
+import 'package:club_app/modules/Security/Security.dart';
 import 'package:club_app/shared/appCubit/app_cubit.dart';
 import 'package:club_app/shared/appCubit/app_states.dart';
+import 'package:club_app/shared/components/components.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -855,51 +857,57 @@ class ClubDetails extends StatelessWidget {
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   child: InkWell(
                     onTap: () {},
-                    child: Card(
-                      child: Padding(
-                        padding: const EdgeInsets.all(8.0),
-                        child: Row(
-                          children: [
-                            Container(
-                              height: 60,
-                              width: 50,
-                              decoration: const BoxDecoration(
-                                  image: DecorationImage(
-                                image: AssetImage(
-                                  'assets/images/security.png',
-                                ),
-                              )),
-                            ),
-                            const SizedBox(
-                              width: 20,
-                            ),
-                            Expanded(
-                              child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children:  [
-                                  Text(
-                                    'Security Manager ',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.w300),
+                    child: InkWell(
+                      onTap: (){
+                                navigateTo(context, Security());
+
+                      },
+                      child: Card(
+                        child: Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: Row(
+                            children: [
+                              Container(
+                                height: 60,
+                                width: 50,
+                                decoration: const BoxDecoration(
+                                    image: DecorationImage(
+                                  image: AssetImage(
+                                    'assets/images/security.png',
                                   ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Text(
-                                    '${Model!.securityManagerName}',
-                                    maxLines: 1,
-                                    overflow: TextOverflow.ellipsis,
-                                    style: TextStyle(
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w200),
-                                  ),
-                                ],
+                                )),
                               ),
-                            )
-                          ],
+                              const SizedBox(
+                                width: 20,
+                              ),
+                              Expanded(
+                                child: Column(
+                                  crossAxisAlignment: CrossAxisAlignment.center,
+                                  children:  [
+                                    Text(
+                                      'Security Manager ',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.w300),
+                                    ),
+                                    SizedBox(
+                                      height: 5,
+                                    ),
+                                    Text(
+                                      '${Model!.securityManagerName}',
+                                      maxLines: 1,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: TextStyle(
+                                          fontSize: 16,
+                                          fontWeight: FontWeight.w200),
+                                    ),
+                                  ],
+                                ),
+                              )
+                            ],
+                          ),
                         ),
                       ),
                     ),

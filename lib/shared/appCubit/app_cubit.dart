@@ -157,4 +157,10 @@ class AppCubit extends Cubit<AppStates> {
     Drop_Down_Value = x;
     emit(AppGetChangeDropState());
   }
+
+   String? Dep_Value;
+  void set_Dep({required String? x}) {
+    Dep_Value = x;
+    emit(AppGetChangeDropState());
+  }
 }
