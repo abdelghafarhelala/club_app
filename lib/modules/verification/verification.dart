@@ -5,6 +5,7 @@ import 'package:club_app/shared/colors.dart';
 import 'package:club_app/shared/components/components.dart';
 import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
+import 'package:hexcolor/hexcolor.dart';
 import 'package:pin_code_fields/pin_code_fields.dart';
 
 String currentText = "";
@@ -35,7 +36,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
           child: Column(
             children: [
               Padding(
-                padding: const EdgeInsets.all(20.0),
+                padding: const EdgeInsets.all(30.0),
                 child: Column(
                   children: [
                     const SizedBox(
@@ -49,33 +50,34 @@ class _VerificationScreenState extends State<VerificationScreen> {
                       height: 40,
                     ),
                     const Text(
-                      '''Forget Password !
-Don\'t Worry ''',
+                      '''Please enter OTP 
+received on your mail ''',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.w300,
                       ),
                       textAlign: TextAlign.center,
                     ),
-
                     const SizedBox(
                       height: 25,
                     ),
                     PinCodeTextField(
+                      cursorColor: Colors.white,
                       appContext: context,
-                      length: 6,
+                      length: 4,
                       obscureText: false,
                       animationType: AnimationType.fade,
                       pinTheme: PinTheme(
                         shape: PinCodeFieldShape.box,
                         borderRadius: BorderRadius.circular(5),
                         fieldHeight: 50,
-                        fieldWidth: 40,
+                        fieldWidth: 60,
                         activeFillColor: Colors.white,
+                        inactiveColor: Colors.grey[200],
                       ),
                       animationDuration: Duration(milliseconds: 300),
-                      backgroundColor: Colors.blue.shade50,
-                      enableActiveFill: true,
+                      backgroundColor: Colors.white,
+                      enableActiveFill: false,
                       errorAnimationController: errorController,
                       controller: emailVerificationController1,
                       onCompleted: (v) {
@@ -94,7 +96,6 @@ Don\'t Worry ''',
                         return true;
                       },
                     ),
-
                     const SizedBox(
                       height: 20,
                     ),
@@ -109,17 +110,31 @@ Don\'t Worry ''',
                             //       context: context);
                             // } else {}
                           },
-                          text: 'Submit'),
+                          text: 'Confirm'),
                       fallback: (context) => const CircularProgressIndicator(),
                     ),
-                    // Container(
-                    //   width: double.infinity,
-                    //   height: 50,
-                    //   child: OutlinedButton(
-                    //       onPressed: () {}, child: const Text('data')),
-                    // ),
                     const SizedBox(
-                      height: 50,
+                      height: 20,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          'Not Received!',
+                          style: TextStyle(
+                              fontSize: 24, fontWeight: FontWeight.w300),
+                        ),
+                        TextButton(
+                            onPressed: () {},
+                            child: Text('Send Again',
+                                style: TextStyle(
+                                    fontSize: 24,
+                                    fontWeight: FontWeight.w300,
+                                    color: HexColor('#648FE3'))))
+                      ],
+                    ),
+                    const SizedBox(
+                      height: 30,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.start,

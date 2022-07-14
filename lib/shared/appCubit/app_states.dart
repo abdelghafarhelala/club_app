@@ -1,3 +1,5 @@
+import 'package:club_app/models/userModel/userModel.dart';
+
 abstract class AppStates {}
 
 class AppInitialState extends AppStates {}
@@ -10,6 +12,10 @@ class AppChangeThemState extends AppStates {}
 
 //get user data states
 class AppGetUserDataSuccessState extends AppStates {}
+
+class PasswordShownState extends AppStates {}
+
+class PasswordShownStatee extends AppStates {}
 
 class AppGetUserDataErrorState extends AppStates {}
 
@@ -39,3 +45,14 @@ class AppGetProjectSuccessState extends AppStates {}
 class AppGetProjectErrorState extends AppStates {}
 
 class AppGetProjectLoadingState extends AppStates {}
+
+//update user data states
+class AppUpdateUserDataSuccessState extends AppStates {
+  final UserModel? model;
+
+  AppUpdateUserDataSuccessState(this.model);
+}
+
+class AppUpdateUserDataErrorState extends AppStates {}
+
+class AppUpdateUserDataLoadingState extends AppStates {}

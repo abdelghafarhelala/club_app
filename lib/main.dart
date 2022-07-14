@@ -1,8 +1,7 @@
-import 'package:club_app/models/verification/verification.dart';
-import 'package:club_app/modules/club_details/club_details.dart';
-import 'package:club_app/modules/forget_password/forget_password.dart';
 import 'package:club_app/modules/home/home_screen.dart';
 import 'package:club_app/modules/login/login.dart';
+import 'package:club_app/modules/reset_password/reset_password.dart';
+import 'package:club_app/modules/update_profile/update_profile.dart';
 import 'package:club_app/network/local/cache_Helper.dart';
 import 'package:club_app/network/remote/dio_helper.dart';
 import 'package:club_app/shared/appCubit/app_cubit.dart';
@@ -13,7 +12,6 @@ import 'package:club_app/shared/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -63,12 +61,10 @@ class MyApp extends StatelessWidget {
     return BlocProvider(
       create: (BuildContext context) => AppCubit()
         ..changeAppTheme(fromCache: isDark)
-        ..getUserData(),
-      // ..getCategoryData()
-      // ..getMainServicesData()
-      // ..getSocialData()
-      // ..getAboutData()
-      // ..getSliderData(),
+        ..getUserData()
+        ..getClubs()
+        ..getproject()
+        ..getgovernorates(),
       child: BlocConsumer<AppCubit, AppStates>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -89,7 +85,7 @@ class MyApp extends StatelessWidget {
             themeMode:
                 AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             // home: startWidget,
-            home: VerificationScreen(),
+            home: LoginScreen(),
           );
         },
       ),

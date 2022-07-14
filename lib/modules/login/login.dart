@@ -1,3 +1,5 @@
+import 'package:club_app/models/test/test.dart';
+import 'package:club_app/modules/forget_password/forget_password.dart';
 import 'package:club_app/modules/home/home_screen.dart';
 import 'package:club_app/modules/login/loginCubit/loginCubit.dart';
 import 'package:club_app/modules/login/loginCubit/loginStates.dart';
@@ -29,7 +31,7 @@ class LoginScreen extends StatelessWidget {
               CacheHelper.saveData(key: "token", value: state.model?.token)
                   .then((value) {
                 token = state.model?.token;
-        AppCubit.get(context).getClubs();
+                AppCubit.get(context).getClubs();
                 navigateAndFinish(context, HomeScreen());
                 AppCubit.get(context).getUserData();
                 showToast(
@@ -124,7 +126,9 @@ class LoginScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.end,
                             children: [
                               TextButton(
-                                  onPressed: () {},
+                                  onPressed: () {
+                                    navigateTo(context, ForgetPasswordScreen());
+                                  },
                                   child: Text(
                                     'Forget password ?',
                                     style: TextStyle(

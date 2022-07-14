@@ -32,7 +32,7 @@ class User {
   String? role;
   String? image;
   String? department;
-  Null? mobileNumber;
+  String? mobileNumber;
   String? jobTitle;
 
   User(

@@ -14,6 +14,7 @@ class ClubDetails extends StatelessWidget {
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
+            elevation: 0,
             title: const Image(
               image: AssetImage(
                 'assets/images/name.png',
@@ -24,7 +25,11 @@ class ClubDetails extends StatelessWidget {
             actions: [
               IconButton(
                   onPressed: () {},
-                  icon: const Icon(Icons.notifications_none_rounded))
+                  icon: const Icon(
+                    Icons.notifications_none_rounded,
+                    size: 34,
+                    color: Colors.black,
+                  ))
             ],
           ),
           body: SingleChildScrollView(

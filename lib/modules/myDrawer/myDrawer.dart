@@ -8,6 +8,7 @@ import 'package:club_app/shared/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_switch/flutter_switch.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({Key? key}) : super(key: key);
@@ -19,32 +20,25 @@ class MyDrawer extends StatelessWidget {
       builder: (context, state) {
         // var userData = AppCubit.get(context).profile;
         return Container(
-          color: primaryColor,
+          color: HexColor('#101620'),
           width: double.infinity,
-          height: 200,
+          height: 111,
           padding: const EdgeInsets.only(top: 20.0),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Container(
-                margin: const EdgeInsets.only(bottom: 10),
-                height: 70,
-                decoration: const BoxDecoration(
-                    shape: BoxShape.circle,
-                    image: DecorationImage(
-                      image: NetworkImage(
-                          'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQwnYnwftDUSjsQmLQvMBZ2pwDXhAJiIdfKvg&usqp=CAU'),
-                    )),
-              ),
               Text(
-                // userData?.data?.name ?? 'User Name',
-                '',
-                style: const TextStyle(color: Colors.white, fontSize: 20),
+                // userData?.data?.email ??
+                'Omer Elshrif',
+                style: TextStyle(color: Colors.white, fontSize: 21),
+              ),
+              SizedBox(
+                height: 5,
               ),
               Text(
                 // userData?.data?.email ??
-                'userName@example.com',
-                style: TextStyle(color: Colors.grey[200], fontSize: 14),
+                'Job Title',
+                style: TextStyle(color: Colors.white, fontSize: 15),
               ),
             ],
           ),
@@ -59,27 +53,28 @@ class MyDrawer extends StatelessWidget {
       padding: const EdgeInsets.only(top: 15),
       child: Column(
         children: [
-          menuItem(context, Icons.home, 'الرئيسيه', HomeScreen()),
-          menuItem(context, Icons.support_rounded, 'الخدمات', HomeScreen(),
+          menuItem(context, 'assets/images/projects.png', 'My Projects',
+              HomeScreen()),
+          menuItem(context, 'assets/images/pers.png', 'Profile', HomeScreen(),
               index: 1),
-          menuItem(context, Icons.post_add, 'حجز ميعاد', HomeScreen(),
+          menuItem(
+              context, 'assets/images/add.png', 'Add Project ', HomeScreen(),
               index: 3),
-          menuItem(context, Icons.phone, 'تواصل معنا', HomeScreen(), index: 2),
-          menuItem(context, Icons.file_copy_outlined, 'عن التطبيق',
+          menuItem(
+              context, 'assets/images/user.png', ' Add Users', HomeScreen(),
+              index: 2),
+          menuItem(context, 'assets/images/noti.png', ' Notifications',
               const HomeScreen()),
-          menuItem3(
-            context,
-            Icons.brightness_medium,
-            ' الوضع الليلي',
-          ),
+          menuItem(context, 'assets/images/lang.png', 'Language ', HomeScreen(),
+              index: 2),
           if (token == null)
-            menuItem(
-                context, Icons.person, 'تسجيل الدخول', const LoginScreen()),
+            menuItem(context, 'assets/images/name.png', 'تسجيل الدخول',
+                const LoginScreen()),
           if (token != null)
             menuItem2(
               context,
               Icons.logout,
-              'تسجيل الخروج',
+              ' Log Out',
             ),
         ],
       ),
@@ -87,7 +82,7 @@ class MyDrawer extends StatelessWidget {
   }
 
 // Build menu of Drawer
-  Widget menuItem(context, IconData icon, String text, Widget widget,
+  Widget menuItem(context, String icon, String text, Widget widget,
       {int index = 0}) {
     return Material(
       child: InkWell(
@@ -99,7 +94,13 @@ class MyDrawer extends StatelessWidget {
           padding: const EdgeInsets.all(15),
           child: Row(
             children: [
-              Expanded(child: Icon(icon)),
+              Expanded(
+                  child: Image(
+                image: AssetImage(
+                  icon,
+                ),
+                height: 25,
+              )),
               Expanded(
                   flex: 3,
                   child: Text(
