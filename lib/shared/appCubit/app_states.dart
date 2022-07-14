@@ -46,6 +46,7 @@ class AppGetProjectErrorState extends AppStates {}
 
 class AppGetProjectLoadingState extends AppStates {}
 
+<<<<<<< HEAD
 //update user data states
 class AppUpdateUserDataSuccessState extends AppStates {
   final UserModel? model;
@@ -56,3 +57,8 @@ class AppUpdateUserDataSuccessState extends AppStates {
 class AppUpdateUserDataErrorState extends AppStates {}
 
 class AppUpdateUserDataLoadingState extends AppStates {}
+=======
+
+class AppGetChangeDropState extends AppStates {}
+
+>>>>>>> d479354cebd3234ebef2dc31274bc3328bf907ea

@@ -125,6 +125,7 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
+<<<<<<< HEAD
   UserModel? user;
   void updateUserData({
     required String email,
@@ -151,4 +152,12 @@ class AppCubit extends Cubit<AppStates> {
       print(error.toString());
     });
   }
+=======
+  String ?Drop_Down_Value;
+  void set_drop({required String? x}){
+    Drop_Down_Value=x;
+    emit(AppGetChangeDropState());
+  }
+
+>>>>>>> d479354cebd3234ebef2dc31274bc3328bf907ea
 }

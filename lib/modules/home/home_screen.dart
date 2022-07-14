@@ -1,4 +1,5 @@
 import 'package:club_app/models/clubModel/clubs.dart';
+import 'package:club_app/modules/club_details/club_details.dart';
 import 'package:club_app/network/remote/dio_helper.dart';
 import 'package:club_app/shared/appCubit/app_cubit.dart';
 import 'package:club_app/shared/appCubit/app_states.dart';
@@ -15,10 +16,11 @@ class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    String? x;
 
     AppCubit.get(context).getClubs();
     AppCubit.get(context).getproject();
+    AppCubit.get(context).getgovernorates();
+
 
 
     return BlocConsumer<AppCubit, AppStates>(
@@ -32,13 +34,12 @@ class HomeScreen extends StatelessWidget {
                   child: Image(
                       image: AssetImage("assets/images/Path 10008.png"))),
               actions: [
+                 Spacer(),
                 Image(
                   image: AssetImage('assets/images/name.png'),
                   width: 150,
                 ),
-                SizedBox(
-                  width: 70,
-                ),
+                Spacer(),
                 Image(
                   image: AssetImage(
                       'assets/images/Icon ionic-md-notifications-outline.png'),
@@ -118,13 +119,13 @@ class HomeScreen extends StatelessWidget {
                               autofocus: false, iconSize: 30,
                               isExpanded: true,
               
-                              value: x,
+                              value: AppCubit.get(context).Drop_Down_Value,
                               // icon: const Icon(Icons.arrow_downward),
                               // elevation: 16,
                               hint: Center(child: Text("Select Project")),
               
                               onChanged: (newValue) {
-                                x = newValue;
+                               AppCubit.get(context).set_drop(x:newValue);
                               },
                               items: AppCubit.get(context).project!.data!.map<DropdownMenuItem<String>>((e) {
                                 return DropdownMenuItem<String>(
@@ -217,7 +218,7 @@ class HomeScreen extends StatelessWidget {
                           shrinkWrap: true,
                           // physics: NeverScrollableScrollPhysics(),
                           itemBuilder: (BuildContext context, int index) {
-                            return carrd(AppCubit.get(context).club!.data![index]);
+                            return carrd(AppCubit.get(context).club!.data![index],context);
                           },
                           itemCount: AppCubit.get(context).club!.data!.length==null? 2 : AppCubit.get(context).club!.data!.length,
                           separatorBuilder: (BuildContext context, int index) {
@@ -295,7 +296,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget carrd(Data Model) {
+  Widget carrd(Data Model,context) {
     Color c;
 if(int.parse(Model.constructionRatio.toString().substring(0,2))<=100&&int.parse(Model.constructionRatio.toString().substring(0,2))>=85)
     {
@@ -316,7 +317,7 @@ if(int.parse(Model.constructionRatio.toString().substring(0,2))<=100&&int.parse(
           children: [
             InkWell(
               onTap: (){
-
+                navigateTo(context, ClubDetails(Model: Model,));
               },
               child: Container(
                 height: 100,
