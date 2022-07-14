@@ -6,6 +6,7 @@ import 'package:club_app/shared/colors.dart';
 import 'package:club_app/shared/components/components.dart';
 import 'package:club_app/shared/const.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:hexcolor/hexcolor.dart';
@@ -19,28 +20,57 @@ class MyDrawer extends StatelessWidget {
       listener: (context, state) {},
       builder: (context, state) {
         // var userData = AppCubit.get(context).profile;
-        return Container(
-          color: HexColor('#101620'),
-          width: double.infinity,
-          height: 111,
-          padding: const EdgeInsets.only(top: 20.0),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
-              Text(
-                // userData?.data?.email ??
-                'Omer Elshrif',
-                style: TextStyle(color: Colors.white, fontSize: 21),
-              ),
-              SizedBox(
-                height: 5,
-              ),
-              Text(
-                // userData?.data?.email ??
-                'Job Title',
-                style: TextStyle(color: Colors.white, fontSize: 15),
-              ),
-            ],
+        return AnnotatedRegion<SystemUiOverlayStyle>(
+          value: SystemUiOverlayStyle(
+            // For Android.
+            // Use [light] for white status bar and [dark] for black status bar.
+            statusBarIconBrightness: Brightness.light,
+            statusBarColor: HexColor('#101620'),
+            // For iOS.
+            // Use [dark] for white status bar and [light] for black status bar.
+            statusBarBrightness: Brightness.dark,
+          ),
+          child: Container(
+            color: HexColor('#101620'),
+            width: double.infinity,
+            height: 111,
+            padding: const EdgeInsets.only(top: 20.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        // userData?.data?.email ??
+                        'Omer Elshrif',
+                        style: TextStyle(color: Colors.white, fontSize: 21),
+                      ),
+                      SizedBox(
+                        height: 5,
+                      ),
+                      Text(
+                        // userData?.data?.email ??
+                        'Job Title',
+                        style: TextStyle(color: Colors.white, fontSize: 15),
+                      ),
+                    ],
+                  ),
+                ),
+                SizedBox(
+                  width: 5,
+                ),
+                IconButton(
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
+                    icon: Icon(
+                      Icons.close,
+                      color: Colors.white,
+                    ))
+              ],
+            ),
           ),
         );
       },
@@ -50,7 +80,8 @@ class MyDrawer extends StatelessWidget {
 //Build Drawer List
   Widget myDrawerList(context) {
     return Container(
-      padding: const EdgeInsets.only(top: 15),
+      height: MediaQuery.of(context).size.height - 111,
+      // padding: const EdgeInsets.only(top: 15),
       child: Column(
         children: [
           menuItem(context, 'assets/images/projects.png', 'My Projects',
@@ -67,9 +98,7 @@ class MyDrawer extends StatelessWidget {
               const HomeScreen()),
           menuItem(context, 'assets/images/lang.png', 'Language ', HomeScreen(),
               index: 2),
-          if (token == null)
-            menuItem(context, 'assets/images/name.png', 'تسجيل الدخول',
-                const LoginScreen()),
+          Spacer(),
           if (token != null)
             menuItem2(
               context,
@@ -90,27 +119,37 @@ class MyDrawer extends StatelessWidget {
           navigateTo(context, widget);
           AppCubit.get(context).currentIndex = index;
         },
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Row(
-            children: [
-              Expanded(
-                  child: Image(
-                image: AssetImage(
-                  icon,
-                ),
-                height: 25,
-              )),
-              Expanded(
-                  flex: 3,
-                  child: Text(
-                    text,
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400),
-                  )),
-            ],
+        child: Container(
+          height: 70,
+          decoration: BoxDecoration(
+              border: Border.all(color: HexColor('#707070').withOpacity(.3))),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Expanded(
+                    child: Image(
+                  image: AssetImage(
+                    icon,
+                  ),
+                  height: 25,
+                )),
+                // SizedBox(
+                //   width: 10,
+                // ),
+                Expanded(
+                    flex: 3,
+                    child: Text(
+                      text,
+                      textAlign: TextAlign.center,
+                      style: const TextStyle(
+                          color: Colors.black,
+                          fontSize: 19,
+                          fontWeight: FontWeight.bold),
+                    )),
+              ],
+            ),
           ),
         ),
       ),
@@ -128,21 +167,31 @@ class MyDrawer extends StatelessWidget {
         onTap: () {
           // AppCubit.get(context).logOut(context);
         },
-        child: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Row(
-            children: [
-              Expanded(child: Icon(icon)),
-              Expanded(
-                  flex: 3,
-                  child: Text(
-                    text,
-                    style: const TextStyle(
-                        color: Colors.black,
-                        fontSize: 16,
-                        fontWeight: FontWeight.w400),
-                  )),
-            ],
+        child: Container(
+          height: 59,
+          decoration: BoxDecoration(
+              color: HexColor('#F87F45').withOpacity(.1),
+              border: Border.all(color: HexColor('#707070').withOpacity(.3))),
+          child: Padding(
+            padding: const EdgeInsets.all(15),
+            child: Row(
+              children: [
+                Expanded(
+                    child: Icon(
+                  icon,
+                  color: HexColor('#AF4040'),
+                )),
+                Expanded(
+                    flex: 3,
+                    child: Text(
+                      text,
+                      style: TextStyle(
+                          color: HexColor('#AF4040'),
+                          fontSize: 18,
+                          fontWeight: FontWeight.w500),
+                    )),
+              ],
+            ),
           ),
         ),
       ),

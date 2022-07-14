@@ -106,8 +106,10 @@ Color? toastColor(ToastStates state) {
   return color;
 }
 
-Widget defaultDrawer(context) => Drawer(
-      child: SingleChildScrollView(
+Widget defaultDrawer(context) => Container(
+      padding: EdgeInsets.all(0),
+      width: 243,
+      child: Drawer(
         child: Column(
           children: [
             const MyDrawer(),
