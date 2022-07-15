@@ -56,6 +56,16 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
         double screenHeight = MediaQuery.of(context).size.height;
         return Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(
+                Icons.arrow_back_ios,
+                color: Colors.black,
+                size: 30,
+              ),
+            ),
             elevation: 0,
             title: const Image(
               image: AssetImage(

@@ -18,7 +18,12 @@ class MyDrawer extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is AppLogOutSuccessState) {
+          showToast(text: 'LogOut Successfully', state: ToastStates.success);
+          navigateAndFinish(context, LoginScreen());
+        }
+      },
       builder: (context, state) {
         var userData = AppCubit.get(context).profile;
         return AnnotatedRegion<SystemUiOverlayStyle>(

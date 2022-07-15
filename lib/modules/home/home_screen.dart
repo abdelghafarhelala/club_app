@@ -20,7 +20,6 @@ class HomeScreen extends StatelessWidget {
     AppCubit.get(context).getClubs();
     AppCubit.get(context).getproject();
     AppCubit.get(context).getgovernorates();
-    
 
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -106,7 +105,7 @@ class HomeScreen extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
-                                    children:  [
+                                    children: [
                                       Image(
                                           image: AssetImage(
                                               "assets/images/Path 10225.png")),
@@ -317,9 +316,7 @@ class HomeScreen extends StatelessWidget {
                 },
                 condition: AppCubit.get(context).club != null &&
                     AppCubit.get(context).governorate != null &&
-                    AppCubit.get(context).project != null&&
-                    AppCubit.get(context).Count!=null,
-                    
+                    AppCubit.get(context).project != null,
                 fallback: (BuildContext context) {
                   return const Center(child: CircularProgressIndicator());
                 },
@@ -361,14 +358,24 @@ class HomeScreen extends StatelessWidget {
                 child: Stack(
                   alignment: Alignment.bottomCenter,
                   children: [
-                    Image(
-                      image: NetworkImage(
-                        "${Model.image}",
+                    if (Model.image == '')
+                      const Image(
+                        image: NetworkImage(
+                          'https://estadat.ivas.com.eg/uploads/clubs/kq82Dp8fte2jssFYisqRUZAc7EpuRsScG2o0B8zb.png',
+                        ),
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
                       ),
-                      width: 100,
-                      height: 100,
-                      fit: BoxFit.cover,
-                    ),
+                    if (Model.image != '')
+                      Image(
+                        image: NetworkImage(
+                          Model.image ?? '',
+                        ),
+                        width: 100,
+                        height: 100,
+                        fit: BoxFit.cover,
+                      ),
                     Container(
                       color: Colors.black.withOpacity(.7),
                       height: 35,

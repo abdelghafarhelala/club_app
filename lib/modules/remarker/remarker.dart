@@ -17,6 +17,17 @@ class Remarker extends StatelessWidget {
       builder: (BuildContext context, state) {
         return Scaffold(
             appBar: AppBar(
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.black,
+                  size: 25,
+                ),
+              ),
+              elevation: 0,
               title: const Image(
                 image: AssetImage(
                   'assets/images/name.png',
@@ -56,7 +67,7 @@ class Remarker extends StatelessWidget {
                             const SizedBox(
                               width: 35,
                             ),
-                            Expanded(
+                            const Expanded(
                               child: Center(
                                 child: Text(
                                   'Topic Name - Created By : Amr Alsherif  ',
@@ -86,28 +97,29 @@ class Remarker extends StatelessWidget {
                             color: Colors.white,
                             border: Border.all(width: 1, color: Colors.black)),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                        children: const [
                           Text("Haitham Shaker"),
                           Text("23-06-2022 12:23"),
                         ],
                       ),
-                      Spacer(),
-                      Image(
+                      const Spacer(),
+                      const Image(
                           image: AssetImage(
                               "assets/images/Icon feather-video.png")),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
-                      Image(image: AssetImage("assets/images/Line 174.png")),
-                      SizedBox(
+                      const Image(
+                          image: AssetImage("assets/images/Line 174.png")),
+                      const SizedBox(
                         width: 5,
                       ),
-                      Image(
+                      const Image(
                           image: AssetImage(
                               "assets/images/Icon feather-image.png")),
                     ],
@@ -118,7 +130,7 @@ class Remarker extends StatelessWidget {
                       height: 120,
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   Row(
@@ -133,28 +145,29 @@ class Remarker extends StatelessWidget {
                             color: Colors.white,
                             border: Border.all(width: 1, color: Colors.black)),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         width: 10,
                       ),
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
+                        children: const [
                           Text("Amr El-Sherif"),
                           Text("23-06-2022 12:23"),
                         ],
                       ),
-                      Spacer(),
-                      Image(
+                      const Spacer(),
+                      const Image(
                           image: AssetImage(
                               "assets/images/Icon feather-video.png")),
-                      SizedBox(
+                      const SizedBox(
                         width: 5,
                       ),
-                      Image(image: AssetImage("assets/images/Line 174.png")),
-                      SizedBox(
+                      const Image(
+                          image: AssetImage("assets/images/Line 174.png")),
+                      const SizedBox(
                         width: 5,
                       ),
-                      Image(
+                      const Image(
                           image: AssetImage(
                               "assets/images/Icon feather-image.png")),
                     ],

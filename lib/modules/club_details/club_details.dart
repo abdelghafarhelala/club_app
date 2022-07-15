@@ -28,7 +28,7 @@ class ClubDetails extends StatelessWidget {
               icon: const Icon(
                 Icons.arrow_back_ios,
                 color: Colors.black,
-                size: 30,
+                size: 25,
               ),
             ),
             elevation: 0,
@@ -60,7 +60,7 @@ class ClubDetails extends StatelessWidget {
               statusBarBrightness: Brightness.dark,
             ),
             child: SingleChildScrollView(
-              physics: BouncingScrollPhysics(),
+              physics: const BouncingScrollPhysics(),
               child: Column(
                 children: [
                   Container(
@@ -88,8 +88,8 @@ class ClubDetails extends StatelessWidget {
                             Expanded(
                               child: Center(
                                 child: Text(
-                                  'City club - Madinaty Cairo ${Model!.city} ',
-                                  style: TextStyle(
+                                  ' ${Model!.city} ',
+                                  style: const TextStyle(
                                     fontWeight: FontWeight.w300,
                                     fontSize: 25,
                                     color: Colors.white,
@@ -109,15 +109,27 @@ class ClubDetails extends StatelessWidget {
                       Stack(
                         alignment: Alignment.bottomCenter,
                         children: [
-                          Container(
-                            width: double.infinity,
-                            height: 170,
-                            decoration: BoxDecoration(
-                                color: Colors.red,
-                                image: DecorationImage(
-                                    image: NetworkImage('${Model!.image}'),
-                                    fit: BoxFit.fill)),
-                          ),
+                          if (Model?.image == '')
+                            Container(
+                              width: double.infinity,
+                              height: 170,
+                              decoration: const BoxDecoration(
+                                  color: Colors.red,
+                                  image: DecorationImage(
+                                      image: NetworkImage(
+                                          'https://estadat.ivas.com.eg/uploads/clubs/kq82Dp8fte2jssFYisqRUZAc7EpuRsScG2o0B8zb.png'),
+                                      fit: BoxFit.fill)),
+                            ),
+                          if (Model?.image != '')
+                            Container(
+                              width: double.infinity,
+                              height: 170,
+                              decoration: BoxDecoration(
+                                  color: Colors.red,
+                                  image: DecorationImage(
+                                      image: NetworkImage(Model?.image ?? ''),
+                                      fit: BoxFit.fill)),
+                            ),
                           Container(
                             color: HexColor('#6f6f6f'),
                             height: 51,
