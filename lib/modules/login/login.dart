@@ -35,6 +35,7 @@ class LoginScreen extends StatelessWidget {
                 AppCubit.get(context).getClubs();
                 navigateAndFinish(context, HomeScreen());
                 AppCubit.get(context).getUserData();
+                AppCubit.get(context).getCount();
                 showToast(
                     text: 'Login successfully', state: ToastStates.success);
                 // print(state.model?.data!.name);

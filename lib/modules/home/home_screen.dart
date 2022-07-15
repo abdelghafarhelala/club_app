@@ -28,6 +28,7 @@ class HomeScreen extends StatelessWidget {
         var height = AppBar().preferredSize.height;
         final double screenHeight = MediaQuery.of(context).size.height;
         return Scaffold(
+            resizeToAvoidBottomInset: false,
             key: scaffoldKey,
             drawer: defaultDrawer(context),
             appBar: AppBar(
@@ -87,7 +88,7 @@ class HomeScreen extends StatelessWidget {
                                         width: 15,
                                       ),
                                       Text(
-                                        "${AppCubit.get(context).Count!.projects} Project",
+                                        "${AppCubit.get(context).Count?.projects ?? ''} Project",
                                         style: TextStyle(color: Colors.white),
                                       )
                                     ],
@@ -113,7 +114,7 @@ class HomeScreen extends StatelessWidget {
                                         width: 15,
                                       ),
                                       Text(
-                                        "${AppCubit.get(context).Count!.members} Member",
+                                        "${AppCubit.get(context).Count?.members ?? ''} Member",
                                         style: TextStyle(color: Colors.white),
                                       )
                                     ],
@@ -239,7 +240,7 @@ class HomeScreen extends StatelessWidget {
                           height: 5,
                         ),
                         Container(
-                          height: screenHeight - (height + 350),
+                          height: screenHeight - (height + 370),
                           child: ListView.separated(
                             shrinkWrap: true,
                             physics: BouncingScrollPhysics(),
@@ -317,6 +318,7 @@ class HomeScreen extends StatelessWidget {
                 condition: AppCubit.get(context).club != null &&
                     AppCubit.get(context).governorate != null &&
                     AppCubit.get(context).project != null,
+                // AppCubit.get(context).Count != null,
                 fallback: (BuildContext context) {
                   return const Center(child: CircularProgressIndicator());
                 },

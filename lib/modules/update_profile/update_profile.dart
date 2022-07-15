@@ -32,8 +32,20 @@ class UpdateProfileScreen extends StatefulWidget {
 class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
   @override
   Widget build(BuildContext context) {
+    var profileData = AppCubit.get(context).profile?.user;
     List<String> listOfValue = ['HR', 'CEO', 'Employee', 'Legal'];
     List<String> listOfValue2 = ['Super Admin', 'Manager', 'Employee'];
+    emailController.text = profileData?.email ?? '';
+    nameController.text = profileData?.name ?? '';
+    phoneController.text = profileData?.mobileNumber ?? '';
+    // selectedItem = profileData?.jobTitle ?? '';
+    if (profileData?.department == 1)
+      selectedItem2 = 'HR';
+    else if (profileData?.department == 2)
+      selectedItem2 = 'CEO';
+    else if (profileData?.department == 3)
+      selectedItem2 = 'Employee';
+    else if (profileData?.department == 4) selectedItem2 = 'Legal';
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state) {
         if (state is AppUpdateUserDataSuccessState) {
@@ -54,6 +66,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
       },
       builder: (context, state) {
         double screenHeight = MediaQuery.of(context).size.height;
+
         return Scaffold(
           appBar: AppBar(
             leading: IconButton(
