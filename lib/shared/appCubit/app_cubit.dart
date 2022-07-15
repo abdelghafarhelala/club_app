@@ -234,4 +234,6 @@ class AppCubit extends Cubit<AppStates> {
       emit(AppRestPasswordErrorState());
     });
   }
+
+  var foush = '';
 }
