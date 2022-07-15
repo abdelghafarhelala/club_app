@@ -30,7 +30,8 @@ class Remarker extends StatelessWidget {
                     icon: const Icon(Icons.notifications_none_rounded))
               ],
             ),
-            body: SingleChildScrollView(
+            body: Padding(
+              padding: const EdgeInsets.all(8.0),
               child: Column(
                 children: [
                   Container(
@@ -114,7 +115,7 @@ class Remarker extends StatelessWidget {
                   Card(
                     child: Container(
                       width: double.infinity,
-                      height: 150,
+                      height: 120,
                     ),
                   )
                        ,SizedBox(
@@ -161,13 +162,11 @@ class Remarker extends StatelessWidget {
                   Card(
                     child: Container(
                       width: double.infinity,
-                      height: 150,
+                      height: 120,
                       // width:double.infinity,
                     ),
                   ),
-                SizedBox(
-                        height: 5,
-                      ),
+                Spacer(),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: InkWell(

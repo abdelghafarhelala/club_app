@@ -88,7 +88,7 @@ class MyApp extends StatelessWidget {
             themeMode:
                 AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             // home: startWidget,
-            home: Replay(),
+            home: LoginScreen(),
           );
         },
       ),
