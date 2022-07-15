@@ -100,3 +100,12 @@ class AppRestPasswordSuccessState extends AppStates {
 class AppRestPasswordErrorState extends AppStates {}
 
 class AppRestPasswordLoadingState extends AppStates {}
+
+
+
+
+class AppGetdepartmentsLoadingState extends AppStates {}
+
+class AppGetdepartmentsErrorState extends AppStates {}
+
+class AppGetdepartmentsSuccState extends AppStates {}
