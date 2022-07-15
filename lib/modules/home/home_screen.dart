@@ -20,6 +20,8 @@ class HomeScreen extends StatelessWidget {
     AppCubit.get(context).getClubs();
     AppCubit.get(context).getproject();
     AppCubit.get(context).getgovernorates();
+    
+
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
 
     return BlocConsumer<AppCubit, AppStates>(
@@ -86,7 +88,7 @@ class HomeScreen extends StatelessWidget {
                                         width: 15,
                                       ),
                                       Text(
-                                        "${AppCubit.get(context).club!.data!.length} Project",
+                                        "${AppCubit.get(context).Count!.projects} Project",
                                         style: TextStyle(color: Colors.white),
                                       )
                                     ],
@@ -104,7 +106,7 @@ class HomeScreen extends StatelessWidget {
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
-                                    children: const [
+                                    children:  [
                                       Image(
                                           image: AssetImage(
                                               "assets/images/Path 10225.png")),
@@ -112,7 +114,7 @@ class HomeScreen extends StatelessWidget {
                                         width: 15,
                                       ),
                                       Text(
-                                        "50 Member",
+                                        "${AppCubit.get(context).Count!.members} Member",
                                         style: TextStyle(color: Colors.white),
                                       )
                                     ],
@@ -315,7 +317,9 @@ class HomeScreen extends StatelessWidget {
                 },
                 condition: AppCubit.get(context).club != null &&
                     AppCubit.get(context).governorate != null &&
-                    AppCubit.get(context).project != null,
+                    AppCubit.get(context).project != null&&
+                    AppCubit.get(context).Count!=null,
+                    
                 fallback: (BuildContext context) {
                   return const Center(child: CircularProgressIndicator());
                 },

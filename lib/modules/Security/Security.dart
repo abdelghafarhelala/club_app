@@ -97,13 +97,15 @@ class Security extends StatelessWidget {
                         onChanged: (newValue) {
                           AppCubit.get(context).set_Dep(x: newValue);
                         },
-                        items: <String>['One', 'Two', 'Free', 'Four']
-                            .map<DropdownMenuItem<String>>((String value) {
-                          return DropdownMenuItem<String>(
-                            value: value,
-                            child: Text(value),
-                          );
-                        }).toList(),
+                        items: AppCubit.get(context)
+                                    .department!
+                                    .data!
+                                    .map<DropdownMenuItem<String>>((e) {
+                                  return DropdownMenuItem<String>(
+                                    value: e.name,
+                                    child: Text("${e.name}"),
+                                  );
+                                }).toList(),
                       ),
                     ),
                     SizedBox(

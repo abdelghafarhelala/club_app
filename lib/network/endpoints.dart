@@ -10,4 +10,4 @@ const String CLUBS = 'clubs';
 const String GOVERNORATES = 'governorates';
 const String PROJECTS = 'projects';
 const String DEPARTMENTS= 'departments';
-
+const String GETCOUNT='get/count';

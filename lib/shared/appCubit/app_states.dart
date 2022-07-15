@@ -109,3 +109,9 @@ class AppGetdepartmentsLoadingState extends AppStates {}
 class AppGetdepartmentsErrorState extends AppStates {}
 
 class AppGetdepartmentsSuccState extends AppStates {}
+
+class AppGetcountLoadingState extends AppStates {}
+
+class AppGetcountErrorState extends AppStates {}
+
+class AppGetcountSuccState extends AppStates {}
