@@ -65,7 +65,9 @@ class MyApp extends StatelessWidget {
         ..getUserData()
         ..getClubs()
         ..getproject()
-        ..getgovernorates(),
+        ..getgovernorates()
+        ..getDepartment()
+        ..getCount(),
       child: BlocConsumer<AppCubit, AppStates>(
         listener: (context, state) {},
         builder: (context, state) {

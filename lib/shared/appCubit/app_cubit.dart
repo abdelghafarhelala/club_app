@@ -2,6 +2,7 @@
 
 import 'package:club_app/models/Department/department.dart';
 import 'package:club_app/models/clubModel/clubs.dart';
+import 'package:club_app/models/countModel/count.dart';
 import 'package:club_app/models/governoratesModel/governorates.dart';
 import 'package:club_app/models/projectModel/project.dart';
 import 'package:club_app/models/reset_password/reset_password.dart';
@@ -244,6 +245,17 @@ class AppCubit extends Cubit<AppStates> {
       emit(AppGetdepartmentsSuccState());
     }).catchError((onError) {
       emit(AppGetdepartmentsErrorState());
+    });
+  }
+
+  CountModel? Count;
+  void getCount() {
+    emit(AppGetcountLoadingState());
+    DioHelper.getData(url: GETCOUNT, token: token).then((value) {
+      Count = CountModel.fromJson(value.data);
+      emit(AppGetcountSuccState());
+    }).catchError((onError) {
+      emit(AppGetcountErrorState());
     });
   }
 }
