@@ -1,5 +1,6 @@
 // ignore_for_file: avoid_print
 
+import 'package:club_app/models/Department/department.dart';
 import 'package:club_app/models/clubModel/clubs.dart';
 import 'package:club_app/models/governoratesModel/governorates.dart';
 import 'package:club_app/models/projectModel/project.dart';
@@ -234,5 +235,14 @@ class AppCubit extends Cubit<AppStates> {
       emit(AppRestPasswordErrorState());
     });
   }
-  var x;
+    departments? department;
+  void getDepartment() {
+    emit(AppGetdepartmentsLoadingState());
+    DioHelper.getData(url: DEPARTMENTS, token: token).then((value) {
+    department=departments.fromJson(value.data);
+      emit(AppGetdepartmentsSuccState());
+    }).catchError((onError) {
+      emit(AppGetdepartmentsErrorState());
+    });
+  }
 }
