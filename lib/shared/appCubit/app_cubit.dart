@@ -235,6 +235,7 @@ class AppCubit extends Cubit<AppStates> {
       emit(AppRestPasswordErrorState());
     });
   }
+
     departments? department;
   void getDepartment() {
     emit(AppGetdepartmentsLoadingState());
@@ -245,4 +246,7 @@ class AppCubit extends Cubit<AppStates> {
       emit(AppGetdepartmentsErrorState());
     });
   }
+
+
+
 }
