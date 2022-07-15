@@ -1,10 +1,8 @@
-import 'package:club_app/modules/Security/Security.dart';
 import 'package:club_app/modules/home/home_screen.dart';
 import 'package:club_app/modules/login/login.dart';
-import 'package:club_app/modules/remarker/remarker.dart';
+
 import 'package:club_app/modules/replay/replay.dart';
-import 'package:club_app/modules/reset_password/reset_password.dart';
-import 'package:club_app/modules/update_profile/update_profile.dart';
+
 import 'package:club_app/network/local/cache_Helper.dart';
 import 'package:club_app/network/remote/dio_helper.dart';
 import 'package:club_app/shared/appCubit/app_cubit.dart';
@@ -88,7 +86,7 @@ class MyApp extends StatelessWidget {
             themeMode:
                 AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             // home: startWidget,
-            home: Replay(),
+            home: LoginScreen(),
           );
         },
       ),

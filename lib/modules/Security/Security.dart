@@ -1,8 +1,6 @@
 import 'package:club_app/shared/appCubit/app_cubit.dart';
 import 'package:club_app/shared/appCubit/app_states.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/src/foundation/key.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 
@@ -15,6 +13,17 @@ class Security extends StatelessWidget {
       builder: (BuildContext context, state) {
         return Scaffold(
           appBar: AppBar(
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(
+                Icons.arrow_back_ios,
+                color: Colors.black,
+                size: 30,
+              ),
+            ),
+            elevation: 0,
             title: const Image(
               image: AssetImage(
                 'assets/images/name.png',
@@ -108,201 +117,258 @@ class Security extends StatelessWidget {
                 SizedBox(
                   height: 10,
                 ),
-         Stack(
-            alignment: Alignment.topRight,
-             children: [
-               Card(
-                child: Row(
+                Stack(
+                  alignment: Alignment.topRight,
                   children: [
-                    Column(
-                      children: [
-                        SizedBox(height: 10,),
-                        Image(image: AssetImage("assets/images/10.PNG"),width: 100,height: 100,),
-                        SizedBox(height: 5,),
-                        Text("Open",style: TextStyle(color: Colors.green,fontSize: 20),),
-                        SizedBox(height: 5,),
-                      ],
+                    Card(
+                      child: Row(
+                        children: [
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Image(
+                                image: AssetImage("assets/images/10.PNG"),
+                                width: 100,
+                                height: 100,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "Open",
+                                style: TextStyle(
+                                    color: Colors.green, fontSize: 20),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Topic Name",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text("Dept : Security"),
+                              Text("Created at : 20-06-2022"),
+                              Text("Last Update : 23-06-2022 12:23"),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                    color: Colors.grey,
+                                    height: 30,
+                                    child: Row(
+                                      children: [
+                                        Image(
+                                          image: AssetImage(
+                                              "assets/images/Path 10776.png"),
+                                        ),
+                                        SizedBox(
+                                          width: 2,
+                                        ),
+                                        Text(
+                                          "23Mem",
+                                          style: TextStyle(color: Colors.white),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    color: Colors.grey,
+                                    height: 30,
+                                    child: Row(
+                                      children: [
+                                        Image(
+                                          image: AssetImage(
+                                              "assets/images/Icon awesome-comments.png"),
+                                        ),
+                                        SizedBox(
+                                          width: 2,
+                                        ),
+                                        Text("12 Com",
+                                            style:
+                                                TextStyle(color: Colors.white))
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    color: Colors.grey,
+                                    height: 30,
+                                    child: Row(
+                                      children: [
+                                        Image(
+                                          image: AssetImage(
+                                              "assets/images/Ellipse 1276.png"),
+                                        ),
+                                        SizedBox(
+                                          width: 2,
+                                        ),
+                                        Text("Priority",
+                                            style:
+                                                TextStyle(color: Colors.white))
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
-                 SizedBox(
-                  width: 10,
-                 ),
-                 Column(
-                  // mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Topic Name",style: TextStyle(fontWeight: FontWeight.bold),),  
-                    Text("Dept : Security"),
-                    Text("Created at : 20-06-2022"),
-                    Text("Last Update : 23-06-2022 12:23"),
-                    SizedBox(height: 15,),
-                     Row(
-                       children: [
-                         Container(
-                                    color: Colors.grey,
-                                    height: 30,
-
-                                    child: Row(
-                                      children: [
-                                        Image(
-                                          image:
-                                              AssetImage("assets/images/Path 10776.png"),
-                                        ),
-                                        SizedBox(
-                                          width: 2,
-                                        ),
-                                        Text("23Mem",style: TextStyle(color: Colors.white),)
-                                      ],
-                                    ),
-                                  ),
-                SizedBox(width: 5,),
-                 Container(
-                                    color: Colors.grey,
-                                    height: 30,
-
-                                    child: Row(
-                                      children: [
-                                        Image(
-                                          image:
-                                              AssetImage("assets/images/Icon awesome-comments.png"),
-                                        ),
-                                        SizedBox(
-                                          width: 2,
-                                        ),
-                                        Text("12 Com",style: TextStyle(color: Colors.white))
-                                      ],
-                                    ),
-                                  ),
-                SizedBox(width: 5,),
-                  
-                  Container(
-                                    color: Colors.grey,
-                                    height: 30,
-
-                                    child: Row(
-                                      children: [
-                                        Image(
-                                          image:
-                                              AssetImage("assets/images/Ellipse 1276.png"),
-                                        ),
-                                        SizedBox(
-                                          width: 2,
-                                        ),
-                                        Text("Priority",style: TextStyle(color: Colors.white))
-                                      ],
-                                    ),
-                                  ),
-                       ],
-                     ),
-                 
-                  ],
-                 )
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Image(
+                        image: AssetImage("assets/images/1.png"),
+                        width: 20,
+                        height: 20,
+                      ),
+                    )
                   ],
                 ),
-               ),
-         Padding(
-             padding: const EdgeInsets.all(18.0),
-             child: Image(image: AssetImage("assets/images/1.png"),width: 20,height: 20,),
-         )  
-             ],
-         ),
-               Stack(
-            alignment: Alignment.topRight,
-             children: [
-               Card(
-                child: Row(
+                Stack(
+                  alignment: Alignment.topRight,
                   children: [
-                    Column(
-                      children: [
-                        SizedBox(height: 10,),
-                        Image(image: AssetImage("assets/images/10.PNG"),width: 100,height: 100,),
-                        SizedBox(height: 5,),
-                        Text("Close",style: TextStyle(color: Colors.red,fontSize: 20),),
-                        SizedBox(height: 5,),
-                      ],
+                    Card(
+                      child: Row(
+                        children: [
+                          Column(
+                            children: [
+                              SizedBox(
+                                height: 10,
+                              ),
+                              Image(
+                                image: AssetImage("assets/images/10.PNG"),
+                                width: 100,
+                                height: 100,
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                              Text(
+                                "Close",
+                                style:
+                                    TextStyle(color: Colors.red, fontSize: 20),
+                              ),
+                              SizedBox(
+                                height: 5,
+                              ),
+                            ],
+                          ),
+                          SizedBox(
+                            width: 10,
+                          ),
+                          Column(
+                            // mainAxisAlignment: MainAxisAlignment.start,
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "Topic Name",
+                                style: TextStyle(fontWeight: FontWeight.bold),
+                              ),
+                              Text("Dept : Security"),
+                              Text("Created at : 20-06-2022"),
+                              Text("Last Update : 23-06-2022 12:23"),
+                              SizedBox(
+                                height: 15,
+                              ),
+                              Row(
+                                children: [
+                                  Container(
+                                    color: Colors.grey,
+                                    height: 30,
+                                    child: Row(
+                                      children: [
+                                        Image(
+                                          image: AssetImage(
+                                              "assets/images/Path 10776.png"),
+                                        ),
+                                        SizedBox(
+                                          width: 2,
+                                        ),
+                                        Text(
+                                          "23Mem",
+                                          style: TextStyle(color: Colors.white),
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    color: Colors.grey,
+                                    height: 30,
+                                    child: Row(
+                                      children: [
+                                        Image(
+                                          image: AssetImage(
+                                              "assets/images/Icon awesome-comments.png"),
+                                        ),
+                                        SizedBox(
+                                          width: 2,
+                                        ),
+                                        Text("12 Com",
+                                            style:
+                                                TextStyle(color: Colors.white))
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 5,
+                                  ),
+                                  Container(
+                                    color: Colors.grey,
+                                    height: 30,
+                                    child: Row(
+                                      children: [
+                                        Image(
+                                          image: AssetImage(
+                                              "assets/images/Ellipse 1276.png"),
+                                        ),
+                                        SizedBox(
+                                          width: 2,
+                                        ),
+                                        Text("Priority",
+                                            style:
+                                                TextStyle(color: Colors.white))
+                                      ],
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          )
+                        ],
+                      ),
                     ),
-                 SizedBox(
-                  width: 10,
-                 ),
-                 Column(
-                  // mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text("Topic Name",style: TextStyle(fontWeight: FontWeight.bold),),  
-                    Text("Dept : Security"),
-                    Text("Created at : 20-06-2022"),
-                    Text("Last Update : 23-06-2022 12:23"),
-                    SizedBox(height: 15,),
-                     Row(
-                       children: [
-                         Container(
-                                    color: Colors.grey,
-                                    height: 30,
-
-                                    child: Row(
-                                      children: [
-                                        Image(
-                                          image:
-                                              AssetImage("assets/images/Path 10776.png"),
-                                        ),
-                                        SizedBox(
-                                          width: 2,
-                                        ),
-                                        Text("23Mem",style: TextStyle(color: Colors.white),)
-                                      ],
-                                    ),
-                                  ),
-                SizedBox(width: 5,),
-                 Container(
-                                    color: Colors.grey,
-                                    height: 30,
-
-                                    child: Row(
-                                      children: [
-                                        Image(
-                                          image:
-                                              AssetImage("assets/images/Icon awesome-comments.png"),
-                                        ),
-                                        SizedBox(
-                                          width: 2,
-                                        ),
-                                        Text("12 Com",style: TextStyle(color: Colors.white))
-                                      ],
-                                    ),
-                                  ),
-                SizedBox(width: 5,),
-                  
-                  Container(
-                                    color: Colors.grey,
-                                    height: 30,
-
-                                    child: Row(
-                                      children: [
-                                        Image(
-                                          image:
-                                              AssetImage("assets/images/Ellipse 1276.png"),
-                                        ),
-                                        SizedBox(
-                                          width: 2,
-                                        ),
-                                        Text("Priority",style: TextStyle(color: Colors.white))
-                                      ],
-                                    ),
-                                  ),
-                       ],
-                     ),
-                 
-                  ],
-                 )
+                    Padding(
+                      padding: const EdgeInsets.all(18.0),
+                      child: Image(
+                        image: AssetImage("assets/images/Icon feather-eye.png"),
+                        width: 20,
+                        height: 20,
+                      ),
+                    )
                   ],
                 ),
-               ),
-         Padding(
-             padding: const EdgeInsets.all(18.0),
-             child: Image(image: AssetImage("assets/images/Icon feather-eye.png"),width: 20,height: 20,),
-         )  
-             ],
-         ),
-             
               ],
             ),
           ),

@@ -17,6 +17,17 @@ class Remarker extends StatelessWidget {
       builder: (BuildContext context, state) {
         return Scaffold(
             appBar: AppBar(
+              elevation: 0,
+              leading: IconButton(
+                onPressed: () {
+                  Navigator.pop(context);
+                },
+                icon: const Icon(
+                  Icons.arrow_back_ios,
+                  color: Colors.black,
+                  size: 30,
+                ),
+              ),
               title: const Image(
                 image: AssetImage(
                   'assets/images/name.png',
@@ -97,8 +108,8 @@ class Remarker extends StatelessWidget {
                       ),
                       Spacer(),
                       Image(
-                          image:
-                              AssetImage("assets/images/Icon feather-video.png")),
+                          image: AssetImage(
+                              "assets/images/Icon feather-video.png")),
                       SizedBox(
                         width: 5,
                       ),
@@ -107,8 +118,8 @@ class Remarker extends StatelessWidget {
                         width: 5,
                       ),
                       Image(
-                          image:
-                              AssetImage("assets/images/Icon feather-image.png")),
+                          image: AssetImage(
+                              "assets/images/Icon feather-image.png")),
                     ],
                   ),
                   Card(
@@ -116,11 +127,11 @@ class Remarker extends StatelessWidget {
                       width: double.infinity,
                       height: 150,
                     ),
-                  )
-                       ,SizedBox(
-              height: 10,
-                       ),
-              Row(
+                  ),
+                  SizedBox(
+                    height: 10,
+                  ),
+                  Row(
                     mainAxisAlignment: MainAxisAlignment.start,
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
@@ -144,8 +155,8 @@ class Remarker extends StatelessWidget {
                       ),
                       Spacer(),
                       Image(
-                          image:
-                              AssetImage("assets/images/Icon feather-video.png")),
+                          image: AssetImage(
+                              "assets/images/Icon feather-video.png")),
                       SizedBox(
                         width: 5,
                       ),
@@ -154,8 +165,8 @@ class Remarker extends StatelessWidget {
                         width: 5,
                       ),
                       Image(
-                          image:
-                              AssetImage("assets/images/Icon feather-image.png")),
+                          image: AssetImage(
+                              "assets/images/Icon feather-image.png")),
                     ],
                   ),
                   Card(
@@ -165,24 +176,27 @@ class Remarker extends StatelessWidget {
                       // width:double.infinity,
                     ),
                   ),
-                SizedBox(
-                        height: 5,
-                      ),
+                  SizedBox(
+                    height: 5,
+                  ),
                   Align(
                     alignment: Alignment.bottomCenter,
                     child: InkWell(
-                      onTap: (){
-                        navigateTo(context,Replay() );
+                      onTap: () {
+                        navigateTo(context, Replay());
                       },
                       child: Container(
                         width: double.infinity,
                         height: 40,
                         color: Colors.grey,
-                        child: Center(child: Text("Add Reply",style: TextStyle(color: Colors.white,fontSize: 20),)),
+                        child: Center(
+                            child: Text(
+                          "Add Reply",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        )),
                       ),
                     ),
                   ),
-                      
                 ],
               ),
             ));

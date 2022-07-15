@@ -3,6 +3,9 @@
 import 'package:club_app/models/clubModel/clubs.dart';
 import 'package:club_app/models/governoratesModel/governorates.dart';
 import 'package:club_app/models/projectModel/project.dart';
+import 'package:club_app/models/reset_password/reset_password.dart';
+import 'package:club_app/models/send_email/send_email.dart';
+import 'package:club_app/models/send_opt/send_opt.dart';
 import 'package:club_app/models/userModel/userModel.dart';
 import 'package:club_app/network/endpoints.dart';
 import 'package:club_app/network/local/cache_Helper.dart';
@@ -77,7 +80,7 @@ class AppCubit extends Cubit<AppStates> {
   UserModel? profile;
   void getUserData() {
     emit(AppGetUserDataLoadingState());
-    DioHelper.getData(url: '', token: token).then((value) {
+    DioHelper.getData(url: profileUrl, token: token).then((value) {
       profile = UserModel.fromJson(value.data);
       print(profile!.user!.name);
       emit(AppGetUserDataSuccessState());
@@ -158,9 +161,77 @@ class AppCubit extends Cubit<AppStates> {
     emit(AppGetChangeDropState());
   }
 
-   String? Dep_Value;
+  String? Dep_Value;
   void set_Dep({required String? x}) {
     Dep_Value = x;
     emit(AppGetChangeDropState());
+  }
+
+  //LogOut Form app
+  void logOut() {
+    DioHelper.postData(url: logOutUrl, data: {}, token: token).then((value) {
+      emit(AppLogOutSuccessState());
+    }).catchError((error) {
+      print(error.toString());
+      emit(AppLogOutErrorState());
+    });
+  }
+
+  SendEmailModel? sendEmailModel;
+  void sendEmail({required String email}) {
+    emit(AppSendEmailLoadingState());
+    DioHelper.postData(url: sendEmailUrl, data: {'email': email}, token: token)
+        .then((value) {
+      sendEmailModel = SendEmailModel.fromJson(value.data);
+      emit(AppSendEmailSuccessState(sendEmailModel));
+    }).catchError((error) {
+      print(error.toString());
+      emit(AppSendEmailErrorState());
+    });
+  }
+
+  SendOptModel? sendOptModel;
+  void sendOpt({required String email, required String opt}) {
+    emit(AppSendOptLoadingState());
+    DioHelper.postData(
+            url: checkOptUrl,
+            data: {
+              'email': email,
+              'pincode': opt,
+            },
+            token: token)
+        .then((value) {
+      sendOptModel = SendOptModel.fromJson(value.data);
+      emit(AppSendOptSuccessState(sendOptModel));
+    }).catchError((error) {
+      print(error.toString());
+      emit(AppSendOptErrorState());
+    });
+  }
+
+  ResetPasswordModel? resetPasswordModel;
+  void resetPassword({
+    required String email,
+    required String opt,
+    required String password,
+    required String confirmPassword,
+  }) {
+    emit(AppRestPasswordLoadingState());
+    DioHelper.postData(
+            url: checkOptUrl,
+            data: {
+              'email': email,
+              'pincode': opt,
+              'password': password,
+              'password_confirmation': confirmPassword,
+            },
+            token: token)
+        .then((value) {
+      resetPasswordModel = ResetPasswordModel.fromJson(value.data);
+      emit(AppRestPasswordSuccessState(resetPasswordModel));
+    }).catchError((error) {
+      print(error.toString());
+      emit(AppRestPasswordErrorState());
+    });
   }
 }

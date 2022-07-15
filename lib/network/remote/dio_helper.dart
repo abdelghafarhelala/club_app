@@ -46,7 +46,7 @@ class DioHelper {
   }) async {
     dio!.options.headers = {
       'lang': lang,
-      'Authorization': 'Bearer ' + token!,
+      'Authorization': token!,
       'Content-Type': 'application/json',
     };
     return await dio!.post(

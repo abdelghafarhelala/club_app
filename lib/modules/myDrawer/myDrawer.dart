@@ -1,5 +1,6 @@
 import 'package:club_app/modules/home/home_screen.dart';
 import 'package:club_app/modules/login/login.dart';
+import 'package:club_app/modules/update_profile/update_profile.dart';
 import 'package:club_app/shared/appCubit/app_cubit.dart';
 import 'package:club_app/shared/appCubit/app_states.dart';
 import 'package:club_app/shared/colors.dart';
@@ -19,7 +20,7 @@ class MyDrawer extends StatelessWidget {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state) {},
       builder: (context, state) {
-        // var userData = AppCubit.get(context).profile;
+        var userData = AppCubit.get(context).profile;
         return AnnotatedRegion<SystemUiOverlayStyle>(
           value: SystemUiOverlayStyle(
             // For Android.
@@ -43,29 +44,29 @@ class MyDrawer extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        // userData?.data?.email ??
-                        'Omer Elshrif',
-                        style: TextStyle(color: Colors.white, fontSize: 21),
+                        userData?.user?.name ?? 'User Name',
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 21),
                       ),
-                      SizedBox(
+                      const SizedBox(
                         height: 5,
                       ),
                       Text(
-                        // userData?.data?.email ??
-                        'Job Title',
-                        style: TextStyle(color: Colors.white, fontSize: 15),
+                        userData?.user?.jobTitle ?? 'Job Title',
+                        style:
+                            const TextStyle(color: Colors.white, fontSize: 15),
                       ),
                     ],
                   ),
                 ),
-                SizedBox(
+                const SizedBox(
                   width: 5,
                 ),
                 IconButton(
                     onPressed: () {
                       Navigator.pop(context);
                     },
-                    icon: Icon(
+                    icon: const Icon(
                       Icons.close,
                       color: Colors.white,
                     ))
@@ -86,14 +87,17 @@ class MyDrawer extends StatelessWidget {
         children: [
           menuItem(context, 'assets/images/projects.png', 'My Projects',
               HomeScreen()),
-          menuItem(context, 'assets/images/pers.png', 'Profile', HomeScreen(),
+          menuItem(context, 'assets/images/pers.png', 'Update Profile',
+              UpdateProfileScreen(),
               index: 1),
-          menuItem(
-              context, 'assets/images/add.png', 'Add Project ', HomeScreen(),
-              index: 3),
-          menuItem(
-              context, 'assets/images/user.png', ' Add Users', HomeScreen(),
-              index: 2),
+          if (AppCubit.get(context).profile?.user?.role == 'Super Admin')
+            menuItem(
+                context, 'assets/images/add.png', 'Add Project ', HomeScreen(),
+                index: 3),
+          if (AppCubit.get(context).profile?.user?.role == 'Super Admin')
+            menuItem(
+                context, 'assets/images/user.png', ' Add Users', HomeScreen(),
+                index: 2),
           menuItem(context, 'assets/images/noti.png', ' Notifications',
               HomeScreen()),
           menuItem(context, 'assets/images/lang.png', 'Language ', HomeScreen(),
@@ -165,7 +169,7 @@ class MyDrawer extends StatelessWidget {
     return Material(
       child: InkWell(
         onTap: () {
-          // AppCubit.get(context).logOut(context);
+          AppCubit.get(context).logOut();
         },
         child: Container(
           height: 59,

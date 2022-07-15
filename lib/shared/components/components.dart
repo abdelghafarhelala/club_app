@@ -18,7 +18,7 @@ void navigateAndFinish(context, widget) => Navigator.pushAndRemoveUntil(
 
 Widget defaultButton({
   double width = double.infinity,
-  double height = 50,
+  required double height,
   Color color = buttonColor,
   required Function onPress,
   required String text,

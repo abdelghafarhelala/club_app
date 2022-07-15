@@ -15,6 +15,17 @@ class Replay extends StatelessWidget {
       builder: (BuildContext context, state) {
         return Scaffold(
           appBar: AppBar(
+            elevation: 0,
+            leading: IconButton(
+              onPressed: () {
+                Navigator.pop(context);
+              },
+              icon: const Icon(
+                Icons.arrow_back_ios,
+                color: Colors.black,
+                size: 30,
+              ),
+            ),
             title: const Image(
               image: AssetImage(
                 'assets/images/name.png',
@@ -100,7 +111,7 @@ class Replay extends StatelessWidget {
                   height: 5,
                 ),
                 Padding(
-                  padding: const EdgeInsets.only(left: 20,right: 20),
+                  padding: const EdgeInsets.only(left: 20, right: 20),
                   child: Row(
                     children: [
                       Image(
@@ -132,96 +143,100 @@ class Replay extends StatelessWidget {
                     ],
                   ),
                 ),
-          SizedBox(
-            height: 10,
-          ),
-         
-         Row(
-          children: [
-             Expanded(
-              child: Container(
-                    height: 40,
-                    // width: 80,
-            
-                    // color: Colors.black26,
-                    decoration: BoxDecoration(
-                      // color: Colors.grey,
-            
-                      border: Border.all(
-              color: Colors.grey,
-              width: 1,
-                      ),
-                    ),
-                    child: Row(
-                      // crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
-
-                      children: [
-                        Image(image: AssetImage("assets/images/Path 11623.png"),),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                                'From Gallery',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                      ],
-                    ),
-                  ),
-            ),
-             SizedBox(width: 5,),
-               Expanded(
-              child: Container(
-                    height: 40,
-                    // width: 80,
-            
-                    // color: Colors.black26,
-                    decoration: BoxDecoration(
-                      // color: Colors.grey,
-            
-                      border: Border.all(
-              color: Colors.grey,
-              width: 1,
-                      ),
-                    ),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-
-                      children: [
-                        Image(image: AssetImage("assets/images/Path 11624.png"),),
-                         SizedBox(
-                          width: 5,
-                        ),
-                        Text(
-                                'From Camera',
-                                style: TextStyle(color: Colors.black),
-                              ),
-                      ],
-                    ),
-                  ),
-            ),
-              
-          ],
-         ),
-          Spacer(),
-         
-         Align(
-                    alignment: Alignment(-1, -1),
-                    child: InkWell(
-                      onTap: (){
-                        // navigateTo(context,Replay() );
-                      },
+                SizedBox(
+                  height: 10,
+                ),
+                Row(
+                  children: [
+                    Expanded(
                       child: Container(
-                        width: double.infinity,
                         height: 40,
-                        color: Colors.grey,
-                        child: Center(child: Text("Submit",style: TextStyle(color: Colors.white,fontSize: 20),)),
+                        // width: 80,
+
+                        // color: Colors.black26,
+                        decoration: BoxDecoration(
+                          // color: Colors.grey,
+
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 1,
+                          ),
+                        ),
+                        child: Row(
+                          // crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+
+                          children: [
+                            Image(
+                              image: AssetImage("assets/images/Path 11623.png"),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              'From Gallery',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ],
+                        ),
                       ),
                     ),
+                    SizedBox(
+                      width: 5,
+                    ),
+                    Expanded(
+                      child: Container(
+                        height: 40,
+                        // width: 80,
+
+                        // color: Colors.black26,
+                        decoration: BoxDecoration(
+                          // color: Colors.grey,
+
+                          border: Border.all(
+                            color: Colors.grey,
+                            width: 1,
+                          ),
+                        ),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Image(
+                              image: AssetImage("assets/images/Path 11624.png"),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            Text(
+                              'From Camera',
+                              style: TextStyle(color: Colors.black),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+                Spacer(),
+                Align(
+                  alignment: Alignment(-1, -1),
+                  child: InkWell(
+                    onTap: () {
+                      // navigateTo(context,Replay() );
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 40,
+                      color: Colors.grey,
+                      child: Center(
+                          child: Text(
+                        "Submit",
+                        style: TextStyle(color: Colors.white, fontSize: 20),
+                      )),
+                    ),
                   ),
-           ],
-          
-              
+                ),
+              ],
             ),
           ),
         );
