@@ -33,6 +33,10 @@ class ResetPassword extends StatelessWidget {
           } else {
             showToast(text: state.model?.message, state: ToastStates.error);
           }
+        } else if (state is AppRestPasswordErrorState) {
+          showToast(
+              text: 'The two passwords aren\'t the same',
+              state: ToastStates.error);
         }
       },
       builder: (context, state) {

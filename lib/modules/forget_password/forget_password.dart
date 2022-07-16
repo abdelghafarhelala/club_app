@@ -31,6 +31,8 @@ class ForgetPasswordScreen extends StatelessWidget {
           } else {
             showToast(text: state.model?.message, state: ToastStates.error);
           }
+        } else if (state is AppSendEmailErrorState) {
+          showToast(text: 'This email is invalid', state: ToastStates.error);
         }
       },
       builder: (context, state) {

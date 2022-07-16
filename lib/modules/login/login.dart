@@ -43,6 +43,10 @@ class LoginScreen extends StatelessWidget {
             } else {
               showToast(text: state.model?.message, state: ToastStates.error);
             }
+          } else if (state is LoginErrorState) {
+            showToast(
+                text: 'The email or Password is invalid',
+                state: ToastStates.error);
           }
         },
         builder: (context, state) {

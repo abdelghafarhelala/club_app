@@ -62,6 +62,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
           } else {
             showToast(text: state.model?.message, state: ToastStates.error);
           }
+        } else if (state is AppUpdateUserDataErrorState) {
+          showToast(text: 'This data is invalid', state: ToastStates.error);
         }
       },
       builder: (context, state) {

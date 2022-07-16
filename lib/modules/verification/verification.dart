@@ -54,6 +54,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
         } else {
           showToast(text: state.model?.message, state: ToastStates.error);
         }
+      } else if (state is AppSendOptErrorState) {
+        showToast(text: 'This code is invalid', state: ToastStates.error);
       }
     }, builder: (context, state) {
       return Scaffold(

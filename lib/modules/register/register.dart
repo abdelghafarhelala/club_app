@@ -55,6 +55,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
             } else {
               showToast(text: state.model?.message, state: ToastStates.error);
             }
+          } else if (state is RegisterErrorState) {
+            showToast(text: 'This data is invalid', state: ToastStates.error);
           }
         },
         builder: (context, state) {
