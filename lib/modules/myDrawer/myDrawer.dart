@@ -1,3 +1,4 @@
+import 'package:club_app/modules/change_password/change_password_screen.dart';
 import 'package:club_app/modules/home/home_screen.dart';
 import 'package:club_app/modules/login/login.dart';
 import 'package:club_app/modules/update_profile/update_profile.dart';
@@ -106,6 +107,9 @@ class MyDrawer extends StatelessWidget {
           menuItem(context, 'assets/images/noti.png', ' Notifications',
               HomeScreen()),
           menuItem(context, 'assets/images/lang.png', 'Language ', HomeScreen(),
+              index: 2),
+          menuItem(context, 'assets/images/lock.png', 'Change password ',
+              ChangePasswordScreen(),
               index: 2),
           Spacer(),
           if (token != null)

@@ -32,6 +32,7 @@ class HomeScreen extends StatelessWidget {
             key: scaffoldKey,
             drawer: defaultDrawer(context),
             appBar: AppBar(
+              elevation: 0,
               backgroundColor: Colors.white,
               leading: IconButton(
                   onPressed: () => scaffoldKey.currentState!.openDrawer(),
@@ -87,9 +88,13 @@ class HomeScreen extends StatelessWidget {
                                       SizedBox(
                                         width: 15,
                                       ),
-                                      Text(
-                                        "${AppCubit.get(context).Count?.projects ?? ''} Project",
-                                        style: TextStyle(color: Colors.white),
+                                      Expanded(
+                                        child: Text(
+                                          "${AppCubit.get(context).Count?.projects ?? ''} Project ",
+                                          style: TextStyle(color: Colors.white),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       )
                                     ],
                                   ),
@@ -97,7 +102,7 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(
-                              width: 10,
+                              width: 5,
                             ),
                             Expanded(
                               child: Container(
@@ -113,9 +118,13 @@ class HomeScreen extends StatelessWidget {
                                       SizedBox(
                                         width: 15,
                                       ),
-                                      Text(
-                                        "${AppCubit.get(context).Count?.members ?? ''} Member",
-                                        style: TextStyle(color: Colors.white),
+                                      Expanded(
+                                        child: Text(
+                                          "${AppCubit.get(context).Count?.members ?? ''} Member",
+                                          style: TextStyle(color: Colors.white),
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                        ),
                                       )
                                     ],
                                   ),
@@ -130,39 +139,47 @@ class HomeScreen extends StatelessWidget {
                         Row(
                           children: [
                             Expanded(
-                              child: DropdownButton<String>(
-                                // alignment:Alignment.bottomRight ,
-                                autofocus: false, iconSize: 30,
-                                isExpanded: true,
-                                // menuMaxHeight: 100,
-                                itemHeight: 50,
+                              child: Card(
+                                elevation: 2,
+                                child: DropdownButton<String>(
+                                  // alignment:Alignment.bottomRight ,
+                                  autofocus: false, iconSize: 30,
+                                  isExpanded: true,
+                                  // menuMaxHeight: 100,
+                                  itemHeight: 50,
+                                  underline: Container(
+                                    height: 0,
+                                  ),
 
-                                value: AppCubit.get(context).Drop_Down_Value,
-                                // icon: const Icon(Icons.arrow_downward),
-                                // elevation: 16,
-                                hint:
-                                    const Center(child: Text("Select Project")),
+                                  value: AppCubit.get(context).Drop_Down_Value,
+                                  // icon: const Icon(Icons.arrow_downward),
+                                  // elevation: 16,
+                                  hint: const Center(
+                                      child: Text("Select Project")),
 
-                                onChanged: (newValue) {
-                                  AppCubit.get(context).set_drop(x: newValue);
-                                },
-                                items: AppCubit.get(context)
-                                    .project!
-                                    .data!
-                                    .map<DropdownMenuItem<String>>((e) {
-                                  return DropdownMenuItem<String>(
-                                    value: e.name,
-                                    child: Text("${e.name}"),
-                                  );
-                                }).toList(),
+                                  onChanged: (newValue) {
+                                    AppCubit.get(context).set_drop(x: newValue);
+                                  },
+                                  items: AppCubit.get(context)
+                                      .project!
+                                      .data!
+                                      .map<DropdownMenuItem<String>>((e) {
+                                    return DropdownMenuItem<String>(
+                                      value: e.name,
+                                      child: Text("${e.name}"),
+                                    );
+                                  }).toList(),
+                                ),
                               ),
                             ),
                             const SizedBox(
                               width: 10,
                             ),
                             const Image(
-                                image: AssetImage(
-                                    'assets/images/Icon feather-filter.png'))
+                              width: 30,
+                              image: AssetImage(
+                                  'assets/images/Icon feather-filter.png'),
+                            )
                           ],
                         ),
                         const SizedBox(
@@ -241,6 +258,7 @@ class HomeScreen extends StatelessWidget {
                         ),
                         Container(
                           height: screenHeight - (height + 370),
+                          width: double.infinity,
                           child: ListView.separated(
                             shrinkWrap: true,
                             physics: BouncingScrollPhysics(),
@@ -333,13 +351,13 @@ class HomeScreen extends StatelessWidget {
     Color c;
     if (int.parse(Model.constructionRatio.toString().substring(0, 2)) <= 100 &&
         int.parse(Model.constructionRatio.toString().substring(0, 2)) >= 85) {
-      c = Colors.green;
+      c = HexColor('#38C117');
     } else if (int.parse(Model.constructionRatio.toString().substring(0, 2)) <=
             85 &&
         int.parse(Model.constructionRatio.toString().substring(0, 2)) >= 50) {
-      c = Colors.orange;
+      c = HexColor('#F09A25');
     } else {
-      c = Colors.red;
+      c = HexColor('#F02525');
     }
     return InkWell(
       onTap: () {
@@ -351,12 +369,14 @@ class HomeScreen extends StatelessWidget {
       },
       child: Card(
         child: Container(
-          height: 120,
+          padding: EdgeInsets.all(0),
+          height: 130,
+          width: double.infinity,
           child: Row(
             children: [
               Container(
-                height: 100,
-                width: 100,
+                height: 130,
+                width: 120,
                 child: Stack(
                   alignment: Alignment.bottomCenter,
                   children: [
@@ -366,8 +386,8 @@ class HomeScreen extends StatelessWidget {
                           'https://estadat.ivas.com.eg/uploads/clubs/kq82Dp8fte2jssFYisqRUZAc7EpuRsScG2o0B8zb.png',
                         ),
                         width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
+                        height: 130,
+                        fit: BoxFit.fill,
                       ),
                     if (Model.image != '')
                       Image(
@@ -375,68 +395,124 @@ class HomeScreen extends StatelessWidget {
                           Model.image ?? '',
                         ),
                         width: 100,
-                        height: 100,
-                        fit: BoxFit.cover,
+                        height: 130,
+                        fit: BoxFit.fill,
                       ),
                     Container(
-                      color: Colors.black.withOpacity(.7),
-                      height: 35,
+                      color: HexColor('#6F6F6F'),
+                      height: 28,
                       width: double.infinity,
                       child: Center(
                           child: Text(
                         "${Model.city}",
                         overflow: TextOverflow.ellipsis,
                         maxLines: 1,
-                        style: TextStyle(color: Colors.white),
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontSize: 18,
+                        ),
+                        textAlign: TextAlign.center,
                       )),
                       // width: double.infinity,
                     )
                   ],
                 ),
               ),
+              const SizedBox(
+                width: 10,
+              ),
               Column(
+                // crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SizedBox(
-                    height: 15,
+                  // SizedBox(
+                  //   height: 15,
+                  // ),
+                  Expanded(
+                    child: Row(
+                      children: [
+                        Container(
+                          width: MediaQuery.of(context).size.width - 160,
+                          child: Row(
+                            children: [
+                              Container(
+                                // width: MediaQuery.of(context).size.width - 160,
+                                child: Expanded(
+                                  child: Text(
+                                    " ${Model.city} ",
+                                    overflow: TextOverflow.ellipsis,
+                                    maxLines: 1,
+                                    style: TextStyle(fontSize: 25),
+                                    textAlign: TextAlign.center,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  Text(
-                    " ${Model.city}",
-                    overflow: TextOverflow.ellipsis,
-                    maxLines: 1,
-                    style: TextStyle(fontSize: 18),
-                  ),
-                  Spacer(),
+                  // Spacer(),
                   Row(
                     children: [
-                      Text("  Progress"),
-                      SizedBox(
-                        width: 5,
-                      ),
                       Container(
-                          color: c,
-                          child: Text(
-                            "${Model.constructionRatio}",
-                            style: TextStyle(color: Colors.white),
-                          )),
-                      SizedBox(
-                        width: 5,
-                      ),
-                      Text("Subscribers"),
-                      SizedBox(
-                        width: 2,
-                      ),
-                      Container(
-                          color: Colors.grey,
-                          child: Text(
-                            "${Model.area!.substring(0, 2)}k",
-                            style: TextStyle(color: Colors.white),
-                          )),
-                      SizedBox(
-                        width: 5,
+                        width: MediaQuery.of(context).size.width - 160,
+                        child: Row(
+                          children: [
+                            const Expanded(
+                              flex: 1,
+                              child: Text(
+                                "Progress",
+                                style: TextStyle(fontSize: 18),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            Container(
+                                padding: EdgeInsets.symmetric(horizontal: 2),
+                                color: c,
+                                height: 25,
+                                child: Center(
+                                  child: Text(
+                                    "${Model.constructionRatio}",
+                                    style: const TextStyle(color: Colors.white),
+                                    maxLines: 1,
+                                    overflow: TextOverflow.ellipsis,
+                                  ),
+                                )),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                            const Expanded(
+                              child: Text(
+                                "Subscribers",
+                                style: TextStyle(fontSize: 17),
+                                maxLines: 1,
+                                overflow: TextOverflow.ellipsis,
+                              ),
+                            ),
+                            const SizedBox(
+                              width: 2,
+                            ),
+                            Container(
+                                color: Colors.grey,
+                                height: 25,
+                                padding: EdgeInsets.all(2),
+                                child: Text(
+                                  "${Model.area!.substring(0, 2)}k",
+                                  style: const TextStyle(color: Colors.white),
+                                  maxLines: 1,
+                                  overflow: TextOverflow.ellipsis,
+                                )),
+                            const SizedBox(
+                              width: 5,
+                            ),
+                          ],
+                        ),
                       ),
                     ],
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                 ],

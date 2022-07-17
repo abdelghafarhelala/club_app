@@ -46,6 +46,7 @@ Widget defaultTextField({
   required Function? validate,
   required context,
   IconData? suffix,
+  ImageIcon? imageIcon,
   Function? suffixPressed,
   bool isSecure = false,
   required TextInputType type,
@@ -58,6 +59,45 @@ Widget defaultTextField({
       decoration: InputDecoration(
         labelText: lable,
         prefixIcon: Icon(prefix),
+        suffixIcon: IconButton(
+            icon: Icon(suffix),
+            onPressed: () {
+              suffixPressed!();
+            }),
+      ),
+      keyboardType: type,
+      obscureText: isSecure,
+      validator: (String? s) {
+        return validate!(s);
+      },
+      controller: controller,
+      onTap: () {
+        // ontap!();
+      },
+      // onChanged: (String s){
+      //     onChange!(s);
+      // },
+    );
+
+Widget defaultTextFieldWithCustomIconImage({
+  required String lable,
+  required ImageIcon prefix,
+  required Function? validate,
+  required context,
+  IconData? suffix,
+  ImageIcon? imageIcon,
+  Function? suffixPressed,
+  bool isSecure = false,
+  required TextInputType type,
+  var controller,
+  // Function? ontap,
+  // Function? onChange,
+}) =>
+    TextFormField(
+      style: Theme.of(context).textTheme.button,
+      decoration: InputDecoration(
+        labelText: lable,
+        prefixIcon: prefix,
         suffixIcon: IconButton(
             icon: Icon(suffix),
             onPressed: () {

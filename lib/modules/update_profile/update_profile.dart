@@ -10,13 +10,11 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-var selectedItem;
-var selectedItem2;
 int? depid;
 var emailController = TextEditingController();
 var nameController = TextEditingController();
 var phoneController = TextEditingController();
-var passwordController = TextEditingController();
+
 var confirmPasswordController = TextEditingController();
 var formKey = GlobalKey<FormState>();
 
@@ -40,25 +38,22 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
     phoneController.text = profileData?.mobileNumber ?? '';
     // selectedItem = profileData?.jobTitle ?? '';
     if (profileData?.department == 1)
-      selectedItem2 = 'HR';
+      AppCubit.get(context).selectedItem2 = 'HR';
     else if (profileData?.department == 2)
-      selectedItem2 = 'CEO';
+      AppCubit.get(context).selectedItem2 = 'CEO';
     else if (profileData?.department == 3)
-      selectedItem2 = 'Employee';
-    else if (profileData?.department == 4) selectedItem2 = 'Legal';
+      AppCubit.get(context).selectedItem2 = 'Employee';
+    else if (profileData?.department == 4)
+      AppCubit.get(context).selectedItem2 = 'Legal';
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state) {
         if (state is AppUpdateUserDataSuccessState) {
           if (state.model?.success == true) {
-            CacheHelper.saveData(key: "token", value: state.model?.token)
-                .then((value) {
-              token = state.model?.token;
-              AppCubit.get(context).getUserData();
-              showToast(
-                  text: state.model?.message ?? '', state: ToastStates.success);
-              navigateAndFinish(context, HomeScreen());
-              print(state.model?.user!.name);
-            });
+            AppCubit.get(context).getUserData();
+            showToast(
+                text: state.model?.message ?? '', state: ToastStates.success);
+            navigateAndFinish(context, HomeScreen());
+            print(state.model?.user!.name);
           } else {
             showToast(text: state.model?.message, state: ToastStates.error);
           }
@@ -230,11 +225,14 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                             );
                                           }).toList(),
                                           onChanged: (val) {
-                                            setState(() {
-                                              selectedItem = val;
-                                            });
+                                            // setState(() {
+                                            //   selectedItem = val;
+                                            // });
+                                            AppCubit.get(context)
+                                                .changeListVal(val);
                                           },
-                                          value: selectedItem,
+                                          value: AppCubit.get(context)
+                                              .selectedItem,
                                         ),
                                       ),
                                     ),
@@ -284,11 +282,14 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                             );
                                           }).toList(),
                                           onChanged: (val) {
-                                            setState(() {
-                                              selectedItem2 = val;
-                                            });
+                                            // setState(() {
+                                            //   selectedItem2 = val;
+                                            // });
+                                            AppCubit.get(context)
+                                                .changeListVal2(val);
                                           },
-                                          value: selectedItem2,
+                                          value: AppCubit.get(context)
+                                              .selectedItem2,
                                         ),
                                       ),
                                     ),
@@ -297,34 +298,8 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                               ),
                             ),
                           ),
-                          const SizedBox(
-                            height: 5,
-                          ),
-                          Card(
-                            shape: BeveledRectangleBorder(
-                              borderRadius: BorderRadius.circular(4.0),
-                            ),
-                            elevation: 1.5,
-                            child: defaultTextField(
-                                controller: passwordController,
-                                lable: 'Password ',
-                                prefix: Icons.lock_outline,
-                                suffix: AppCubit.get(context).suffix,
-                                suffixPressed: () {
-                                  AppCubit.get(context)
-                                      .changePasswordVisibility();
-                                },
-                                isSecure: AppCubit.get(context).isPass,
-                                validate: (String value) {
-                                  if (value.isEmpty) {
-                                    return 'Password can\'t be empty ';
-                                  }
-                                },
-                                context: context,
-                                type: TextInputType.visiblePassword),
-                          ),
                           SizedBox(
-                            height: screenHeight / 68,
+                            height: screenHeight / 26,
                           ),
                           ConditionalBuilder(
                             condition: state is! AppUpdateUserDataLoadingState,
@@ -332,21 +307,28 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                 height: screenHeight / 16,
                                 onPress: () {
                                   if (formKey.currentState!.validate()) {
-                                    if (selectedItem == 'HR') {
+                                    if (AppCubit.get(context).selectedItem ==
+                                        'HR') {
                                       depid = 1;
-                                    } else if (selectedItem == 'CEO') {
+                                    } else if (AppCubit.get(context)
+                                            .selectedItem ==
+                                        'CEO') {
                                       depid = 2;
-                                    } else if (selectedItem == 'Employee') {
+                                    } else if (AppCubit.get(context)
+                                            .selectedItem ==
+                                        'Employee') {
                                       depid = 3;
-                                    } else if (selectedItem == 'Legal') {
+                                    } else if (AppCubit.get(context)
+                                            .selectedItem ==
+                                        'Legal') {
                                       depid = 4;
                                     }
                                     AppCubit.get(context).updateUserData(
                                         email: emailController.text,
                                         phone: phoneController.text,
                                         name: nameController.text,
-                                        password: passwordController.text,
-                                        jobTitle: selectedItem2,
+                                        jobTitle:
+                                            AppCubit.get(context).selectedItem2,
                                         departmentId: depid!);
                                   } else {}
                                 },

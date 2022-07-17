@@ -5,7 +5,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class Security extends StatelessWidget {
-  // const Security({Key? key}) : super(key: key);
+  const Security({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -98,14 +98,14 @@ class Security extends StatelessWidget {
                           AppCubit.get(context).set_Dep(x: newValue);
                         },
                         items: AppCubit.get(context)
-                                    .department!
-                                    .data!
-                                    .map<DropdownMenuItem<String>>((e) {
-                                  return DropdownMenuItem<String>(
-                                    value: e.name,
-                                    child: Text("${e.name}"),
-                                  );
-                                }).toList(),
+                            .department!
+                            .data!
+                            .map<DropdownMenuItem<String>>((e) {
+                          return DropdownMenuItem<String>(
+                            value: e.name,
+                            child: Text("${e.name}"),
+                          );
+                        }).toList(),
                       ),
                     ),
                     SizedBox(

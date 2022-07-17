@@ -1,5 +1,6 @@
 import 'package:club_app/models/clubModel/clubs.dart';
 import 'package:club_app/modules/Security/Security.dart';
+import 'package:club_app/modules/full_screen_image/full_screen_image.dart';
 import 'package:club_app/modules/remarker/remarker.dart';
 import 'package:club_app/shared/appCubit/app_cubit.dart';
 import 'package:club_app/shared/appCubit/app_states.dart';
@@ -137,7 +138,7 @@ class ClubDetails extends StatelessWidget {
                             child: Center(
                               child: Text(
                                 '${Model!.area} ',
-                                style: TextStyle(
+                                style: const TextStyle(
                                     fontSize: 24,
                                     color: Colors.white,
                                     fontWeight: FontWeight.w300),
@@ -150,9 +151,12 @@ class ClubDetails extends StatelessWidget {
                         ],
                       ),
                       IconButton(
-                          onPressed: () {},
-                          icon: const Icon(
-                            Icons.fullscreen_outlined,
+                          onPressed: () {
+                            navigateTo(context,
+                                FullScreenImageScreen(imagePath: Model?.image));
+                          },
+                          icon: const ImageIcon(
+                            AssetImage('assets/images/full_screen.png'),
                             size: 35,
                           )),
                     ],

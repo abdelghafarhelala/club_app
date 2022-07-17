@@ -135,7 +135,6 @@ class AppCubit extends Cubit<AppStates> {
     required String email,
     required String phone,
     required String name,
-    required String password,
     required String jobTitle,
     required int departmentId,
   }) {
@@ -144,7 +143,6 @@ class AppCubit extends Cubit<AppStates> {
       'email': email,
       'mobile': phone,
       'name': name,
-      'password': password,
       'department_id': departmentId,
       'job_title': jobTitle,
     }).then((value) {
@@ -257,5 +255,38 @@ class AppCubit extends Cubit<AppStates> {
     }).catchError((onError) {
       emit(AppGetcountErrorState());
     });
+  }
+
+  //change password
+  void updatePasswordData({
+    required String oldPassword,
+    required String newPassword,
+    required String confirmNewPassword,
+  }) {
+    emit(AppChangePasswordLoadingState());
+    DioHelper.putData(url: changePasswordUrl, token: token, data: {
+      'password': oldPassword,
+      'new_password': newPassword,
+      'password_confirmation': confirmNewPassword,
+    }).then((value) {
+      user = UserModel.fromJson(value.data);
+      print(user?.message);
+      emit(AppChangePasswordSuccessState(user));
+    }).catchError((error) {
+      emit(AppChangePasswordErrorState());
+      print(error.toString());
+    });
+  }
+
+  var selectedItem;
+  var selectedItem2;
+  void changeListVal(val) {
+    selectedItem = val;
+    emit(AppchangeListValState());
+  }
+
+  void changeListVal2(val) {
+    selectedItem2 = val;
+    emit(AppchangeListValState());
   }
 }

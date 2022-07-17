@@ -101,8 +101,15 @@ class AppRestPasswordErrorState extends AppStates {}
 
 class AppRestPasswordLoadingState extends AppStates {}
 
+class AppChangePasswordSuccessState extends AppStates {
+  final UserModel? model;
 
+  AppChangePasswordSuccessState(this.model);
+}
 
+class AppChangePasswordErrorState extends AppStates {}
+
+class AppChangePasswordLoadingState extends AppStates {}
 
 class AppGetdepartmentsLoadingState extends AppStates {}
 
@@ -115,3 +122,5 @@ class AppGetcountLoadingState extends AppStates {}
 class AppGetcountErrorState extends AppStates {}
 
 class AppGetcountSuccState extends AppStates {}
+
+class AppchangeListValState extends AppStates {}
