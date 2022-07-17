@@ -103,7 +103,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                             height: screenHeight / 35,
                           ),
                           ConditionalBuilder(
-                            condition: true,
+                            condition: state is! AppSendEmailLoadingState,
                             builder: (context) => defaultButton(
                                 height: screenHeight / 14,
                                 onPress: () {

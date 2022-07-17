@@ -137,7 +137,7 @@ class ResetPassword extends StatelessWidget {
                             height: screenHeight / 35,
                           ),
                           ConditionalBuilder(
-                            condition: true,
+                            condition: state is! AppRestPasswordLoadingState,
                             builder: (context) => defaultButton(
                                 height: screenHeight / 16,
                                 onPress: () {

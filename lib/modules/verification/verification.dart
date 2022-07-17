@@ -141,7 +141,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           height: screenHeight / 35,
                         ),
                         ConditionalBuilder(
-                          condition: true,
+                          condition: state is! AppSendOptLoadingState,
                           builder: (context) => defaultButton(
                               height: screenHeight / 16,
                               onPress: () {

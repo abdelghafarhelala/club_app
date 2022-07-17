@@ -327,7 +327,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                             height: screenHeight / 68,
                           ),
                           ConditionalBuilder(
-                            condition: true,
+                            condition: state is! AppUpdateUserDataLoadingState,
                             builder: (context) => defaultButton(
                                 height: screenHeight / 16,
                                 onPress: () {
