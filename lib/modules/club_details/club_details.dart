@@ -5,6 +5,7 @@ import 'package:club_app/modules/remarker/remarker.dart';
 import 'package:club_app/shared/appCubit/app_cubit.dart';
 import 'package:club_app/shared/appCubit/app_states.dart';
 import 'package:club_app/shared/components/components.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,7 +19,11 @@ class ClubDetails extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocConsumer<AppCubit, AppStates>(
-      listener: (context, state) {},
+      listener: (context, state) {
+        if (state is AppGetRemarkerSuccessState) {
+          navigateTo(context, Remarker());
+        }
+      },
       builder: (context, state) {
         return Scaffold(
           appBar: AppBar(
@@ -965,60 +970,65 @@ class ClubDetails extends StatelessWidget {
                       ),
                     ),
                   ),
-                  Container(
-                    padding: EdgeInsets.symmetric(horizontal: 8),
-                    child: InkWell(
-                      onTap: () {},
-                      child: Card(
-                        child: Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: InkWell(
-                            onTap: () {
-                              navigateTo(context, Remarker());
-                            },
-                            child: Row(
-                              children: [
-                                Container(
-                                  height: 60,
-                                  width: 50,
-                                  decoration: const BoxDecoration(
-                                      image: DecorationImage(
-                                    image: AssetImage(
-                                      'assets/images/comment.png',
-                                    ),
-                                  )),
-                                ),
-                                const SizedBox(
-                                  width: 20,
-                                ),
-                                Expanded(
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    children: [
-                                      Text(
-                                        'Remarks and follow-up ',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w300),
+                  ConditionalBuilder(
+                    condition: state is! AppGetRemarkerLoadingState,
+                    fallback: (context) =>
+                        Center(child: CircularProgressIndicator()),
+                    builder: (context) => Container(
+                      padding: EdgeInsets.symmetric(horizontal: 8),
+                      child: InkWell(
+                        onTap: () {},
+                        child: Card(
+                          child: Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: InkWell(
+                              onTap: () {
+                                AppCubit.get(context).getReMarkerData();
+                              },
+                              child: Row(
+                                children: [
+                                  Container(
+                                    height: 60,
+                                    width: 50,
+                                    decoration: const BoxDecoration(
+                                        image: DecorationImage(
+                                      image: AssetImage(
+                                        'assets/images/comment.png',
                                       ),
-                                      SizedBox(
-                                        height: 5,
-                                      ),
-                                      Text(
-                                        '${Model!.managerName}',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w200),
-                                      ),
-                                    ],
+                                    )),
                                   ),
-                                )
-                              ],
+                                  const SizedBox(
+                                    width: 20,
+                                  ),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      children: [
+                                        Text(
+                                          'Remarks and follow-up ',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.w300),
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Text(
+                                          '${Model!.managerName}',
+                                          maxLines: 1,
+                                          overflow: TextOverflow.ellipsis,
+                                          style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w200),
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                                ],
+                              ),
                             ),
                           ),
                         ),

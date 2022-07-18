@@ -1,10 +1,14 @@
 // ignore_for_file: avoid_print
 
+import 'dart:io';
+
 import 'package:club_app/models/Department/department.dart';
 import 'package:club_app/models/clubModel/clubs.dart';
 import 'package:club_app/models/countModel/count.dart';
 import 'package:club_app/models/governoratesModel/governorates.dart';
+import 'package:club_app/models/notes/notes_model.dart';
 import 'package:club_app/models/projectModel/project.dart';
+import 'package:club_app/models/remarker/remarker_model.dart';
 import 'package:club_app/models/reset_password/reset_password.dart';
 import 'package:club_app/models/send_email/send_email.dart';
 import 'package:club_app/models/send_opt/send_opt.dart';
@@ -15,31 +19,13 @@ import 'package:club_app/network/remote/dio_helper.dart';
 import 'package:club_app/shared/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:image_picker/image_picker.dart';
 import 'app_states.dart';
 
 class AppCubit extends Cubit<AppStates> {
   AppCubit() : super(AppInitialState());
   static AppCubit get(context) => BlocProvider.of(context);
   bool isFirst = true;
-  List<BottomNavigationBarItem> buttomItems = [
-    const BottomNavigationBarItem(icon: Icon(Icons.home), label: 'الرئيسيه'),
-    const BottomNavigationBarItem(icon: Icon(Icons.apps), label: 'الخدمات'),
-    const BottomNavigationBarItem(icon: Icon(Icons.phone), label: 'اتصل بنا'),
-    const BottomNavigationBarItem(
-        icon: Icon(Icons.post_add_outlined), label: 'الحجز'),
-  ];
-  List<String> titles = [
-    'الرئيسيه',
-    'الخدمات',
-    'اتصل بنا',
-    'الحجز',
-  ];
-  List<Widget> appScreens = [
-    // const HomeScreen(),
-    // const MainServicesScreen(),
-    // const ContactUsScreen(),
-    // BookingScreen(),
-  ];
 
   int currentIndex = 0;
 
@@ -126,6 +112,7 @@ class AppCubit extends Cubit<AppStates> {
       project = projects.fromJson(value.data);
       emit(AppGetProjectSuccessState());
     }).catchError((onError) {
+      print(onError.toString());
       emit(AppGetProjectErrorState());
     });
   }
@@ -288,5 +275,89 @@ class AppCubit extends Cubit<AppStates> {
   void changeListVal2(val) {
     selectedItem2 = val;
     emit(AppchangeListValState());
+  }
+
+  //get remarkers
+  RemarkerModel? remarkerModel;
+  void getReMarkerData() {
+    emit(AppGetRemarkerLoadingState());
+    DioHelper.getData(url: reMarkerUrl, token: token).then((value) {
+      remarkerModel = RemarkerModel.fromJson(value.data);
+      emit(AppGetRemarkerSuccessState(remarkerModel));
+    }).catchError((onError) {
+      print(onError.toString());
+      emit(AppGetRemarkerErrorState());
+    });
+  }
+
+  void clickPriority({required int click, required int num}) {
+    click = num;
+    emit(AppClickPriorityState());
+  }
+
+//pic image
+  File? postImage;
+  var picker = ImagePicker();
+  Future<void> getImageFromGalley() async {
+    final pickerFile = await picker.pickImage(source: ImageSource.gallery);
+
+    if (pickerFile != null) {
+      postImage = File(pickerFile.path);
+      emit(AppPickImageSuccessState());
+    } else {
+      print('No Image Selected');
+      emit(AppPickImageErrorState());
+    }
+  }
+
+  Future<void> getImageFromCamera() async {
+    final pickerFile = await picker.pickImage(source: ImageSource.camera);
+
+    if (pickerFile != null) {
+      postImage = File(pickerFile.path);
+      emit(AppPickImageSuccessState());
+    } else {
+      print('No Image Selected');
+      emit(AppPickImageErrorState());
+    }
+  }
+
+  void removeImage() {
+    postImage = null;
+    emit(AppRemovePickImageState());
+  }
+
+  //post note
+  NotesModel? notesModel;
+  void postNoteData({
+    int catId = 1,
+    required int priorityId,
+    required int ClubId,
+    required int EmployeeId,
+    required String description,
+  }) {
+    emit(AppPostNoteLoadingState());
+    DioHelper.postData(
+            url: newNoteUrl,
+            data: {
+              'note_category_id': catId,
+              'priority_id': priorityId,
+              'club_id': ClubId,
+              'employee_id': EmployeeId,
+              'desc': description,
+              // 'file_path': Uri.file(postImage!.path).pathSegments.last,
+              'file_path': postImage,
+            },
+            token: token)
+        .then((value) {
+      notesModel = NotesModel.fromJson(value.data);
+      print(notesModel?.message);
+      print(Uri.file(postImage!.path).pathSegments.last);
+
+      emit(AppPostNoteSuccessState(notesModel));
+    }).catchError((error) {
+      print(error.toString());
+      emit(AppPostNoteErrorState());
+    });
   }
 }

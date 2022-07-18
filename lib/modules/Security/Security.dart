@@ -63,7 +63,7 @@ class Security extends StatelessWidget {
                           const SizedBox(
                             width: 35,
                           ),
-                          Expanded(
+                          const Expanded(
                             child: Center(
                               child: Text(
                                 'City club - Madinaty Cairo  ',
@@ -84,28 +84,32 @@ class Security extends StatelessWidget {
                 Row(
                   children: [
                     Expanded(
-                      child: DropdownButton<String>(
-                        // alignment:Alignment.bottomRight ,
-                        autofocus: false, iconSize: 30,
-                        isExpanded: true,
+                      child: Card(
+                        elevation: 2,
+                        child: DropdownButton<String>(
+                          // alignment:Alignment.bottomRight ,
+                          autofocus: false, iconSize: 30,
 
-                        value: AppCubit.get(context).Dep_Value,
-                        // icon: const Icon(Icons.arrow_downward),
-                        // elevation: 16,
-                        hint: Center(child: Text("Select Dept")),
+                          isExpanded: true,
+                          underline: Container(height: 0),
+                          value: AppCubit.get(context).Dep_Value,
+                          // icon: const Icon(Icons.arrow_downward),
+                          // elevation: 16,
+                          hint: Center(child: Text("Select Dept")),
 
-                        onChanged: (newValue) {
-                          AppCubit.get(context).set_Dep(x: newValue);
-                        },
-                        items: AppCubit.get(context)
-                            .department!
-                            .data!
-                            .map<DropdownMenuItem<String>>((e) {
-                          return DropdownMenuItem<String>(
-                            value: e.name,
-                            child: Text("${e.name}"),
-                          );
-                        }).toList(),
+                          onChanged: (newValue) {
+                            AppCubit.get(context).set_Dep(x: newValue);
+                          },
+                          items: AppCubit.get(context)
+                              .department!
+                              .data!
+                              .map<DropdownMenuItem<String>>((e) {
+                            return DropdownMenuItem<String>(
+                              value: e.name,
+                              child: Text("${e.name}"),
+                            );
+                          }).toList(),
+                        ),
                       ),
                     ),
                     SizedBox(

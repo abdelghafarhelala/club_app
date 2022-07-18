@@ -8,6 +8,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 var emailVerificationController = TextEditingController();
 var formKey = GlobalKey<FormState>();
@@ -68,13 +69,9 @@ class ForgetPasswordScreen extends StatelessWidget {
                           SizedBox(
                             height: screenHeight / 20,
                           ),
-                          const Text(
-                            '''Forget Password !
-        Don\'t Worry ''',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w300,
-                            ),
+                          Text(
+                            '''Forget Password !\nDon\'t Worry ''',
+                            style: GoogleFonts.glory(),
                             textAlign: TextAlign.center,
                           ),
 

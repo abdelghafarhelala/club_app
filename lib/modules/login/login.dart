@@ -36,6 +36,8 @@ class LoginScreen extends StatelessWidget {
                 navigateAndFinish(context, HomeScreen());
                 AppCubit.get(context).getUserData();
                 AppCubit.get(context).getCount();
+                AppCubit.get(context).getproject();
+                AppCubit.get(context).getDepartment();
                 showToast(
                     text: 'Login successfully', state: ToastStates.success);
                 // print(state.model?.data!.name);
@@ -78,7 +80,7 @@ class LoginScreen extends StatelessWidget {
                               height: screenHeight / 11,
                             ),
                             SizedBox(
-                              height: screenHeight / 20,
+                              height: screenHeight / 25,
                             ),
                             const Text(
                               'Login in your account',
@@ -89,7 +91,7 @@ class LoginScreen extends StatelessWidget {
                             // Text('تسجيل الدخول ',
                             //     style: Theme.of(context).textTheme.bodyText1),
                             SizedBox(
-                              height: screenHeight / 35,
+                              height: screenHeight / 37,
                             ),
                             Card(
                               shape: BeveledRectangleBorder(
@@ -109,7 +111,7 @@ class LoginScreen extends StatelessWidget {
                                   type: TextInputType.emailAddress),
                             ),
                             SizedBox(
-                              height: screenHeight / 35,
+                              height: screenHeight / 68,
                             ),
                             Card(
                               shape: BeveledRectangleBorder(
@@ -155,7 +157,7 @@ class LoginScreen extends StatelessWidget {
                               ],
                             ),
                             SizedBox(
-                              height: screenHeight / 35,
+                              height: screenHeight / 70,
                             ),
                             ConditionalBuilder(
                               condition: state is! LoginLoadingState,
@@ -180,7 +182,7 @@ class LoginScreen extends StatelessWidget {
                             //       onPressed: () {}, child: const Text('data')),
                             // ),
                             SizedBox(
-                              height: screenHeight / 20,
+                              height: screenHeight / 28,
                             ),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.start,
@@ -210,7 +212,7 @@ class LoginScreen extends StatelessWidget {
                                 ),
                               ],
                             ),
-                            SizedBox(height: screenHeight / 20),
+                            SizedBox(height: screenHeight / 30),
                             MaterialButton(
                               onPressed: () {
                                 navigateAndFinish(context, RegisterScreen());

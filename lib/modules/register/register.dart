@@ -49,7 +49,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 AppCubit.get(context).getUserData();
                 showToast(
                     text: 'Register successfully', state: ToastStates.success);
-                navigateAndFinish(context, HomeScreen());
+                navigateAndFinish(context, LoginScreen());
                 print(state.model?.user!.name);
               });
             } else {
@@ -127,6 +127,9 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               elevation: 1.5,
                               child: defaultTextField(
+                                  formats: [
+                                    LengthLimitingTextInputFormatter(11),
+                                  ],
                                   lable: 'Mobile Number',
                                   controller: phoneController,
                                   prefix: Icons.phone_iphone,

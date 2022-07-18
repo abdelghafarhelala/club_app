@@ -64,9 +64,7 @@ class MyApp extends StatelessWidget {
         ..changeAppTheme(fromCache: isDark)
         ..getUserData()
         ..getClubs()
-        ..getproject()
-        ..getgovernorates()
-        ..getDepartment(),
+        ..getgovernorates(),
       child: BlocConsumer<AppCubit, AppStates>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -88,6 +86,12 @@ class MyApp extends StatelessWidget {
                 AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             // home: startWidget,
             home: LoginScreen(),
+            builder: (context, child) {
+              return MediaQuery(
+                child: child!,
+                data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),
+              );
+            },
           );
         },
       ),

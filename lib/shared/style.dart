@@ -1,8 +1,10 @@
 import 'package:club_app/shared/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 ThemeData lightTheme = ThemeData(
+  fontFamily: 'Glory',
   appBarTheme: AppBarTheme(
     systemOverlayStyle: SystemUiOverlayStyle(
         statusBarColor: Colors.white, statusBarIconBrightness: Brightness.dark),
@@ -36,7 +38,7 @@ ThemeData lightTheme = ThemeData(
           color: Colors.white,
         ),
       ),
-      labelStyle: TextStyle(color: Colors.grey),
+      labelStyle: TextStyle(color: Colors.grey, fontSize: 20),
       iconColor: Colors.grey,
       prefixIconColor: Colors.grey,
       hintStyle: TextStyle(color: Colors.grey)),
@@ -50,7 +52,7 @@ ThemeData lightTheme = ThemeData(
       style: ButtonStyle(
     foregroundColor: MaterialStateProperty.all<Color>(primaryColor),
   )),
-  textTheme: const TextTheme(
+  textTheme: TextTheme(
       button: TextStyle(
         fontSize: 15,
         fontWeight: FontWeight.w400,
@@ -60,19 +62,24 @@ ThemeData lightTheme = ThemeData(
       //   fontSize: 17,
       //   color: Colors.red,
       // ),
+
       subtitle2: TextStyle(
         fontSize: 17,
         color: Colors.white,
       ),
-      bodyText1: TextStyle(
-        fontSize: 25,
-        fontWeight: FontWeight.w600,
+      subtitle1: TextStyle(
+        fontSize: 20,
         color: Colors.black,
+      ),
+      bodyText1: TextStyle(
+        fontSize: 20,
+        fontWeight: FontWeight.w500,
+        color: HexColor('#121721'),
       ),
       bodyText2: TextStyle(
         fontSize: 16,
-        fontWeight: FontWeight.w300,
-        color: Colors.black,
+        fontWeight: FontWeight.w400,
+        color: HexColor('#121721'),
       ),
       headline1: TextStyle(
         fontSize: 20,

@@ -158,7 +158,7 @@ class MyDrawer extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: const TextStyle(
                           color: Colors.black,
-                          fontSize: 19,
+                          fontSize: 20,
                           fontWeight: FontWeight.bold),
                     )),
               ],
@@ -201,7 +201,7 @@ class MyDrawer extends StatelessWidget {
                       style: TextStyle(
                           color: HexColor('#AF4040'),
                           fontSize: 18,
-                          fontWeight: FontWeight.w500),
+                          fontWeight: FontWeight.w700),
                     )),
               ],
             ),

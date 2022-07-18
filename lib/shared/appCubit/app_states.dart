@@ -1,3 +1,5 @@
+import 'package:club_app/models/notes/notes_model.dart';
+import 'package:club_app/models/remarker/remarker_model.dart';
 import 'package:club_app/models/reset_password/reset_password.dart';
 import 'package:club_app/models/send_email/send_email.dart';
 import 'package:club_app/models/send_opt/send_opt.dart';
@@ -101,6 +103,7 @@ class AppRestPasswordErrorState extends AppStates {}
 
 class AppRestPasswordLoadingState extends AppStates {}
 
+//change password states
 class AppChangePasswordSuccessState extends AppStates {
   final UserModel? model;
 
@@ -110,6 +113,39 @@ class AppChangePasswordSuccessState extends AppStates {
 class AppChangePasswordErrorState extends AppStates {}
 
 class AppChangePasswordLoadingState extends AppStates {}
+
+//get remarker states
+class AppGetRemarkerSuccessState extends AppStates {
+  final RemarkerModel? model;
+
+  AppGetRemarkerSuccessState(this.model);
+}
+
+class AppGetRemarkerErrorState extends AppStates {}
+
+class AppGetRemarkerLoadingState extends AppStates {}
+
+//get remarker states
+class AppPostNoteSuccessState extends AppStates {
+  final NotesModel? model;
+
+  AppPostNoteSuccessState(this.model);
+}
+
+class AppPostNoteErrorState extends AppStates {}
+
+class AppPostNoteLoadingState extends AppStates {}
+
+//click priority state
+class AppClickPriorityState extends AppStates {}
+
+//pic image states
+class AppPickImageSuccessState extends AppStates {}
+
+class AppPickImageErrorState extends AppStates {}
+
+//pic image states
+class AppRemovePickImageState extends AppStates {}
 
 class AppGetdepartmentsLoadingState extends AppStates {}
 

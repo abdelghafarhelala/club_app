@@ -6,6 +6,7 @@ import 'package:conditional_builder_null_safety/conditional_builder_null_safety.
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_fonts/google_fonts.dart';
 
 var oldPasswordController = TextEditingController();
 var newPasswordController = TextEditingController();
@@ -86,13 +87,9 @@ class ChangePasswordScreen extends StatelessWidget {
                           SizedBox(
                             height: screenHeight / 14,
                           ),
-                          const Text(
+                          Text(
                             '''Change Password ''',
-                            style: TextStyle(
-                              fontSize: 24,
-                              fontWeight: FontWeight.w300,
-                            ),
-                            textAlign: TextAlign.center,
+                            style: GoogleFonts.glory(),
                           ),
                           SizedBox(
                             height: screenHeight / 30,
@@ -160,7 +157,7 @@ class ChangePasswordScreen extends StatelessWidget {
                                   AppCubit.get(context)
                                       .changePasswordVisibilityy();
                                 },
-                                isSecure: AppCubit.get(context).isPass,
+                                isSecure: AppCubit.get(context).isPasss,
                                 validate: (String value) {
                                   if (value.isEmpty) {
                                     return 'Confirm New Password can\'t be empty ';

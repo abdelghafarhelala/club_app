@@ -124,7 +124,7 @@ class ResetPassword extends StatelessWidget {
                                   AppCubit.get(context)
                                       .changePasswordVisibilityy();
                                 },
-                                isSecure: AppCubit.get(context).isPass,
+                                isSecure: AppCubit.get(context).isPasss,
                                 validate: (String value) {
                                   if (value.isEmpty) {
                                     return 'Confirm password can\'t be empty ';

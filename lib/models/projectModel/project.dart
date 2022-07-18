@@ -1,35 +1,35 @@
 class projects {
-  List<Data>? data;
+  List<ProjectData>? projectData;
 
-  projects({this.data});
+  projects({this.projectData});
 
   projects.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = <Data>[];
+      projectData = <ProjectData>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        projectData!.add(new ProjectData.fromJson(v));
       });
     }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    if (this.data != null) {
-      data['data'] = this.data!.map((v) => v.toJson()).toList();
+    if (this.projectData != null) {
+      data['data'] = this.projectData!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Data {
+class ProjectData {
   int? id;
   String? name;
-  Null? logo;
-  Null? priority;
+  String? logo;
+  String? priority;
 
-  Data({this.id, this.name, this.logo, this.priority});
+  ProjectData({this.id, this.name, this.logo, this.priority});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  ProjectData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
     logo = json['logo'];

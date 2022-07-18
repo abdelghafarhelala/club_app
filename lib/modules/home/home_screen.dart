@@ -1,4 +1,5 @@
 import 'package:club_app/models/clubModel/clubs.dart';
+import 'package:club_app/models/projectModel/project.dart';
 import 'package:club_app/modules/club_details/club_details.dart';
 import 'package:club_app/network/remote/dio_helper.dart';
 import 'package:club_app/shared/appCubit/app_cubit.dart';
@@ -32,8 +33,6 @@ class HomeScreen extends StatelessWidget {
             key: scaffoldKey,
             drawer: defaultDrawer(context),
             appBar: AppBar(
-              elevation: 0,
-              backgroundColor: Colors.white,
               leading: IconButton(
                   onPressed: () => scaffoldKey.currentState!.openDrawer(),
                   icon: const ImageIcon(
@@ -41,19 +40,22 @@ class HomeScreen extends StatelessWidget {
                     size: 30,
                     color: Colors.black,
                   )),
-              actions: const [
-                Spacer(),
-                Image(
-                  image: AssetImage('assets/images/name.png'),
-                  width: 150,
+              elevation: 0,
+              title: const Image(
+                image: AssetImage(
+                  'assets/images/name.png',
                 ),
-                Spacer(),
-                Image(
-                  height: 30,
-                  image: AssetImage(
-                    'assets/images/Icon ionic-md-notifications-outline.png',
-                  ),
-                ),
+                width: 200,
+              ),
+              centerTitle: true,
+              actions: [
+                IconButton(
+                    onPressed: () {},
+                    icon: const Icon(
+                      Icons.notifications_none_rounded,
+                      size: 34,
+                      color: Colors.black,
+                    ))
               ],
             ),
             body: AnnotatedRegion<SystemUiOverlayStyle>(
@@ -69,7 +71,7 @@ class HomeScreen extends StatelessWidget {
               child: ConditionalBuilder(
                 builder: (BuildContext context) {
                   return Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: EdgeInsets.symmetric(vertical: 15),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -83,15 +85,21 @@ class HomeScreen extends StatelessWidget {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
                                     children: [
-                                      Icon(Icons.polyline_rounded,
-                                          color: Colors.white),
+                                      Icon(
+                                        Icons.polyline_rounded,
+                                        color: Colors.white,
+                                        size: 30,
+                                      ),
                                       SizedBox(
                                         width: 15,
                                       ),
                                       Expanded(
                                         child: Text(
                                           "${AppCubit.get(context).Count?.projects ?? ''} Project ",
-                                          style: TextStyle(color: Colors.white),
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.w600),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                         ),
@@ -102,7 +110,7 @@ class HomeScreen extends StatelessWidget {
                               ),
                             ),
                             const SizedBox(
-                              width: 5,
+                              width: 1,
                             ),
                             Expanded(
                               child: Container(
@@ -112,16 +120,22 @@ class HomeScreen extends StatelessWidget {
                                   padding: const EdgeInsets.all(8.0),
                                   child: Row(
                                     children: [
-                                      Image(
-                                          image: AssetImage(
-                                              "assets/images/Path 10225.png")),
+                                      ImageIcon(
+                                        AssetImage(
+                                            "assets/images/Path 10225.png"),
+                                        size: 30,
+                                        color: Colors.white,
+                                      ),
                                       SizedBox(
                                         width: 15,
                                       ),
                                       Expanded(
                                         child: Text(
                                           "${AppCubit.get(context).Count?.members ?? ''} Member",
-                                          style: TextStyle(color: Colors.white),
+                                          style: TextStyle(
+                                              color: Colors.white,
+                                              fontSize: 24,
+                                              fontWeight: FontWeight.w600),
                                           maxLines: 1,
                                           overflow: TextOverflow.ellipsis,
                                         ),
@@ -136,150 +150,185 @@ class HomeScreen extends StatelessWidget {
                         const SizedBox(
                           height: 10,
                         ),
-                        Row(
-                          children: [
-                            Expanded(
-                              child: Card(
-                                elevation: 2,
-                                child: DropdownButton<String>(
-                                  // alignment:Alignment.bottomRight ,
-                                  autofocus: false, iconSize: 30,
-                                  isExpanded: true,
-                                  // menuMaxHeight: 100,
-                                  itemHeight: 50,
-                                  underline: Container(
-                                    height: 0,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Card(
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(6)),
+                                  elevation: 2,
+                                  child: Padding(
+                                    padding: const EdgeInsets.symmetric(
+                                        horizontal: 10),
+                                    child: DropdownButton<String>(
+                                      alignment: Alignment.center,
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: HexColor('#101620'),
+                                      ),
+                                      autofocus: false, iconSize: 30,
+                                      isExpanded: true,
+                                      // menuMaxHeight: 100,
+                                      itemHeight: 50,
+                                      underline: Container(
+                                        height: 0,
+                                      ),
+
+                                      value:
+                                          AppCubit.get(context).Drop_Down_Value,
+                                      // icon: const Icon(Icons.arrow_downward),
+                                      // elevation: 16,
+                                      hint: const Center(
+                                          child: Text("Select Project")),
+
+                                      onChanged: (newValue) {
+                                        AppCubit.get(context)
+                                            .set_drop(x: newValue);
+                                      },
+                                      items: AppCubit.get(context)
+                                          .project!
+                                          .projectData!
+                                          .map<DropdownMenuItem<String>>((e) {
+                                        return DropdownMenuItem<String>(
+                                          value: e.name,
+                                          child: Text("${e.name}"),
+                                        );
+                                      }).toList(),
+                                    ),
                                   ),
-
-                                  value: AppCubit.get(context).Drop_Down_Value,
-                                  // icon: const Icon(Icons.arrow_downward),
-                                  // elevation: 16,
-                                  hint: const Center(
-                                      child: Text("Select Project")),
-
-                                  onChanged: (newValue) {
-                                    AppCubit.get(context).set_drop(x: newValue);
-                                  },
-                                  items: AppCubit.get(context)
-                                      .project!
-                                      .data!
-                                      .map<DropdownMenuItem<String>>((e) {
-                                    return DropdownMenuItem<String>(
-                                      value: e.name,
-                                      child: Text("${e.name}"),
-                                    );
-                                  }).toList(),
                                 ),
                               ),
-                            ),
-                            const SizedBox(
-                              width: 10,
-                            ),
-                            const Image(
-                              width: 30,
-                              image: AssetImage(
-                                  'assets/images/Icon feather-filter.png'),
-                            )
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Container(
-                          height: 25,
-                          child: Row(
-                            children: const [
-                              Image(
-                                  image: AssetImage(
-                                      'assets/images/Path 10227.png')),
-                              SizedBox(
-                                width: 15,
+                              const SizedBox(
+                                width: 10,
                               ),
-                              Text(
-                                "Select targeted area",
-                                style: TextStyle(
-                                    fontSize: 20, fontWeight: FontWeight.bold),
-                              ),
+                              const Image(
+                                width: 30,
+                                image: AssetImage(
+                                    'assets/images/Icon feather-filter.png'),
+                              )
                             ],
                           ),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        Container(
-                          // color: Colors.amber,
-                          height: 40,
-                          child: ListView.separated(
-                            shrinkWrap: true,
-                            physics: BouncingScrollPhysics(),
-                            scrollDirection: Axis.horizontal,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Gov(AppCubit.get(context)
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 10),
+                          child: Container(
+                            height: 25,
+                            child: Row(
+                              children: const [
+                                ImageIcon(
+                                    AssetImage('assets/images/Path 10227.png')),
+                                SizedBox(
+                                  width: 15,
+                                ),
+                                Text(
+                                  "Select targeted area",
+                                  style: TextStyle(
+                                      fontSize: 20,
+                                      fontWeight: FontWeight.bold),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        const SizedBox(
+                          height: 10,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Container(
+                            // color: Colors.amber,
+                            height: 40,
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              physics: BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              itemBuilder: (BuildContext context, int index) {
+                                return Gov(AppCubit.get(context)
+                                    .governorate!
+                                    .data![index]);
+                              },
+                              itemCount: AppCubit.get(context)
                                   .governorate!
-                                  .data![index]);
-                            },
-                            itemCount:
-                                AppCubit.get(context).governorate!.data!.length,
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return const SizedBox(
-                                width: 5,
-                              );
-                            },
+                                  .data!
+                                  .length,
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return const SizedBox(
+                                  width: 5,
+                                );
+                              },
+                            ),
                           ),
                         ),
                         const SizedBox(
                           height: 10,
                         ),
-                        Container(
-                          height: 20,
-                          child: Row(
-                            children: const [
-                              Image(
-                                  image: AssetImage(
-                                      'assets/images/Path 10228.png')),
-                              SizedBox(
-                                width: 4,
-                              ),
-                              Text(
-                                "Projects",
-                                style: TextStyle(fontSize: 20),
-                              ),
-                              Spacer(),
-                              Text(
-                                "ViewAll",
-                                style: TextStyle(fontSize: 20),
-                              ),
-                            ],
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Container(
+                            height: 20,
+                            child: Row(
+                              children: const [
+                                Image(
+                                    image: AssetImage(
+                                        'assets/images/Path 10228.png')),
+                                SizedBox(
+                                  width: 4,
+                                ),
+                                Text(
+                                  "Projects",
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                                Spacer(),
+                                Text(
+                                  "ViewAll",
+                                  style: TextStyle(fontSize: 20),
+                                ),
+                              ],
+                            ),
                           ),
                         ),
                         const SizedBox(
                           height: 5,
                         ),
-                        Container(
-                          height: screenHeight - (height + 370),
-                          width: double.infinity,
-                          child: ListView.separated(
-                            shrinkWrap: true,
-                            physics: BouncingScrollPhysics(),
-                            itemBuilder: (BuildContext context, int index) {
-                              return carrd(
-                                  AppCubit.get(context).club!.data![index],
-                                  context);
-                            },
-                            itemCount:
-                                AppCubit.get(context).club?.data?.length == null
-                                    ? 2
-                                    : AppCubit.get(context).club!.data!.length,
-                            separatorBuilder:
-                                (BuildContext context, int index) {
-                              return Container();
-                            },
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 8),
+                          child: Container(
+                            height: screenHeight - (height + 370),
+                            width: double.infinity,
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              physics: BouncingScrollPhysics(),
+                              itemBuilder: (BuildContext context, int index) {
+                                return carrd(
+                                    AppCubit.get(context).club!.data![index],
+                                    AppCubit.get(context)
+                                        .project!
+                                        .projectData![index],
+                                    context);
+                              },
+                              itemCount: AppCubit.get(context)
+                                          .club
+                                          ?.data
+                                          ?.length ==
+                                      null
+                                  ? 2
+                                  : AppCubit.get(context).club!.data!.length,
+                              separatorBuilder:
+                                  (BuildContext context, int index) {
+                                return Container();
+                              },
+                            ),
                           ),
                         ),
                         Spacer(),
                         Container(
-                          height: 70,
+                          height: 45,
                           color: Colors.white,
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.start,
@@ -292,7 +341,11 @@ class HomeScreen extends StatelessWidget {
                                 width: 10,
                               ),
                               Container(
-                                child: Center(child: Text("  H S ")),
+                                child: Center(
+                                    child: Text(
+                                  "  H S ",
+                                  style: TextStyle(fontSize: 20),
+                                )),
                                 height: 120,
                                 decoration: BoxDecoration(
                                     shape: BoxShape.circle,
@@ -306,15 +359,21 @@ class HomeScreen extends StatelessWidget {
                               Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  Text("City Club - Nasr City (Security)"),
+                                  Text(
+                                    "City Club - Nasr City (Security)",
+                                    style: TextStyle(fontSize: 20),
+                                  ),
                                   Row(
                                     children: const [
-                                      Text("Mohammed El-Misiny"),
+                                      Text(
+                                        "Mohammed El-Misiny",
+                                        style: TextStyle(fontSize: 16),
+                                      ),
                                       SizedBox(
                                         width: 5,
                                       ),
                                       CircleAvatar(
-                                        radius: 10,
+                                        radius: 7,
                                         backgroundColor: Colors.red,
                                       ),
                                     ],
@@ -347,13 +406,13 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget carrd(Data Model, context) {
+  Widget carrd(Data Model, ProjectData project, context) {
     Color c;
     if (int.parse(Model.constructionRatio.toString().substring(0, 2)) <= 100 &&
-        int.parse(Model.constructionRatio.toString().substring(0, 2)) >= 85) {
+        int.parse(Model.constructionRatio.toString().substring(0, 2)) >= 75) {
       c = HexColor('#38C117');
     } else if (int.parse(Model.constructionRatio.toString().substring(0, 2)) <=
-            85 &&
+            75 &&
         int.parse(Model.constructionRatio.toString().substring(0, 2)) >= 50) {
       c = HexColor('#F09A25');
     } else {
@@ -380,24 +439,20 @@ class HomeScreen extends StatelessWidget {
                 child: Stack(
                   alignment: Alignment.bottomCenter,
                   children: [
-                    if (Model.image == '')
-                      const Image(
-                        image: NetworkImage(
-                          'https://estadat.ivas.com.eg/uploads/clubs/kq82Dp8fte2jssFYisqRUZAc7EpuRsScG2o0B8zb.png',
+                    Center(
+                      child: Container(
+                        // padding: EdgeInsets.only(bottom: 40),
+                        child: Image(
+                          image: NetworkImage(
+                            project.logo ??
+                                'https://estadat.ivas.com.eg/uploads/projects/l8QABPuCRmkeDEdAoZYHIk99lEgl0WjvmhtxRIK8.png',
+                          ),
+                          width: 93,
+                          height: 38,
+                          fit: BoxFit.fill,
                         ),
-                        width: 100,
-                        height: 130,
-                        fit: BoxFit.fill,
                       ),
-                    if (Model.image != '')
-                      Image(
-                        image: NetworkImage(
-                          Model.image ?? '',
-                        ),
-                        width: 100,
-                        height: 130,
-                        fit: BoxFit.fill,
-                      ),
+                    ),
                     Container(
                       color: HexColor('#6F6F6F'),
                       height: 28,
@@ -409,7 +464,7 @@ class HomeScreen extends StatelessWidget {
                         maxLines: 1,
                         style: const TextStyle(
                           color: Colors.white,
-                          fontSize: 18,
+                          fontSize: 20,
                         ),
                         textAlign: TextAlign.center,
                       )),
@@ -438,7 +493,7 @@ class HomeScreen extends StatelessWidget {
                                 // width: MediaQuery.of(context).size.width - 160,
                                 child: Expanded(
                                   child: Text(
-                                    " ${Model.city} ",
+                                    " ${Model.name} ",
                                     overflow: TextOverflow.ellipsis,
                                     maxLines: 1,
                                     style: TextStyle(fontSize: 25),
@@ -463,7 +518,7 @@ class HomeScreen extends StatelessWidget {
                               flex: 1,
                               child: Text(
                                 "Progress",
-                                style: TextStyle(fontSize: 18),
+                                style: TextStyle(fontSize: 20),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -486,7 +541,7 @@ class HomeScreen extends StatelessWidget {
                             const Expanded(
                               child: Text(
                                 "Subscribers",
-                                style: TextStyle(fontSize: 17),
+                                style: TextStyle(fontSize: 20),
                                 maxLines: 1,
                                 overflow: TextOverflow.ellipsis,
                               ),
@@ -525,13 +580,13 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget Gov(model) => Container(
-        height: 40,
-        width: 80,
+        height: 44,
+        width: 100,
 
         // color: Colors.black26,
         decoration: BoxDecoration(
           // color: Colors.grey,
-
+          borderRadius: BorderRadius.circular(5),
           border: Border.all(
             color: Colors.grey,
             width: 1,
@@ -540,7 +595,7 @@ class HomeScreen extends StatelessWidget {
         child: Center(
             child: Text(
           '${model.nameEn}',
-          style: TextStyle(color: Colors.black),
+          style: TextStyle(color: HexColor('#101620'), fontSize: 20),
         )),
       );
 }

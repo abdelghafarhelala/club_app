@@ -3,8 +3,10 @@ import 'package:club_app/shared/colors.dart';
 import 'package:club_app/shared/colors.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_switch/flutter_switch.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+import 'package:hexcolor/hexcolor.dart';
 
 void navigateTo(context, widget) => Navigator.push(
       context,
@@ -50,12 +52,14 @@ Widget defaultTextField({
   Function? suffixPressed,
   bool isSecure = false,
   required TextInputType type,
-  var controller,
+  List<TextInputFormatter> formats = const [],
+  required var controller,
   // Function? ontap,
   // Function? onChange,
 }) =>
     TextFormField(
-      style: Theme.of(context).textTheme.button,
+      inputFormatters: formats,
+      // style: Theme.of(context).textTheme.button,
       decoration: InputDecoration(
         labelText: lable,
         prefixIcon: Icon(prefix),
@@ -94,7 +98,7 @@ Widget defaultTextFieldWithCustomIconImage({
   // Function? onChange,
 }) =>
     TextFormField(
-      style: Theme.of(context).textTheme.button,
+      // style: Theme.of(context).textTheme.button,
       decoration: InputDecoration(
         labelText: lable,
         prefixIcon: prefix,
@@ -126,7 +130,7 @@ void showToast({@required String? text, @required ToastStates? state}) =>
         timeInSecForIosWeb: 7,
         backgroundColor: toastColor(state!),
         textColor: Colors.white,
-        fontSize: 17.0);
+        fontSize: 20.0);
 
 enum ToastStates { success, error, Warrnaing }
 
@@ -134,10 +138,11 @@ Color? color;
 Color? toastColor(ToastStates state) {
   switch (state) {
     case ToastStates.success:
-      color = Colors.green;
+      color = HexColor('#101620');
       break;
     case ToastStates.error:
-      color = Colors.red;
+      color = HexColor('#F02525');
+      ;
       break;
     case ToastStates.Warrnaing:
       color = Colors.amber;
@@ -148,7 +153,7 @@ Color? toastColor(ToastStates state) {
 
 Widget defaultDrawer(context) => Container(
       padding: EdgeInsets.all(0),
-      width: 243,
+      width: 250,
       child: Drawer(
         child: Column(
           children: [
