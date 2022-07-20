@@ -7,29 +7,34 @@ class FullScreenImageScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TransformationController controller = new TransformationController();
     return Scaffold(
-      appBar: AppBar(
-        leading: IconButton(
-          onPressed: () {
-            Navigator.pop(context);
-          },
-          icon: const Icon(
-            Icons.arrow_back_ios,
-            color: Colors.black,
-            size: 25,
+        appBar: AppBar(
+          leading: IconButton(
+            onPressed: () {
+              Navigator.pop(context);
+            },
+            icon: const Icon(
+              Icons.arrow_back_ios,
+              color: Colors.black,
+              size: 25,
+            ),
           ),
+          elevation: 0,
         ),
-        elevation: 0,
-      ),
-      body: Center(
-        child: Container(
-          width: double.infinity,
-          height: double.infinity,
-          decoration: BoxDecoration(
-              image: DecorationImage(
-                  image: NetworkImage(imagePath ?? ''), fit: BoxFit.fill)),
-        ),
-      ),
-    );
+        body: InteractiveViewer(
+          transformationController: controller,
+          clipBehavior: Clip.none,
+          child: AspectRatio(
+            aspectRatio: 1,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(20),
+              child: Image.network(
+                imagePath!,
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+        ));
   }
 }

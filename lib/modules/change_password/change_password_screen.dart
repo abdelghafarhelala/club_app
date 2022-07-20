@@ -89,7 +89,8 @@ class ChangePasswordScreen extends StatelessWidget {
                           ),
                           Text(
                             '''Change Password ''',
-                            style: GoogleFonts.glory(),
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.w700),
                           ),
                           SizedBox(
                             height: screenHeight / 30,

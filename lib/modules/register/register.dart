@@ -96,7 +96,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                             const Text(
                               'You are one of our team',
                               style: TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.w400),
+                                  fontSize: 24, fontWeight: FontWeight.w700),
                             ),
                             SizedBox(
                               height: screenHeight / 68,
@@ -335,8 +335,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                       Expanded(
                         child: Image.asset(
                           'assets/images/run.png',
-                          fit: BoxFit.cover,
-                          // fit: BoxFit.cover,
+                          fit: BoxFit.fill,
+                          // fit: BoxFit.fi,
                           width: double.infinity,
                         ),
                       ),

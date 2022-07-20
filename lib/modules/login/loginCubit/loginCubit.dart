@@ -30,7 +30,7 @@ class LoginCubit extends Cubit<LoginStates> {
       'password': password,
     }).then((value) {
       loginModel = UserModel.fromJson(value.data);
-      CacheHelper.saveData(key: 'token', value: loginModel?.token);
+      // CacheHelper.saveData(key: 'token', value: loginModel?.token);
       emit(LoginSuccessState(loginModel));
     }).catchError((error) {
       print(error.toString());

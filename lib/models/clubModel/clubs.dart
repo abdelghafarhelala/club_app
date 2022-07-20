@@ -43,12 +43,18 @@ class Data {
   int? employeesNumber;
   int? salesPointsNumber;
   int? shopsNumber;
+  int? facilities;
+  int? sports;
+  int? players;
   String? image;
+  int? gallery;
+  List<ListGallery>? listGallery;
   String? project;
   String? city;
   String? projectStatus;
   String? lat;
   String? lng;
+  String? updatedAt;
 
   Data(
       {this.id,
@@ -62,12 +68,18 @@ class Data {
       this.employeesNumber,
       this.salesPointsNumber,
       this.shopsNumber,
+      this.facilities,
+      this.sports,
+      this.players,
       this.image,
+      this.gallery,
+      this.listGallery,
       this.project,
       this.city,
       this.projectStatus,
       this.lat,
-      this.lng});
+      this.lng,
+      this.updatedAt});
 
   Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
@@ -81,12 +93,23 @@ class Data {
     employeesNumber = json['employees_number'];
     salesPointsNumber = json['sales_points_number'];
     shopsNumber = json['shops_number'];
+    facilities = json['facilities'];
+    sports = json['sports'];
+    players = json['players'];
     image = json['image'];
+    gallery = json['gallery'];
+    if (json['list_gallery'] != null) {
+      listGallery = <ListGallery>[];
+      json['list_gallery'].forEach((v) {
+        listGallery!.add(new ListGallery.fromJson(v));
+      });
+    }
     project = json['project'];
     city = json['city'];
     projectStatus = json['project_status'];
     lat = json['lat'];
     lng = json['lng'];
+    updatedAt = json['updated_at'];
   }
 
   Map<String, dynamic> toJson() {
@@ -102,12 +125,42 @@ class Data {
     data['employees_number'] = this.employeesNumber;
     data['sales_points_number'] = this.salesPointsNumber;
     data['shops_number'] = this.shopsNumber;
+    data['facilities'] = this.facilities;
+    data['sports'] = this.sports;
+    data['players'] = this.players;
     data['image'] = this.image;
+    data['gallery'] = this.gallery;
+    if (this.listGallery != null) {
+      data['list_gallery'] = this.listGallery!.map((v) => v.toJson()).toList();
+    }
     data['project'] = this.project;
     data['city'] = this.city;
     data['project_status'] = this.projectStatus;
     data['lat'] = this.lat;
     data['lng'] = this.lng;
+    data['updated_at'] = this.updatedAt;
+    return data;
+  }
+}
+
+class ListGallery {
+  int? id;
+  String? file;
+  String? fileType;
+
+  ListGallery({this.id, this.file, this.fileType});
+
+  ListGallery.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    file = json['file'];
+    fileType = json['file_type'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['file'] = this.file;
+    data['file_type'] = this.fileType;
     return data;
   }
 }
@@ -115,8 +168,8 @@ class Data {
 class Links {
   String? first;
   String? last;
-  Null? prev;
-  Null? next;
+  String? prev;
+  String? next;
 
   Links({this.first, this.last, this.prev, this.next});
 
@@ -141,7 +194,7 @@ class Meta {
   int? currentPage;
   int? from;
   int? lastPage;
-  List<Link>? link;
+  List<Links>? links;
   String? path;
   int? perPage;
   int? to;
@@ -151,7 +204,7 @@ class Meta {
       {this.currentPage,
       this.from,
       this.lastPage,
-      this.link,
+      this.links,
       this.path,
       this.perPage,
       this.to,
@@ -162,9 +215,9 @@ class Meta {
     from = json['from'];
     lastPage = json['last_page'];
     if (json['links'] != null) {
-      link = <Link>[];
+      links = <Links>[];
       json['links'].forEach((v) {
-        link!.add(new Link.fromJson(v));
+        links!.add(new Links.fromJson(v));
       });
     }
     path = json['path'];
@@ -178,35 +231,13 @@ class Meta {
     data['current_page'] = this.currentPage;
     data['from'] = this.from;
     data['last_page'] = this.lastPage;
-    if (this.link != null) {
-      data['links'] = this.link!.map((v) => v.toJson()).toList();
+    if (this.links != null) {
+      data['links'] = this.links!.map((v) => v.toJson()).toList();
     }
     data['path'] = this.path;
     data['per_page'] = this.perPage;
     data['to'] = this.to;
     data['total'] = this.total;
-    return data;
-  }
-}
-
-class Link {
-  String? url;
-  String? label;
-  bool? active;
-
-  Link({this.url, this.label, this.active});
-
-  Link.fromJson(Map<String, dynamic> json) {
-    url = json['url'];
-    label = json['label'];
-    active = json['active'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['url'] = this.url;
-    data['label'] = this.label;
-    data['active'] = this.active;
     return data;
   }
 }

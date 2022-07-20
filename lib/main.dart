@@ -13,6 +13,7 @@ import 'package:club_app/shared/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:splash_screen_view/SplashScreenView.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -27,24 +28,22 @@ void main() async {
   } else {
     isDark = isDark;
   }
-
-  Widget? widget;
-  if (onboarding != null) {
-    if (token != null) {
-      widget = HomeScreen();
-    } else {
-      widget = HomeScreen();
-    }
-  } else {
-    widget = HomeScreen();
-  }
+  Widget examp = SplashScreenView(
+    navigateRoute: token == null ? LoginScreen() : HomeScreen(),
+    duration: 3000,
+    imageSize: 200,
+    imageSrc: "assets/images/spl.png",
+    // text: "Heart Beats",
+    // textType: TextType.NormalText,
+    // textStyle: TextStyle(fontSize: 30.0, color: Colors.white),
+  );
 
   BlocOverrides.runZoned(
     () {
       // Use cubits...
       runApp(MyApp(
         isDark: isDark,
-        startWidget: widget!,
+        startWidget: examp,
       ));
     },
     blocObserver: MyBlocObserver(),
@@ -64,7 +63,12 @@ class MyApp extends StatelessWidget {
         ..changeAppTheme(fromCache: isDark)
         ..getUserData()
         ..getClubs()
-        ..getgovernorates(),
+        ..getgovernorates()
+        ..getCount()
+        ..getproject()
+        ..getReMarkerData()
+        ..getNoteCategoryData()
+        ..getDepartment(),
       child: BlocConsumer<AppCubit, AppStates>(
         listener: (context, state) {},
         builder: (context, state) {
@@ -85,7 +89,7 @@ class MyApp extends StatelessWidget {
             themeMode:
                 AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
             // home: startWidget,
-            home: LoginScreen(),
+            home: startWidget,
             builder: (context, child) {
               return MediaQuery(
                 child: child!,

@@ -32,12 +32,14 @@ class LoginScreen extends StatelessWidget {
               CacheHelper.saveData(key: "token", value: state.model?.token)
                   .then((value) {
                 token = state.model?.token;
-                AppCubit.get(context).getClubs();
+                // AppCubit.get(context).getClubs();
                 navigateAndFinish(context, HomeScreen());
-                AppCubit.get(context).getUserData();
-                AppCubit.get(context).getCount();
-                AppCubit.get(context).getproject();
-                AppCubit.get(context).getDepartment();
+                // AppCubit.get(context).getUserData();
+                // AppCubit.get(context).getCount();
+                // AppCubit.get(context).getproject();
+                // AppCubit.get(context).getReMarkerData();
+                // AppCubit.get(context).getNoteCategoryData();
+                // AppCubit.get(context).getDepartment();
                 showToast(
                     text: 'Login successfully', state: ToastStates.success);
                 // print(state.model?.data!.name);
@@ -85,7 +87,7 @@ class LoginScreen extends StatelessWidget {
                             const Text(
                               'Login in your account',
                               style: TextStyle(
-                                  fontSize: 24, fontWeight: FontWeight.w400),
+                                  fontSize: 24, fontWeight: FontWeight.w700),
                             ),
 
                             // Text('تسجيل الدخول ',

@@ -71,7 +71,8 @@ class ForgetPasswordScreen extends StatelessWidget {
                           ),
                           Text(
                             '''Forget Password !\nDon\'t Worry ''',
-                            style: GoogleFonts.glory(),
+                            style: TextStyle(
+                                fontSize: 24, fontWeight: FontWeight.w700),
                             textAlign: TextAlign.center,
                           ),
 

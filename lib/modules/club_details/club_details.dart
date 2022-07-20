@@ -21,7 +21,7 @@ class ClubDetails extends StatelessWidget {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state) {
         if (state is AppGetRemarkerSuccessState) {
-          navigateTo(context, Remarker());
+          navigateTo(context, Security());
         }
       },
       builder: (context, state) {
@@ -133,7 +133,8 @@ class ClubDetails extends StatelessWidget {
                               decoration: BoxDecoration(
                                   color: Colors.red,
                                   image: DecorationImage(
-                                      image: NetworkImage(Model?.image ?? ''),
+                                      image: NetworkImage(Model?.image ??
+                                          'https://t4.ftcdn.net/jpg/02/51/95/53/240_F_251955356_FAQH0U1y1TZw3ZcdPGybwUkH90a3VAhb.jpg'),
                                       fit: BoxFit.fill)),
                             ),
                           Container(
@@ -974,61 +975,58 @@ class ClubDetails extends StatelessWidget {
                     condition: state is! AppGetRemarkerLoadingState,
                     fallback: (context) =>
                         Center(child: CircularProgressIndicator()),
-                    builder: (context) => Container(
-                      padding: EdgeInsets.symmetric(horizontal: 8),
-                      child: InkWell(
-                        onTap: () {},
+                    builder: (context) => InkWell(
+                      onTap: () {
+                        AppCubit.get(context).getReMarkerData();
+                      },
+                      child: Container(
+                        padding: EdgeInsets.symmetric(horizontal: 8),
                         child: Card(
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
-                            child: InkWell(
-                              onTap: () {
-                                AppCubit.get(context).getReMarkerData();
-                              },
-                              child: Row(
-                                children: [
-                                  Container(
-                                    height: 60,
-                                    width: 50,
-                                    decoration: const BoxDecoration(
-                                        image: DecorationImage(
-                                      image: AssetImage(
-                                        'assets/images/comment.png',
-                                      ),
-                                    )),
-                                  ),
-                                  const SizedBox(
-                                    width: 20,
-                                  ),
-                                  Expanded(
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.center,
-                                      children: [
-                                        Text(
-                                          'Remarks and follow-up ',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.w300),
-                                        ),
-                                        SizedBox(
-                                          height: 5,
-                                        ),
-                                        Text(
-                                          '${Model!.managerName}',
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: TextStyle(
-                                              fontSize: 16,
-                                              fontWeight: FontWeight.w200),
-                                        ),
-                                      ],
+                            child: Row(
+                              children: [
+                                Container(
+                                  height: 60,
+                                  width: 50,
+                                  decoration: const BoxDecoration(
+                                      image: DecorationImage(
+                                    image: AssetImage(
+                                      'assets/images/comment.png',
                                     ),
-                                  )
-                                ],
-                              ),
+                                  )),
+                                ),
+                                const SizedBox(
+                                  width: 20,
+                                ),
+                                Expanded(
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Text(
+                                        'Remarks and follow-up ',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontSize: 20,
+                                            fontWeight: FontWeight.w300),
+                                      ),
+                                      SizedBox(
+                                        height: 5,
+                                      ),
+                                      Text(
+                                        '${Model!.managerName}',
+                                        maxLines: 1,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: TextStyle(
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w200),
+                                      ),
+                                    ],
+                                  ),
+                                )
+                              ],
                             ),
                           ),
                         ),

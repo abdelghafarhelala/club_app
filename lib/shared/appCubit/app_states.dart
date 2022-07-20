@@ -1,3 +1,4 @@
+import 'package:club_app/models/note_category/note_category_model.dart';
 import 'package:club_app/models/notes/notes_model.dart';
 import 'package:club_app/models/remarker/remarker_model.dart';
 import 'package:club_app/models/reset_password/reset_password.dart';
@@ -70,6 +71,9 @@ class AppLogOutSuccessState extends AppStates {}
 
 class AppLogOutErrorState extends AppStates {}
 
+//change city color state
+class AppChangeCityColorState extends AppStates {}
+
 //send Email states
 class AppSendEmailSuccessState extends AppStates {
   final SendEmailModel? model;
@@ -135,6 +139,17 @@ class AppPostNoteSuccessState extends AppStates {
 class AppPostNoteErrorState extends AppStates {}
 
 class AppPostNoteLoadingState extends AppStates {}
+
+//get note category states
+class AppGetNoteCategorySuccessState extends AppStates {
+  final NoteCategoryModel? model;
+
+  AppGetNoteCategorySuccessState(this.model);
+}
+
+class AppGetNoteCategoryErrorState extends AppStates {}
+
+class AppGetNoteCategoryLoadingState extends AppStates {}
 
 //click priority state
 class AppClickPriorityState extends AppStates {}

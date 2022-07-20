@@ -6,6 +6,7 @@ import 'package:club_app/models/Department/department.dart';
 import 'package:club_app/models/clubModel/clubs.dart';
 import 'package:club_app/models/countModel/count.dart';
 import 'package:club_app/models/governoratesModel/governorates.dart';
+import 'package:club_app/models/note_category/note_category_model.dart';
 import 'package:club_app/models/notes/notes_model.dart';
 import 'package:club_app/models/projectModel/project.dart';
 import 'package:club_app/models/remarker/remarker_model.dart';
@@ -13,12 +14,15 @@ import 'package:club_app/models/reset_password/reset_password.dart';
 import 'package:club_app/models/send_email/send_email.dart';
 import 'package:club_app/models/send_opt/send_opt.dart';
 import 'package:club_app/models/userModel/userModel.dart';
+import 'package:club_app/modules/home/home_screen.dart';
 import 'package:club_app/network/endpoints.dart';
 import 'package:club_app/network/local/cache_Helper.dart';
 import 'package:club_app/network/remote/dio_helper.dart';
 import 'package:club_app/shared/const.dart';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:http_parser/http_parser.dart';
 import 'package:image_picker/image_picker.dart';
 import 'app_states.dart';
 
@@ -84,7 +88,7 @@ class AppCubit extends Cubit<AppStates> {
     DioHelper.getData(url: CLUBS, token: token).then((value) {
       club = clubsModel.fromJson(value.data);
 
-// print(club!.data![0].city);
+      print(club!.data![4].city);
       emit(AppGetClubsSuccessState());
     }).catchError((onError) {
       emit(AppGetClubsErrorState());
@@ -233,6 +237,17 @@ class AppCubit extends Cubit<AppStates> {
     });
   }
 
+  NoteCategoryModel? noteCategoryModel;
+  void getNoteCategoryData() {
+    emit(AppGetNoteCategoryLoadingState());
+    DioHelper.getData(url: noteCategoryUrl, token: token).then((value) {
+      noteCategoryModel = NoteCategoryModel.fromJson(value.data);
+      emit(AppGetNoteCategorySuccessState(noteCategoryModel));
+    }).catchError((onError) {
+      emit(AppGetNoteCategoryErrorState());
+    });
+  }
+
   CountModel? Count;
   void getCount() {
     emit(AppGetcountLoadingState());
@@ -335,29 +350,99 @@ class AppCubit extends Cubit<AppStates> {
     required int ClubId,
     required int EmployeeId,
     required String description,
-  }) {
+  }) async {
+    String? fileName = postImage?.path.split('/').last;
+    FormData formData = FormData.fromMap({
+      "file_path": await MultipartFile.fromFile(
+        postImage?.path ?? '',
+        filename: fileName,
+        contentType: new MediaType("image", "jpeg"), //important
+      ),
+      'note_category_id': catId,
+      'priority_id': priorityId,
+      'club_id': ClubId,
+      'employee_id': EmployeeId,
+      'desc': description,
+    });
     emit(AppPostNoteLoadingState());
-    DioHelper.postData(
-            url: newNoteUrl,
-            data: {
-              'note_category_id': catId,
-              'priority_id': priorityId,
-              'club_id': ClubId,
-              'employee_id': EmployeeId,
-              'desc': description,
-              // 'file_path': Uri.file(postImage!.path).pathSegments.last,
-              'file_path': postImage,
-            },
-            token: token)
-        .then((value) {
-      notesModel = NotesModel.fromJson(value.data);
-      print(notesModel?.message);
-      print(Uri.file(postImage!.path).pathSegments.last);
-
+    Dio dio = new Dio()..options.baseUrl = "https://estadat.ivas.com.eg/api/";
+    dio
+        .post(newNoteUrl,
+            data: formData,
+            options: Options(headers: {
+              'Authorization': token!,
+            }))
+        .then((response) {
+      notesModel = NotesModel.fromJson(response.data);
       emit(AppPostNoteSuccessState(notesModel));
+      print(response);
     }).catchError((error) {
       print(error.toString());
       emit(AppPostNoteErrorState());
     });
+  }
+
+  void postNoteDataWithoutImage({
+    int catId = 1,
+    required int priorityId,
+    required int ClubId,
+    required int EmployeeId,
+    required String description,
+  }) async {
+    String? fileName = postImage?.path.split('/').last;
+    FormData formData = FormData.fromMap({
+      // "file_path": await MultipartFile.fromFile(
+      //   postImage?.path??'',
+      //   filename: fileName,
+      //   contentType: new MediaType("image", "jpeg"), //important
+      // ),
+      'note_category_id': catId,
+      'priority_id': priorityId,
+      'club_id': ClubId,
+      'employee_id': EmployeeId,
+      'desc': description,
+    });
+    emit(AppPostNoteLoadingState());
+    Dio dio = new Dio()..options.baseUrl = "https://estadat.ivas.com.eg/api/";
+    dio
+        .post(newNoteUrl,
+            data: formData,
+            options: Options(headers: {
+              'Authorization': token!,
+            }))
+        .then((response) {
+      notesModel = NotesModel.fromJson(response.data);
+      emit(AppPostNoteSuccessState(notesModel));
+      print(response);
+    }).catchError((error) {
+      print(error.toString());
+      emit(AppPostNoteErrorState());
+    });
+  }
+
+//   void _upload() async {
+//    String fileName = postImage!.path.split('/').last;
+
+//    FormData data = FormData.fromMap({
+//       "file": await MultipartFile.fromFile(
+//         postImage!.path,
+//         filename: fileName,
+//       ),
+//    });
+
+//   // Dio dio = new Dio();
+
+//   // dio.post("https://estadat.ivas.com.eg/api/$newNoteUrl", data: data)
+//   // .then((response) => print(response))
+//   // .catchError((error) => print(error));
+// }
+
+  Color cityColor = Colors.grey;
+  var cityIndex = 40;
+
+  void changeCityColor(index) {
+    cityColor = Colors.grey;
+    cityIndex = index;
+    emit(AppChangeCityColorState());
   }
 }

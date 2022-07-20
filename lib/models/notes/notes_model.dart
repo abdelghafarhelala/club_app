@@ -8,14 +8,14 @@ class NotesModel {
   NotesModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     message = json['message'];
-    note = json['note'] != null ? new Note.fromJson(json['note']) : null;
+    note = json['note'] != String ? new Note.fromJson(json['note']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['success'] = this.success;
     data['message'] = this.message;
-    if (this.note != null) {
+    if (this.note != String) {
       data['note'] = this.note!.toJson();
     }
     return data;
@@ -32,11 +32,11 @@ class Note {
   Count? count;
   String? manager;
   String? employee;
-  Null? fileType;
-  Null? filePath;
+  String? fileType;
+  String? filePath;
   String? desc;
-  Null? employeeReply;
-  Null? employeeCloseDate;
+  String? employeeReply;
+  String? employeeCloseDate;
   String? deadlineDate;
   String? createdAt;
   String? updatedAt;
@@ -67,7 +67,7 @@ class Note {
     seen = json['seen'];
     priority = json['priority'];
     club = json['club'];
-    count = json['count'] != null ? new Count.fromJson(json['count']) : null;
+    count = json['count'] != String ? new Count.fromJson(json['count']) : null;
     manager = json['manager'];
     employee = json['employee'];
     fileType = json['file_type'];
@@ -88,7 +88,7 @@ class Note {
     data['seen'] = this.seen;
     data['priority'] = this.priority;
     data['club'] = this.club;
-    if (this.count != null) {
+    if (this.count != String) {
       data['count'] = this.count!.toJson();
     }
     data['manager'] = this.manager;

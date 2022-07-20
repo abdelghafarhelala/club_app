@@ -77,7 +77,7 @@ class ResetPassword extends StatelessWidget {
                             '''Please enter you new password ''',
                             style: TextStyle(
                               fontSize: 24,
-                              fontWeight: FontWeight.w300,
+                              fontWeight: FontWeight.w700,
                             ),
                             textAlign: TextAlign.center,
                           ),

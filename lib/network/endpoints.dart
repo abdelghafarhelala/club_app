@@ -8,6 +8,7 @@ const String resetPasswordUrl = 'password/forget';
 const String logOutUrl = 'logout';
 const String newNoteUrl = 'notes';
 const String reMarkerUrl = 'notes';
+const String noteCategoryUrl = 'note_categories';
 const String changePasswordUrl = 'profile/password';
 const String CLUBS = 'clubs';
 const String GOVERNORATES = 'governorates';

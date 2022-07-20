@@ -1,6 +1,8 @@
 import 'package:club_app/models/projectModel/project.dart';
 import 'package:club_app/shared/appCubit/app_cubit.dart';
 import 'package:club_app/shared/appCubit/app_states.dart';
+import 'package:club_app/shared/components/components.dart';
+import 'package:conditional_builder_null_safety/conditional_builder_null_safety.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -8,6 +10,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 int clicked = 3;
+var form2Key = GlobalKey<FormState>();
 
 class Replay extends StatelessWidget {
   final ProjectData? projects;
@@ -112,7 +115,7 @@ class Replay extends StatelessWidget {
                           border: Border.all(width: 1, color: Colors.black)),
                     ),
                     SizedBox(
-                      width: 10,
+                      width: 5,
                     ),
                     Text("Haitham Shaker"),
                   ],
@@ -120,14 +123,22 @@ class Replay extends StatelessWidget {
                 Container(
                   decoration: BoxDecoration(
                       border: Border.all(width: 1, color: Colors.grey)),
-                  child: TextFormField(
-                    controller: replyController,
-                    decoration: InputDecoration(
-                      hintText: 'Write your reply',
-                      border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(3)),
+                  child: Form(
+                    key: form2Key,
+                    child: TextFormField(
+                      validator: (value) {
+                        if (value!.isEmpty) {
+                          return 'You must type reply';
+                        }
+                      },
+                      controller: replyController,
+                      decoration: InputDecoration(
+                        hintText: 'Write your reply',
+                        border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(3)),
+                      ),
+                      maxLines: 3,
                     ),
-                    maxLines: 7,
                   ),
                 ),
                 SizedBox(
@@ -333,7 +344,7 @@ class Replay extends StatelessWidget {
                     alignment: AlignmentDirectional.topEnd,
                     children: [
                       Container(
-                        height: 180,
+                        height: 110,
                         width: double.infinity,
                         decoration: BoxDecoration(
                           borderRadius: BorderRadiusDirectional.only(
@@ -359,24 +370,42 @@ class Replay extends StatelessWidget {
                 Spacer(),
                 Align(
                   alignment: Alignment(-1, -1),
-                  child: InkWell(
-                    onTap: () {
-                      AppCubit.get(context).postNoteData(
-                          priorityId: clicked,
-                          ClubId: 1,
-                          EmployeeId:
-                              AppCubit.get(context).profile?.user?.id ?? 1,
-                          description: replyController.text);
-                    },
-                    child: Container(
-                      width: double.infinity,
-                      height: 40,
-                      color: Colors.grey,
-                      child: Center(
-                          child: Text(
-                        "Submit",
-                        style: TextStyle(color: Colors.white, fontSize: 20),
-                      )),
+                  child: ConditionalBuilder(
+                    condition: state is! AppPostNoteLoadingState,
+                    fallback: (context) =>
+                        Center(child: CircularProgressIndicator()),
+                    builder: (context) => InkWell(
+                      onTap: () {
+                        if (form2Key.currentState!.validate()) {
+                          if (postImage != null) {
+                            AppCubit.get(context).postNoteData(
+                                priorityId: clicked,
+                                ClubId: 1,
+                                EmployeeId:
+                                    AppCubit.get(context).profile?.user?.id ??
+                                        1,
+                                description: replyController.text);
+                          } else {
+                            AppCubit.get(context).postNoteDataWithoutImage(
+                                priorityId: clicked,
+                                ClubId: 1,
+                                EmployeeId:
+                                    AppCubit.get(context).profile?.user?.id ??
+                                        1,
+                                description: replyController.text);
+                          }
+                        }
+                      },
+                      child: Container(
+                        width: double.infinity,
+                        height: 40,
+                        color: Colors.grey,
+                        child: Center(
+                            child: Text(
+                          "Submit",
+                          style: TextStyle(color: Colors.white, fontSize: 20),
+                        )),
+                      ),
                     ),
                   ),
                 ),
@@ -385,7 +414,15 @@ class Replay extends StatelessWidget {
           ),
         );
       },
-      listener: (BuildContext context, Object? state) {},
+      listener: (BuildContext context, Object? state) {
+        if (state is AppPostNoteSuccessState) {
+          if (state.model!.success!) {
+            showToast(text: state.model!.message, state: ToastStates.success);
+          } else {
+            showToast(text: state.model!.message, state: ToastStates.error);
+          }
+        }
+      },
     );
   }
 }
