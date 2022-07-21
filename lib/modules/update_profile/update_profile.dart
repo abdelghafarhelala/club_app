@@ -121,7 +121,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           const Text(
                             'Profile Update',
                             style: TextStyle(
-                                fontSize: 24, fontWeight: FontWeight.w400),
+                                fontSize: 24, fontWeight: FontWeight.w700),
                           ),
                           SizedBox(
                             height: 68,

@@ -32,14 +32,16 @@ class LoginScreen extends StatelessWidget {
               CacheHelper.saveData(key: "token", value: state.model?.token)
                   .then((value) {
                 token = state.model?.token;
-                // AppCubit.get(context).getClubs();
+                AppCubit.get(context).getClubs();
                 navigateAndFinish(context, HomeScreen());
-                // AppCubit.get(context).getUserData();
-                // AppCubit.get(context).getCount();
-                // AppCubit.get(context).getproject();
-                // AppCubit.get(context).getReMarkerData();
-                // AppCubit.get(context).getNoteCategoryData();
-                // AppCubit.get(context).getDepartment();
+                AppCubit.get(context).getUserData();
+                AppCubit.get(context).getgovernorates();
+                AppCubit.get(context).getCount();
+                AppCubit.get(context).getproject();
+                AppCubit.get(context).getDepartment();
+                AppCubit.get(context).getReMarkerData();
+                AppCubit.get(context).getNoteCategoryData();
+                AppCubit.get(context).getDepartment();
                 showToast(
                     text: 'Login successfully', state: ToastStates.success);
                 // print(state.model?.data!.name);

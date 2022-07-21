@@ -8,7 +8,9 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 
 class Security extends StatelessWidget {
-  const Security({Key? key}) : super(key: key);
+  String city;
+  //  Security({Key? key}) : super(key: key);
+  Security({required this.city});
 
   @override
   Widget build(BuildContext context) {
@@ -54,41 +56,32 @@ class Security extends StatelessWidget {
                       padding: const EdgeInsets.all(12.0),
                       child: Row(
                         children: [
-                          Center(
-                            child: Container(
-                              color: Colors.white,
-                              padding: EdgeInsets.all(12),
-                              width: 118,
-                              height: 61,
-                              // padding: EdgeInsets.only(bottom: 40),
-                              child: Container(
-                                child: Image(
+                          Container(
+                            height: 70,
+                            width: 100,
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                image: DecorationImage(
                                   image: NetworkImage(
-                                    // project.logo ??
                                     'https://estadat.ivas.com.eg/uploads/projects/l8QABPuCRmkeDEdAoZYHIk99lEgl0WjvmhtxRIK8.png',
                                   ),
-                                  width: 50,
-                                  height: 38,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
+                                )),
                           ),
                           const SizedBox(
-                            width: 5,
+                            width: 35,
                           ),
-                          const Expanded(
+                          Expanded(
                             child: Center(
                               child: Text(
-                                'Topic Name  \n Created By : Amr Alsherif  ',
-                                style: TextStyle(
-                                  fontWeight: FontWeight.w500,
-                                  fontSize: 22,
+                                city,
+                                style: const TextStyle(
+                                  fontWeight: FontWeight.w300,
+                                  fontSize: 25,
                                   color: Colors.white,
                                 ),
                                 maxLines: 2,
                                 overflow: TextOverflow.ellipsis,
-                                textAlign: TextAlign.start,
+                                textAlign: TextAlign.center,
                               ),
                             ),
                           )
@@ -299,7 +292,7 @@ Widget buildSecurityItem(context, Data model) => InkWell(
                                 Image(
                                   height: 12,
                                   image: AssetImage(
-                                    "assets/images/Ellipse 1278.png",
+                                    "assets/images/red.png",
                                   ),
                                 ),
                               SizedBox(

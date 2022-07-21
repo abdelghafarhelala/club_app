@@ -1,5 +1,6 @@
 import 'package:club_app/modules/home/home_screen.dart';
 import 'package:club_app/modules/login/login.dart';
+import 'package:club_app/modules/login/loginCubit/loginCubit.dart';
 
 import 'package:club_app/modules/replay/replay.dart';
 
@@ -13,13 +14,12 @@ import 'package:club_app/shared/style.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
-import 'package:splash_screen_view/SplashScreenView.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await CacheHelper.init();
   await DioHelper.init();
-
+  Widget startWidget;
   bool isDark = false;
   token = CacheHelper.getData(key: 'token');
   bool? onboarding = CacheHelper.getData(key: 'onBoarding');
@@ -28,22 +28,27 @@ void main() async {
   } else {
     isDark = isDark;
   }
-  Widget examp = SplashScreenView(
-    navigateRoute: token == null ? LoginScreen() : HomeScreen(),
-    duration: 3000,
-    imageSize: 200,
-    imageSrc: "assets/images/spl.png",
-    // text: "Heart Beats",
-    // textType: TextType.NormalText,
-    // textStyle: TextStyle(fontSize: 30.0, color: Colors.white),
-  );
+  if (token != null) {
+    startWidget = HomeScreen();
+  } else {
+    startWidget = LoginScreen();
+  }
+  // Widget examp = SplashScreenView(
+  //   navigateRoute: token == null ? LoginScreen() : HomeScreen(),
+  //   duration: 3000,
+  //   imageSize: 200,
+  //   // imageSrc: "assets/images/spl.png",
+  //   // text: "Heart Beats",
+  //   // textType: TextType.NormalText,
+  //   // textStyle: TextStyle(fontSize: 30.0, color: Colors.white),
+  // );
 
   BlocOverrides.runZoned(
     () {
       // Use cubits...
       runApp(MyApp(
         isDark: isDark,
-        startWidget: examp,
+        startWidget: startWidget,
       ));
     },
     blocObserver: MyBlocObserver(),
@@ -88,8 +93,8 @@ class MyApp extends StatelessWidget {
             darkTheme: darkTheme,
             themeMode:
                 AppCubit.get(context).isDark ? ThemeMode.dark : ThemeMode.light,
-            // home: startWidget,
             home: startWidget,
+            // home: LoginScreen(),
             builder: (context, child) {
               return MediaQuery(
                 child: child!,

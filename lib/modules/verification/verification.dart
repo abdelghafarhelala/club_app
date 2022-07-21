@@ -95,7 +95,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
         received on your mail ''',
                           style: TextStyle(
                             fontSize: 24,
-                            fontWeight: FontWeight.w300,
+                            fontWeight: FontWeight.w700,
                           ),
                           textAlign: TextAlign.center,
                         ),

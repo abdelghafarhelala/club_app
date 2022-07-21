@@ -21,7 +21,11 @@ class ClubDetails extends StatelessWidget {
     return BlocConsumer<AppCubit, AppStates>(
       listener: (context, state) {
         if (state is AppGetRemarkerSuccessState) {
-          navigateTo(context, Security());
+          navigateTo(
+              context,
+              Security(
+                city: Model!.city!,
+              ));
         }
       },
       builder: (context, state) {
@@ -84,7 +88,7 @@ class ClubDetails extends StatelessWidget {
                                   color: Colors.white,
                                   image: DecorationImage(
                                     image: NetworkImage(
-                                      'https://img.freepik.com/free-photo/beautiful-vintage-collage-composition_23-2149479771.jpg?size=338&ext=jpg&uid=R24960600&ga=GA1.2.1634405249.1648830357',
+                                      'https://estadat.ivas.com.eg/uploads/projects/l8QABPuCRmkeDEdAoZYHIk99lEgl0WjvmhtxRIK8.png',
                                     ),
                                   )),
                             ),
@@ -917,7 +921,11 @@ class ClubDetails extends StatelessWidget {
                       onTap: () {},
                       child: InkWell(
                         onTap: () {
-                          navigateTo(context, Security());
+                          navigateTo(
+                              context,
+                              Security(
+                                city: Model!.city!,
+                              ));
                         },
                         child: Card(
                           child: Padding(

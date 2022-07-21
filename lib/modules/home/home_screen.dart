@@ -27,12 +27,7 @@ class HomeScreen extends StatelessWidget {
         var height = AppBar().preferredSize.height;
         final double screenHeight = MediaQuery.of(context).size.height;
         return ConditionalBuilder(
-          condition: state is! AppGetClubsLoadingState &&
-              state is! AppGetgovernoratesLoadingState &&
-              state is! AppGetUserDataLoadingState &&
-              state is! AppGetProjectLoadingState &&
-              state is! AppGetdepartmentsLoadingState &&
-              state is! AppGetProjectLoadingState,
+          condition: state is! AppGetdepartmentsLoadingState,
           fallback: (context) => Center(child: CircularProgressIndicator()),
           builder: (context) => Scaffold(
               resizeToAvoidBottomInset: false,
