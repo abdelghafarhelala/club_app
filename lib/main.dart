@@ -11,6 +11,7 @@ import 'package:club_app/shared/appCubit/app_states.dart';
 import 'package:club_app/shared/blocObserver/blocObserver.dart';
 import 'package:club_app/shared/const.dart';
 import 'package:club_app/shared/style.dart';
+import 'package:easy_splash_screen/easy_splash_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -28,20 +29,19 @@ void main() async {
   } else {
     isDark = isDark;
   }
-  if (token != null) {
-    startWidget = HomeScreen();
-  } else {
-    startWidget = LoginScreen();
-  }
-  // Widget examp = SplashScreenView(
-  //   navigateRoute: token == null ? LoginScreen() : HomeScreen(),
-  //   duration: 3000,
-  //   imageSize: 200,
-  //   // imageSrc: "assets/images/spl.png",
-  //   // text: "Heart Beats",
-  //   // textType: TextType.NormalText,
-  //   // textStyle: TextStyle(fontSize: 30.0, color: Colors.white),
-  // );
+  // if (token != null) {
+  //   startWidget = HomeScreen();
+  // } else {
+  //   startWidget = LoginScreen();
+  // }
+  Widget examp = EasySplashScreen(
+    backgroundImage: AssetImage('assets/images/splash.png'),
+    showLoader: false,
+    // loadingText: Text("Loading..."),
+    navigator: token == null ? LoginScreen() : HomeScreen(),
+    durationInSeconds: 3,
+  );
+  startWidget = examp;
 
   BlocOverrides.runZoned(
     () {
@@ -73,7 +73,8 @@ class MyApp extends StatelessWidget {
         ..getproject()
         ..getReMarkerData()
         ..getNoteCategoryData()
-        ..getDepartment(),
+        ..getDepartment()
+        ..getLastClubs(),
       child: BlocConsumer<AppCubit, AppStates>(
         listener: (context, state) {},
         builder: (context, state) {

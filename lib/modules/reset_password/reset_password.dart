@@ -12,7 +12,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 
-var formKey = GlobalKey<FormState>();
+var formKeyResetPass = GlobalKey<FormState>();
 var passController = TextEditingController();
 var confirmPassController = TextEditingController();
 
@@ -55,7 +55,7 @@ class ResetPassword extends StatelessWidget {
             ),
             child: Center(
               child: Form(
-                key: formKey,
+                key: formKeyResetPass,
                 child: Column(
                   children: [
                     Padding(
@@ -141,7 +141,8 @@ class ResetPassword extends StatelessWidget {
                             builder: (context) => defaultButton(
                                 height: screenHeight / 16,
                                 onPress: () {
-                                  if (formKey.currentState!.validate()) {
+                                  if (formKeyResetPass.currentState!
+                                      .validate()) {
                                     AppCubit.get(context).resetPassword(
                                         email: email!,
                                         opt: code!,
@@ -152,7 +153,7 @@ class ResetPassword extends StatelessWidget {
                                 },
                                 text: 'Confirm'),
                             fallback: (context) =>
-                                const CircularProgressIndicator(),
+                                Center(child: buildLoading()),
                           ),
                           SizedBox(
                             height: screenHeight / 35,

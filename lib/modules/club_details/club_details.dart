@@ -1,7 +1,6 @@
 import 'package:club_app/models/clubModel/clubs.dart';
 import 'package:club_app/modules/Security/Security.dart';
 import 'package:club_app/modules/full_screen_image/full_screen_image.dart';
-import 'package:club_app/modules/remarker/remarker.dart';
 import 'package:club_app/shared/appCubit/app_cubit.dart';
 import 'package:club_app/shared/appCubit/app_states.dart';
 import 'package:club_app/shared/components/components.dart';
@@ -10,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ClubDetails extends StatelessWidget {
   // const ClubDetails({Key? key}) : super(key: key);
@@ -25,6 +25,7 @@ class ClubDetails extends StatelessWidget {
               context,
               Security(
                 city: Model!.city!,
+                club_id: Model!.id!,
               ));
         }
       },
@@ -87,21 +88,21 @@ class ClubDetails extends StatelessWidget {
                               decoration: const BoxDecoration(
                                   color: Colors.white,
                                   image: DecorationImage(
-                                    image: NetworkImage(
-                                      'https://estadat.ivas.com.eg/uploads/projects/l8QABPuCRmkeDEdAoZYHIk99lEgl0WjvmhtxRIK8.png',
+                                    image: AssetImage(
+                                      'assets/images/est.jpg',
                                     ),
                                   )),
                             ),
                             const SizedBox(
-                              width: 35,
+                              width: 20,
                             ),
                             Expanded(
                               child: Center(
                                 child: Text(
                                   ' ${Model!.city} ',
                                   style: const TextStyle(
-                                    fontWeight: FontWeight.w300,
-                                    fontSize: 25,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 24,
                                     color: Colors.white,
                                   ),
                                   maxLines: 2,
@@ -109,6 +110,16 @@ class ClubDetails extends StatelessWidget {
                                   textAlign: TextAlign.center,
                                 ),
                               ),
+                            ),
+                            IconButton(
+                              onPressed: () {
+                                // MapUtils.openMap(-3.823216, -38.481700);
+                                MapUtils.openMap(double.parse(Model?.lat ?? ''),
+                                    double.parse(Model?.lng ?? ''));
+                              },
+                              icon: Icon(Icons.location_on_outlined),
+                              iconSize: 35,
+                              color: Colors.white,
                             )
                           ],
                         ),
@@ -160,15 +171,20 @@ class ClubDetails extends StatelessWidget {
                           ),
                         ],
                       ),
-                      IconButton(
-                          onPressed: () {
-                            navigateTo(context,
-                                FullScreenImageScreen(imagePath: Model?.image));
-                          },
-                          icon: const ImageIcon(
-                            AssetImage('assets/images/full_screen.png'),
-                            size: 35,
-                          )),
+                      if (Model?.image != null)
+                        IconButton(
+                            onPressed: () {
+                              if (Model?.image != '') {
+                                navigateTo(
+                                    context,
+                                    FullScreenImageScreen(
+                                        imagePath: Model?.image));
+                              }
+                            },
+                            icon: const ImageIcon(
+                              AssetImage('assets/images/full_screen.png'),
+                              size: 35,
+                            )),
                     ],
                   ),
                   Container(
@@ -413,7 +429,7 @@ class ClubDetails extends StatelessWidget {
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              '${Model!.employeesNumber}',
+                                              '${Model!.sports}',
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.center,
@@ -480,7 +496,7 @@ class ClubDetails extends StatelessWidget {
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              '870',
+                                              '${Model?.players}',
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.center,
@@ -686,7 +702,7 @@ class ClubDetails extends StatelessWidget {
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              '5',
+                                              '${Model?.salesPointsNumber}',
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.center,
@@ -893,7 +909,7 @@ class ClubDetails extends StatelessWidget {
                                       overflow: TextOverflow.ellipsis,
                                       style: TextStyle(
                                           fontSize: 20,
-                                          fontWeight: FontWeight.w300),
+                                          fontWeight: FontWeight.w700),
                                     ),
                                     SizedBox(
                                       height: 5,
@@ -921,11 +937,11 @@ class ClubDetails extends StatelessWidget {
                       onTap: () {},
                       child: InkWell(
                         onTap: () {
-                          navigateTo(
-                              context,
-                              Security(
-                                city: Model!.city!,
-                              ));
+                          // navigateTo(
+                          //     context,
+                          //     Security(
+                          //       city: Model!.city!,
+                          //     ));
                         },
                         child: Card(
                           child: Padding(
@@ -956,7 +972,7 @@ class ClubDetails extends StatelessWidget {
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                             fontSize: 20,
-                                            fontWeight: FontWeight.w300),
+                                            fontWeight: FontWeight.w700),
                                       ),
                                       SizedBox(
                                         height: 5,
@@ -981,11 +997,11 @@ class ClubDetails extends StatelessWidget {
                   ),
                   ConditionalBuilder(
                     condition: state is! AppGetRemarkerLoadingState,
-                    fallback: (context) =>
-                        Center(child: CircularProgressIndicator()),
+                    fallback: (context) => Center(child: buildLoading()),
                     builder: (context) => InkWell(
                       onTap: () {
-                        AppCubit.get(context).getReMarkerData();
+                        AppCubit.get(context)
+                            .getReMarkerData(club_id: Model!.id!);
                       },
                       child: Container(
                         padding: EdgeInsets.symmetric(horizontal: 8),
@@ -1018,18 +1034,11 @@ class ClubDetails extends StatelessWidget {
                                         overflow: TextOverflow.ellipsis,
                                         style: TextStyle(
                                             fontSize: 20,
-                                            fontWeight: FontWeight.w300),
+                                            fontWeight: FontWeight.w700),
+                                        textAlign: TextAlign.center,
                                       ),
                                       SizedBox(
                                         height: 5,
-                                      ),
-                                      Text(
-                                        '${Model!.managerName}',
-                                        maxLines: 1,
-                                        overflow: TextOverflow.ellipsis,
-                                        style: TextStyle(
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w200),
                                       ),
                                     ],
                                   ),
@@ -1048,5 +1057,28 @@ class ClubDetails extends StatelessWidget {
         );
       },
     );
+  }
+}
+
+class MapUtils {
+  MapUtils._();
+
+  static Future<void> openMap(double latitude, double longitude) async {
+    String googleUrl =
+        'https://www.google.com/maps/search/?api=1&query=$latitude,$longitude';
+    if (await canLaunchUrl(Uri.parse(googleUrl))) {
+      await launchUrl(Uri.parse(googleUrl));
+    } else {
+      throw 'Could not open the map.';
+    }
+  }
+}
+
+void navigateToMap(double lat, double lng) async {
+  var uri = Uri.parse("google.navigation:q=$lat,$lng&mode=d");
+  if (await launchUrl(uri)) {
+    await launchUrl(uri);
+  } else {
+    throw 'Could not launch ${uri.toString()}';
   }
 }

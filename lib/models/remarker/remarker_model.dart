@@ -1,31 +1,27 @@
 class RemarkerModel {
+  bool? success;
+  String? message;
   List<Data>? data;
-  Links? links;
-  Meta? meta;
 
-  RemarkerModel({this.data, this.links, this.meta});
+  RemarkerModel({this.success, this.message, this.data});
 
   RemarkerModel.fromJson(Map<String, dynamic> json) {
+    success = json['success'];
+    message = json['message'];
     if (json['data'] != null) {
       data = <Data>[];
       json['data'].forEach((v) {
         data!.add(new Data.fromJson(v));
       });
     }
-    links = json['links'] != null ? new Links.fromJson(json['links']) : null;
-    meta = json['meta'] != null ? new Meta.fromJson(json['meta']) : null;
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['success'] = this.success;
+    data['message'] = this.message;
     if (this.data != null) {
       data['data'] = this.data!.map((v) => v.toJson()).toList();
-    }
-    if (this.links != null) {
-      data['links'] = this.links!.toJson();
-    }
-    if (this.meta != null) {
-      data['meta'] = this.meta!.toJson();
     }
     return data;
   }
@@ -41,8 +37,8 @@ class Data {
   Count? count;
   String? manager;
   String? employee;
-  String? fileType;
-  String? filePath;
+  int? gallery;
+  List<ListGallery>? listGallery;
   String? desc;
   String? employeeReply;
   String? employeeCloseDate;
@@ -60,8 +56,8 @@ class Data {
       this.count,
       this.manager,
       this.employee,
-      this.fileType,
-      this.filePath,
+      this.gallery,
+      this.listGallery,
       this.desc,
       this.employeeReply,
       this.employeeCloseDate,
@@ -79,8 +75,13 @@ class Data {
     count = json['count'] != null ? new Count.fromJson(json['count']) : null;
     manager = json['manager'];
     employee = json['employee'];
-    fileType = json['file_type'];
-    filePath = json['file_path'];
+    gallery = json['gallery'];
+    if (json['list_gallery'] != null) {
+      listGallery = <ListGallery>[];
+      json['list_gallery'].forEach((v) {
+        listGallery!.add(new ListGallery.fromJson(v));
+      });
+    }
     desc = json['desc'];
     employeeReply = json['employee_reply'];
     employeeCloseDate = json['employee_close_date'];
@@ -102,8 +103,10 @@ class Data {
     }
     data['manager'] = this.manager;
     data['employee'] = this.employee;
-    data['file_type'] = this.fileType;
-    data['file_path'] = this.filePath;
+    data['gallery'] = this.gallery;
+    if (this.listGallery != null) {
+      data['list_gallery'] = this.listGallery!.map((v) => v.toJson()).toList();
+    }
     data['desc'] = this.desc;
     data['employee_reply'] = this.employeeReply;
     data['employee_close_date'] = this.employeeCloseDate;
@@ -133,79 +136,24 @@ class Count {
   }
 }
 
-class Links {
-  String? first;
-  String? last;
-  String? prev;
-  String? next;
+class ListGallery {
+  int? id;
+  String? file;
+  String? fileType;
 
-  Links({this.first, this.last, this.prev, this.next});
+  ListGallery({this.id, this.file, this.fileType});
 
-  Links.fromJson(Map<String, dynamic> json) {
-    first = json['first'];
-    last = json['last'];
-    prev = json['prev'];
-    next = json['next'];
+  ListGallery.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    file = json['file'];
+    fileType = json['file_type'];
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['first'] = this.first;
-    data['last'] = this.last;
-    data['prev'] = this.prev;
-    data['next'] = this.next;
-    return data;
-  }
-}
-
-class Meta {
-  int? currentPage;
-  int? from;
-  int? lastPage;
-  List<Links>? links;
-  String? path;
-  int? perPage;
-  int? to;
-  int? total;
-
-  Meta(
-      {this.currentPage,
-      this.from,
-      this.lastPage,
-      this.links,
-      this.path,
-      this.perPage,
-      this.to,
-      this.total});
-
-  Meta.fromJson(Map<String, dynamic> json) {
-    currentPage = json['current_page'];
-    from = json['from'];
-    lastPage = json['last_page'];
-    if (json['links'] != null) {
-      links = <Links>[];
-      json['links'].forEach((v) {
-        links!.add(new Links.fromJson(v));
-      });
-    }
-    path = json['path'];
-    perPage = json['per_page'];
-    to = json['to'];
-    total = json['total'];
-  }
-
-  Map<String, dynamic> toJson() {
-    final Map<String, dynamic> data = new Map<String, dynamic>();
-    data['current_page'] = this.currentPage;
-    data['from'] = this.from;
-    data['last_page'] = this.lastPage;
-    if (this.links != null) {
-      data['links'] = this.links!.map((v) => v.toJson()).toList();
-    }
-    data['path'] = this.path;
-    data['per_page'] = this.perPage;
-    data['to'] = this.to;
-    data['total'] = this.total;
+    data['id'] = this.id;
+    data['file'] = this.file;
+    data['file_type'] = this.fileType;
     return data;
   }
 }

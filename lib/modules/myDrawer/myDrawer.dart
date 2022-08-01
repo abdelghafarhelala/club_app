@@ -129,8 +129,14 @@ class MyDrawer extends StatelessWidget {
     return Material(
       child: InkWell(
         onTap: () {
-          navigateTo(context, widget);
-          AppCubit.get(context).currentIndex = index;
+          if (text == 'Update Profile') {
+            AppCubit.get(context).getUserData();
+            AppCubit.get(context).currentIndex = index;
+            navigateTo(context, widget);
+          } else {
+            navigateTo(context, widget);
+            AppCubit.get(context).currentIndex = index;
+          }
         },
         child: Container(
           height: 70,
@@ -178,7 +184,7 @@ class MyDrawer extends StatelessWidget {
     return Material(
       child: InkWell(
         onTap: () {
-          AppCubit.get(context).logOut();
+          AppCubit.get(context).logOut(context);
         },
         child: Container(
           height: 59,

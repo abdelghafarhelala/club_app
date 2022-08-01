@@ -1,13 +1,13 @@
 class departments {
-  List<Data>? data;
+  List<DepartData>? data;
 
   departments({this.data});
 
   departments.fromJson(Map<String, dynamic> json) {
     if (json['data'] != null) {
-      data = <Data>[];
+      data = <DepartData>[];
       json['data'].forEach((v) {
-        data!.add(new Data.fromJson(v));
+        data!.add(new DepartData.fromJson(v));
       });
     }
   }
@@ -21,13 +21,13 @@ class departments {
   }
 }
 
-class Data {
+class DepartData {
   int? id;
   String? name;
 
-  Data({this.id, this.name});
+  DepartData({this.id, this.name});
 
-  Data.fromJson(Map<String, dynamic> json) {
+  DepartData.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     name = json['name'];
   }

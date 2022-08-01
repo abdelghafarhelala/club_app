@@ -1,4 +1,6 @@
+import 'package:carousel_slider/carousel_slider.dart';
 import 'package:club_app/models/clubModel/clubs.dart';
+import 'package:club_app/models/lsat_clubs/last_clubs_model.dart';
 import 'package:club_app/models/projectModel/project.dart';
 import 'package:club_app/modules/club_details/club_details.dart';
 import 'package:club_app/network/remote/dio_helper.dart';
@@ -12,9 +14,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
+import 'package:intl/intl.dart';
 
+List<String> projectTypeList2 = ['2022-5-4', '2022-5-3', '2022-5-2'];
+List<String> projectTypeList = ['Running', 'In-Progress', 'Pipe-Line'];
+List<String> projectPriorityList = ['High', 'Medium', 'Low'];
 bool h = true;
 Color colorCity = Colors.white;
+CarouselController buttonCarouselController = CarouselController();
 
 class HomeScreen extends StatelessWidget {
   // const HomeScreen({Key? key}) : super(key: key);
@@ -24,11 +31,12 @@ class HomeScreen extends StatelessWidget {
     final GlobalKey<ScaffoldState> scaffoldKey = GlobalKey<ScaffoldState>();
     return BlocConsumer<AppCubit, AppStates>(
       builder: (BuildContext context, state) {
+        // List<String> ooo = AppCubit.get(context).updated;
         var height = AppBar().preferredSize.height;
         final double screenHeight = MediaQuery.of(context).size.height;
         return ConditionalBuilder(
           condition: state is! AppGetdepartmentsLoadingState,
-          fallback: (context) => Center(child: CircularProgressIndicator()),
+          fallback: (context) => Center(child: buildLoading()),
           builder: (context) => Scaffold(
               resizeToAvoidBottomInset: false,
               key: scaffoldKey,
@@ -169,8 +177,8 @@ class HomeScreen extends StatelessWidget {
                                                 .projectData!
                                                 .length >
                                             0,
-                                        fallback: (context) => Center(
-                                            child: CircularProgressIndicator()),
+                                        fallback: (context) =>
+                                            Center(child: buildLoading()),
                                         builder: (context) =>
                                             DropdownButton<String>(
                                           alignment: Alignment.center,
@@ -196,6 +204,23 @@ class HomeScreen extends StatelessWidget {
                                           onChanged: (newValue) {
                                             AppCubit.get(context)
                                                 .set_drop(x: newValue);
+                                            if (newValue == 'City Club') {
+                                              AppCubit.get(context).ProjectId =
+                                                  1;
+                                            } else if (newValue ==
+                                                'Madrasentan') {
+                                              AppCubit.get(context).ProjectId =
+                                                  2;
+                                            } else if (newValue == 'Ahly TV') {
+                                              AppCubit.get(context).ProjectId =
+                                                  3;
+                                            } else if (newValue ==
+                                                'Borg Elmonofeya') {
+                                              AppCubit.get(context).ProjectId =
+                                                  4;
+                                            }
+                                            AppCubit.get(context)
+                                                .getClubsFilteredWithGov();
                                           },
                                           items: AppCubit.get(context)
                                               .project!
@@ -204,7 +229,10 @@ class HomeScreen extends StatelessWidget {
                                                   (e) {
                                             return DropdownMenuItem<String>(
                                               value: e.name,
-                                              child: Text("${e.name}"),
+                                              child: Center(
+                                                  child: Text("${e.name}",
+                                                      textAlign:
+                                                          TextAlign.center)),
                                             );
                                           }).toList(),
                                         ),
@@ -215,10 +243,19 @@ class HomeScreen extends StatelessWidget {
                                 const SizedBox(
                                   width: 10,
                                 ),
-                                const Image(
-                                  width: 30,
-                                  image: AssetImage(
-                                      'assets/images/Icon feather-filter.png'),
+                                InkWell(
+                                  onTap: () {
+                                    showDialog(
+                                      context: context,
+                                      builder: (context) =>
+                                          buildDialog(context),
+                                    );
+                                  },
+                                  child: const Image(
+                                    width: 30,
+                                    image: AssetImage(
+                                        'assets/images/Icon feather-filter.png'),
+                                  ),
                                 )
                               ],
                             ),
@@ -264,7 +301,7 @@ class HomeScreen extends StatelessWidget {
                                           .length >
                                       0,
                               fallback: (context) =>
-                                  Center(child: CircularProgressIndicator()),
+                                  Center(child: buildLoading()),
                               builder: (context) => Container(
                                 // color: Colors.amber,
                                 height: 40,
@@ -326,109 +363,97 @@ class HomeScreen extends StatelessWidget {
                           const SizedBox(
                             height: 5,
                           ),
-                          Padding(
-                            padding: const EdgeInsets.symmetric(horizontal: 8),
-                            child: ConditionalBuilder(
-                              condition:
-                                  AppCubit.get(context).club!.data!.length >
+                          if (AppCubit.get(context).club!.data!.length > 0)
+                            ConditionalBuilder(
+                              condition: state
+                                  is! AppGetClubsFilteredWithGovLoadingState,
+                              fallback: (context) => Expanded(
+                                  child: Center(child: buildLoading())),
+                              builder: (context) => Padding(
+                                padding:
+                                    const EdgeInsets.symmetric(horizontal: 8),
+                                child: ConditionalBuilder(
+                                  condition: (AppCubit.get(context)
+                                              .club!
+                                              .data!
+                                              .length >
                                           0 &&
                                       AppCubit.get(context)
                                               .project!
                                               .projectData!
                                               .length >
-                                          0,
-                              fallback: (context) =>
-                                  Center(child: CircularProgressIndicator()),
-                              builder: (context) => Container(
-                                height: screenHeight - (height + 370),
-                                width: double.infinity,
-                                child: ListView.separated(
-                                  shrinkWrap: true,
-                                  physics: BouncingScrollPhysics(),
-                                  itemBuilder: (context, index) {
-                                    return carrd(
-                                        AppCubit.get(context)
-                                            .club!
-                                            .data![index],
-                                        AppCubit.get(context)
-                                            .project!
-                                            .projectData![0],
-                                        context);
-                                  },
-                                  itemCount:
-                                      AppCubit.get(context).club!.data!.length,
-                                  separatorBuilder:
-                                      (BuildContext context, int index) {
-                                    return Container(
-                                      height: 0,
-                                    );
-                                  },
+                                          0),
+                                  fallback: (context) =>
+                                      Center(child: buildLoading()),
+                                  builder: (context) => Container(
+                                    height: screenHeight - (height + 370),
+                                    width: double.infinity,
+                                    child: ListView.separated(
+                                      shrinkWrap: true,
+                                      physics: BouncingScrollPhysics(),
+                                      itemBuilder: (context, index) {
+                                        return carrd(
+                                            AppCubit.get(context)
+                                                .club!
+                                                .data![index],
+                                            AppCubit.get(context)
+                                                .project!
+                                                .projectData![0],
+                                            context);
+                                      },
+                                      itemCount: AppCubit.get(context)
+                                          .club!
+                                          .data!
+                                          .length,
+                                      separatorBuilder:
+                                          (BuildContext context, int index) {
+                                        return Container(
+                                          height: 0,
+                                        );
+                                      },
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
-                          ),
-                          Spacer(),
-                          Container(
-                            height: 45,
-                            color: Colors.white,
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                          if (AppCubit.get(context).club!.data!.length == 0)
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                const Icon(
-                                  Icons.arrow_back_ios,
-                                  color: Colors.black,
+                                SizedBox(
+                                  height: 50,
                                 ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Container(
-                                  child: Center(
-                                      child: Text(
-                                    "  H S ",
-                                    style: TextStyle(fontSize: 20),
-                                  )),
-                                  height: 120,
-                                  decoration: BoxDecoration(
-                                      shape: BoxShape.circle,
-                                      color: Colors.white,
-                                      border: Border.all(
-                                          width: 1, color: Colors.black)),
-                                ),
-                                const SizedBox(
-                                  width: 10,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      "City Club - Nasr City (Security)",
-                                      style: TextStyle(fontSize: 20),
-                                    ),
-                                    Row(
-                                      children: const [
-                                        Text(
-                                          "Mohammed El-Misiny",
-                                          style: TextStyle(fontSize: 16),
-                                        ),
-                                        SizedBox(
-                                          width: 5,
-                                        ),
-                                        CircleAvatar(
-                                          radius: 7,
-                                          backgroundColor: Colors.red,
-                                        ),
-                                      ],
-                                    )
-                                  ],
-                                ),
-                                const Spacer(),
-                                const Icon(
-                                  Icons.arrow_forward_ios,
-                                  color: Colors.black,
+                                Center(
+                                  child: Text(
+                                    'There is No items here',
+                                    style: TextStyle(
+                                        fontSize: 22,
+                                        color: Colors.grey,
+                                        fontWeight: FontWeight.w800),
+                                  ),
                                 ),
                               ],
                             ),
-                          )
+                          Spacer(),
+                          CarouselSlider(
+                            items: AppCubit.get(context)
+                                .lastClubs
+                                ?.data!
+                                .map((e) => buildSlider(e))
+                                .toList(),
+                            carouselController: buttonCarouselController,
+                            options: CarouselOptions(
+                              height: 60,
+                              initialPage: 0,
+                              viewportFraction: 1,
+                              autoPlay: true,
+                              autoPlayAnimationDuration: Duration(seconds: 1),
+                              autoPlayInterval: Duration(seconds: 3),
+                              autoPlayCurve: Curves.fastOutSlowIn,
+                              scrollDirection: Axis.horizontal,
+                              reverse: false,
+                            ),
+                          ),
                         ],
                       ),
                     );
@@ -438,7 +463,7 @@ class HomeScreen extends StatelessWidget {
                       AppCubit.get(context).project != null,
                   // AppCubit.get(context).Count != null,
                   fallback: (BuildContext context) {
-                    return const Center(child: CircularProgressIndicator());
+                    return Center(child: buildLoading());
                   },
                 ),
               )),
@@ -447,6 +472,88 @@ class HomeScreen extends StatelessWidget {
       listener: (BuildContext context, Object? state) {},
     );
   }
+
+  Widget buildSlider(LastClubsData data) => Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 0),
+        child: Container(
+          height: 45,
+          color: Colors.white,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                  onPressed: () {
+                    buttonCarouselController.previousPage();
+                  },
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    color: Colors.black,
+                  )),
+              const SizedBox(
+                width: 2,
+              ),
+              CircleAvatar(
+                radius: 17,
+                backgroundColor: Colors.black,
+                child: CircleAvatar(
+                  backgroundColor: Colors.white,
+                  radius: 16,
+                  child: Text(
+                    '${data.managerName?[0].toUpperCase()}',
+                    style: TextStyle(fontSize: 20),
+                  ),
+                ),
+              ),
+              const SizedBox(
+                width: 5,
+              ),
+              Center(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Expanded(
+                      child: Row(
+                        children: [
+                          Text(
+                            "${data.city}(Security)",
+                            style: TextStyle(fontSize: 20),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+                      ),
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "${data.securityManagerName} ",
+                          style: TextStyle(fontSize: 16),
+                        ),
+                        SizedBox(
+                          width: 2,
+                        ),
+                        CircleAvatar(
+                          radius: 7,
+                          backgroundColor: Colors.red,
+                        ),
+                      ],
+                    )
+                  ],
+                ),
+              ),
+              // const Spacer(),
+              IconButton(
+                  onPressed: () {
+                    buttonCarouselController.nextPage();
+                  },
+                  icon: Icon(
+                    Icons.arrow_forward_ios,
+                    color: Colors.black,
+                  ))
+            ],
+          ),
+        ),
+      );
 
   Widget carrd(Data Model, ProjectData project, context) {
     Color c;
@@ -523,38 +630,44 @@ class HomeScreen extends StatelessWidget {
                 padding: EdgeInsets.all(0),
                 margin: EdgeInsets.zero,
                 child: Column(
-                  mainAxisSize: MainAxisSize.max,
+                  // mainAxisSize: MainAxisSize.max,
+                  // mainAxisAlignment: MainAxisAlignment.center,
                   // crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     // SizedBox(
                     //   height: 15,
                     // ),
                     Expanded(
-                      child: Row(
-                        children: [
-                          Container(
-                            width: MediaQuery.of(context).size.width - 160,
-                            child: Row(
-                              children: [
-                                Container(
-                                  // width: MediaQuery.of(context).size.width - 160,
-                                  child: Expanded(
+                      child: Container(
+                        // color: Colors.red,
+                        child: Row(
+                          crossAxisAlignment: CrossAxisAlignment.end,
+                          children: [
+                            Container(
+                              // color: Colors.amber,
+                              width: MediaQuery.of(context).size.width - 160,
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Expanded(
                                     child: Text(
                                       " ${Model.name} ",
                                       overflow: TextOverflow.ellipsis,
                                       maxLines: 1,
-                                      style: TextStyle(fontSize: 25),
+                                      style: TextStyle(
+                                          fontSize: 25,
+                                          fontWeight: FontWeight.w700),
                                       textAlign: TextAlign.center,
                                     ),
                                   ),
-                                ),
-                              ],
+                                ],
+                              ),
                             ),
-                          ),
-                        ],
+                          ],
+                        ),
                       ),
                     ),
-                    Spacer(),
+                    // Spacer(),
                     Expanded(
                       child: Container(
                         height: double.infinity,
@@ -611,12 +724,19 @@ class HomeScreen extends StatelessWidget {
                                       height: 30,
                                       padding: EdgeInsets.all(2),
                                       child: Center(
-                                        child: Text(
-                                          "${Model.area!.substring(0, 2)}k",
-                                          style: const TextStyle(
-                                              color: Colors.white),
-                                          maxLines: 1,
-                                          overflow: TextOverflow.ellipsis,
+                                        child: InkWell(
+                                          onTap: () {
+                                            print(
+                                                '++++++++++++++++++++++++++++++++');
+                                            print(Model.area?.length);
+                                          },
+                                          child: Text(
+                                            '${Model.membershipsNumber}4',
+                                            style: const TextStyle(
+                                                color: Colors.white),
+                                            maxLines: 1,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
                                         ),
                                       )),
                                   const SizedBox(
@@ -645,6 +765,9 @@ class HomeScreen extends StatelessWidget {
             InkWell(
               onTap: () {
                 AppCubit.get(context).changeCityColor(40);
+                // AppCubit.get(context).getClubs();
+                AppCubit.get(context).clubId = null;
+                AppCubit.get(context).getClubsFilteredWithGov();
               },
               child: Container(
                   height: 44,
@@ -675,6 +798,10 @@ class HomeScreen extends StatelessWidget {
           InkWell(
             onTap: () {
               AppCubit.get(context).changeCityColor(index);
+              AppCubit.get(context).clubId = index + 1;
+              AppCubit.get(context).getClubsFilteredWithGov();
+              print('________________________________________________');
+              print(AppCubit.get(context).clubId);
             },
             child: Container(
               height: 44,
@@ -704,3 +831,220 @@ class HomeScreen extends StatelessWidget {
         ],
       );
 }
+
+var updateController = TextEditingController();
+Widget buildDialog(context) => Dialog(
+    // backgroundColor: Colors.black.withOpacity(.001),
+    insetPadding: EdgeInsets.all(20),
+    insetAnimationCurve: Curves.linearToEaseOut,
+    shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+    clipBehavior: Clip.antiAlias,
+    child: Container(
+      height: 380,
+      child: Column(
+        children: [
+          Container(
+            height: 57,
+            width: double.infinity,
+            color: HexColor('#101620'),
+            child: Center(
+              child: Text(
+                'Please filter your projects',
+                style: TextStyle(
+                    fontSize: 23,
+                    fontWeight: FontWeight.w700,
+                    color: Colors.white),
+                textAlign: TextAlign.center,
+              ),
+            ),
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6)),
+                    elevation: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: DropdownButton<String>(
+                        alignment: Alignment.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: HexColor('#101620'),
+                        ),
+                        autofocus: false, iconSize: 30,
+                        isExpanded: true,
+                        // menuMaxHeight: 100,
+                        itemHeight: 50,
+                        underline: Container(
+                          height: 0,
+                        ),
+
+                        value: AppCubit.get(context).Drop_Down_Value2,
+                        // icon: const Icon(Icons.arrow_downward),
+                        // elevation: 16,
+                        hint: const Center(child: Text("Project Type")),
+
+                        onChanged: (newValue) {
+                          AppCubit.get(context).set_drop2(x: newValue);
+                          if (newValue == 'Running') {
+                            AppCubit.get(context).ProjectType = 1;
+                          } else if (newValue == 'In-Progress') {
+                            AppCubit.get(context).ProjectType = 2;
+                          } else if (newValue == 'Pipe-Line') {
+                            AppCubit.get(context).ProjectType = 3;
+                          }
+                          print(newValue);
+                        },
+                        items:
+                            projectTypeList.map<DropdownMenuItem<String>>((q) {
+                          return DropdownMenuItem<String>(
+                            value: q,
+                            child: Center(
+                                child:
+                                    Text("${q}", textAlign: TextAlign.center)),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6)),
+                    elevation: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: DropdownButton<String>(
+                        alignment: Alignment.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: HexColor('#101620'),
+                        ),
+                        autofocus: false, iconSize: 30,
+                        isExpanded: true,
+                        // menuMaxHeight: 100,
+                        itemHeight: 50,
+                        underline: Container(
+                          height: 0,
+                        ),
+
+                        value: AppCubit.get(context).Drop_Down_Value3,
+                        // icon: const Icon(Icons.arrow_downward),
+                        // elevation: 16,
+                        hint: const Center(child: Text("Project Priority")),
+
+                        onChanged: (newValue) {
+                          AppCubit.get(context).set_drop3(x: newValue);
+                          if (newValue == 'High') {
+                            AppCubit.get(context).priorityId = 3;
+                          } else if (newValue == 'Medium') {
+                            AppCubit.get(context).priorityId = 2;
+                          } else if (newValue == 'Low') {
+                            AppCubit.get(context).priorityId = 1;
+                          }
+                          print(newValue);
+                        },
+                        items: projectPriorityList
+                            .map<DropdownMenuItem<String>>((q) {
+                          return DropdownMenuItem<String>(
+                            value: q,
+                            child: Center(
+                                child:
+                                    Text("${q}", textAlign: TextAlign.center)),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 12,
+          ),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Card(
+                    shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(6)),
+                    elevation: 2,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10),
+                      child: DropdownButton<String>(
+                        alignment: Alignment.center,
+                        style: TextStyle(
+                          fontSize: 20,
+                          color: HexColor('#101620'),
+                        ),
+                        autofocus: false, iconSize: 30,
+                        isExpanded: true,
+                        // menuMaxHeight: 100,
+                        itemHeight: 50,
+                        underline: Container(
+                          height: 0,
+                        ),
+
+                        value: AppCubit.get(context).Drop_Down_Value5,
+                        // icon: const Icon(Icons.arrow_downward),
+                        // elevation: 16,
+                        hint: const Center(child: Text("Project Updated")),
+
+                        onChanged: (newValue) {
+                          print(newValue);
+
+                          AppCubit.get(context).set_drop5(x: newValue);
+                          AppCubit.get(context).updatedAt = newValue;
+                        },
+                        items:
+                            projectTypeList2.map<DropdownMenuItem<String>>((q) {
+                          return DropdownMenuItem<String>(
+                            value: q,
+                            child: Center(
+                                child:
+                                    Text("${q}", textAlign: TextAlign.center)),
+                          );
+                        }).toList(),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(
+            height: 30,
+          ),
+          defaultButton2(
+              height: 50,
+              onPress: () {
+                AppCubit.get(context).getClubsFilteredWithGov();
+                Navigator.pop(context);
+              },
+              text: 'Submit',
+              color: HexColor('#101620'),
+              width: 170)
+        ],
+      ),
+    ));

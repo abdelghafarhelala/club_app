@@ -2,8 +2,9 @@
     package="com.example.club_app">
    <uses-permission android:name="android.permission.INTERNET"/>
    <uses-permission android:name="android.permission.CAMERA" />
+   <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES" />
    <application
-        android:label="club_app"
+        android:label="Estadat PMS"
         android:name="${applicationName}"
         android:icon="@mipmap/ic_launcher">
         <activity

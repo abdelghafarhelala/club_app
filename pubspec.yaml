@@ -47,13 +47,22 @@ dependencies:
   flutter_native_splash: ^2.2.4
   image_picker: ^0.8.5+3
   http_parser: ^4.0.1
+  easy_splash_screen: ^1.0.3
+  video_player:
+  cached_network_image: ^3.2.1
+  url_launcher: ^6.1.5
+
   # splash_screen_view:
  
 
 flutter_native_splash:
-  background_image: "assets/images/splash.png"
+  color: "#FFFFFF"
   android: true
   ios: true
+  android_12:
+    color: "#FFFFFF"
+  android_gravity: fill
+  
 
 # splash_screen_view:
 #   background_image: "assets/images/splash.png"
@@ -73,7 +82,7 @@ dev_dependencies:
 flutter_icons:
   android: true
   ios: true
-  image_path: "assets/images/app_logo.png"
+  image_path: "assets/images/app_icon.png"
 
   # The "flutter_lints" package below contains a set of recommended lints to
   # encourage good coding practices. The lint set provided by the package is

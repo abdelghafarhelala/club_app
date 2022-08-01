@@ -11,7 +11,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:google_fonts/google_fonts.dart';
 
 var emailVerificationController = TextEditingController();
-var formKey = GlobalKey<FormState>();
+var formKeyForgetPass = GlobalKey<FormState>();
 
 class ForgetPasswordScreen extends StatelessWidget {
   const ForgetPasswordScreen({Key? key}) : super(key: key);
@@ -51,7 +51,7 @@ class ForgetPasswordScreen extends StatelessWidget {
             ),
             child: Center(
               child: Form(
-                key: formKey,
+                key: formKeyForgetPass,
                 child: Column(
                   children: [
                     Padding(
@@ -105,7 +105,8 @@ class ForgetPasswordScreen extends StatelessWidget {
                             builder: (context) => defaultButton(
                                 height: screenHeight / 14,
                                 onPress: () {
-                                  if (formKey.currentState!.validate()) {
+                                  if (formKeyForgetPass.currentState!
+                                      .validate()) {
                                     AppCubit.get(context).sendEmail(
                                         email:
                                             emailVerificationController.text);
@@ -113,7 +114,7 @@ class ForgetPasswordScreen extends StatelessWidget {
                                 },
                                 text: 'Submit'),
                             fallback: (context) =>
-                                const CircularProgressIndicator(),
+                                Center(child: buildLoading()),
                           ),
                           // Container(
                           //   width: double.infinity,

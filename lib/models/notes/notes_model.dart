@@ -1,28 +1,33 @@
 class NotesModel {
   bool? success;
   String? message;
-  Note? note;
+  List<Data>? data;
 
-  NotesModel({this.success, this.message, this.note});
+  NotesModel({this.success, this.message, this.data});
 
   NotesModel.fromJson(Map<String, dynamic> json) {
     success = json['success'];
     message = json['message'];
-    note = json['note'] != String ? new Note.fromJson(json['note']) : null;
+    if (json['data'] != null) {
+      data = <Data>[];
+      json['data'].forEach((v) {
+        data!.add(new Data.fromJson(v));
+      });
+    }
   }
 
   Map<String, dynamic> toJson() {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['success'] = this.success;
     data['message'] = this.message;
-    if (this.note != String) {
-      data['note'] = this.note!.toJson();
+    if (this.data != null) {
+      data['data'] = this.data!.map((v) => v.toJson()).toList();
     }
     return data;
   }
 }
 
-class Note {
+class Data {
   int? id;
   String? noteCategory;
   String? noteStatus;
@@ -32,16 +37,16 @@ class Note {
   Count? count;
   String? manager;
   String? employee;
-  String? fileType;
-  String? filePath;
+  int? gallery;
+  List<ListGallery>? listGallery;
   String? desc;
-  String? employeeReply;
-  String? employeeCloseDate;
+  Null? employeeReply;
+  Null? employeeCloseDate;
   String? deadlineDate;
   String? createdAt;
   String? updatedAt;
 
-  Note(
+  Data(
       {this.id,
       this.noteCategory,
       this.noteStatus,
@@ -51,8 +56,8 @@ class Note {
       this.count,
       this.manager,
       this.employee,
-      this.fileType,
-      this.filePath,
+      this.gallery,
+      this.listGallery,
       this.desc,
       this.employeeReply,
       this.employeeCloseDate,
@@ -60,18 +65,23 @@ class Note {
       this.createdAt,
       this.updatedAt});
 
-  Note.fromJson(Map<String, dynamic> json) {
+  Data.fromJson(Map<String, dynamic> json) {
     id = json['id'];
     noteCategory = json['note_category'];
     noteStatus = json['note_status'];
     seen = json['seen'];
     priority = json['priority'];
     club = json['club'];
-    count = json['count'] != String ? new Count.fromJson(json['count']) : null;
+    count = json['count'] != null ? new Count.fromJson(json['count']) : null;
     manager = json['manager'];
     employee = json['employee'];
-    fileType = json['file_type'];
-    filePath = json['file_path'];
+    gallery = json['gallery'];
+    if (json['list_gallery'] != null) {
+      listGallery = <ListGallery>[];
+      json['list_gallery'].forEach((v) {
+        listGallery!.add(new ListGallery.fromJson(v));
+      });
+    }
     desc = json['desc'];
     employeeReply = json['employee_reply'];
     employeeCloseDate = json['employee_close_date'];
@@ -88,13 +98,15 @@ class Note {
     data['seen'] = this.seen;
     data['priority'] = this.priority;
     data['club'] = this.club;
-    if (this.count != String) {
+    if (this.count != null) {
       data['count'] = this.count!.toJson();
     }
     data['manager'] = this.manager;
     data['employee'] = this.employee;
-    data['file_type'] = this.fileType;
-    data['file_path'] = this.filePath;
+    data['gallery'] = this.gallery;
+    if (this.listGallery != null) {
+      data['list_gallery'] = this.listGallery!.map((v) => v.toJson()).toList();
+    }
     data['desc'] = this.desc;
     data['employee_reply'] = this.employeeReply;
     data['employee_close_date'] = this.employeeCloseDate;
@@ -120,6 +132,28 @@ class Count {
     final Map<String, dynamic> data = new Map<String, dynamic>();
     data['comments'] = this.comments;
     data['members'] = this.members;
+    return data;
+  }
+}
+
+class ListGallery {
+  int? id;
+  String? file;
+  String? fileType;
+
+  ListGallery({this.id, this.file, this.fileType});
+
+  ListGallery.fromJson(Map<String, dynamic> json) {
+    id = json['id'];
+    file = json['file'];
+    fileType = json['file_type'];
+  }
+
+  Map<String, dynamic> toJson() {
+    final Map<String, dynamic> data = new Map<String, dynamic>();
+    data['id'] = this.id;
+    data['file'] = this.file;
+    data['file_type'] = this.fileType;
     return data;
   }
 }

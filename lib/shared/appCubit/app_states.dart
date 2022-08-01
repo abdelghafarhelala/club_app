@@ -34,12 +34,28 @@ class AppGetClubDetailsDataErrorState extends AppStates {}
 
 class AppGetClubDetailsDataLoadingState extends AppStates {}
 
+//get all clubs
 class AppGetClubsSuccessState extends AppStates {}
 
 class AppGetClubsErrorState extends AppStates {}
 
 class AppGetClubsLoadingState extends AppStates {}
 
+//get last clubs
+class AppGetLastClubsSuccessState extends AppStates {}
+
+class AppGetLastClubsErrorState extends AppStates {}
+
+class AppGetLastClubsLoadingState extends AppStates {}
+
+//get  clubs with filter gov
+class AppGetClubsFilteredWithGovSuccessState extends AppStates {}
+
+class AppGetClubsFilteredWithGovErrorState extends AppStates {}
+
+class AppGetClubsFilteredWithGovLoadingState extends AppStates {}
+
+//get all governate
 class AppGetgovernoratesSuccessState extends AppStates {}
 
 class AppGetgovernoratesErrorState extends AppStates {}
@@ -65,6 +81,12 @@ class AppUpdateUserDataErrorState extends AppStates {}
 class AppUpdateUserDataLoadingState extends AppStates {}
 
 class AppGetChangeDropState extends AppStates {}
+
+class AppGetChangeDrop2State extends AppStates {}
+
+class AppGetChangeDrop4State extends AppStates {}
+
+class AppGetChangeDrop3State extends AppStates {}
 
 // app logout states
 class AppLogOutSuccessState extends AppStates {}
@@ -130,6 +152,13 @@ class AppGetRemarkerErrorState extends AppStates {}
 class AppGetRemarkerLoadingState extends AppStates {}
 
 //get remarker states
+class AppGetSingleRemarkerSuccessState extends AppStates {}
+
+class AppGetSingleRemarkerErrorState extends AppStates {}
+
+class AppGetSingleRemarkerLoadingState extends AppStates {}
+
+//get remarker states
 class AppPostNoteSuccessState extends AppStates {
   final NotesModel? model;
 
@@ -175,3 +204,9 @@ class AppGetcountErrorState extends AppStates {}
 class AppGetcountSuccState extends AppStates {}
 
 class AppchangeListValState extends AppStates {}
+
+class AppCountIndexState extends AppStates {}
+
+class appIsFilterdState extends AppStates {}
+
+class AppChangeEyeState extends AppStates {}

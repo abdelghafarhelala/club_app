@@ -11,10 +11,16 @@ import 'package:google_fonts/google_fonts.dart';
 var oldPasswordController = TextEditingController();
 var newPasswordController = TextEditingController();
 var confirmNewPasswordController = TextEditingController();
-var formKey = GlobalKey<FormState>();
 
-class ChangePasswordScreen extends StatelessWidget {
-  const ChangePasswordScreen({Key? key}) : super(key: key);
+class ChangePasswordScreen extends StatefulWidget {
+  const ChangePasswordScreen({super.key});
+
+  @override
+  State<ChangePasswordScreen> createState() => _ChangePasswordScreenState();
+}
+
+class _ChangePasswordScreenState extends State<ChangePasswordScreen> {
+  GlobalKey<FormState> _productKey = GlobalKey<FormState>();
 
   @override
   Widget build(BuildContext context) {
@@ -76,7 +82,7 @@ class ChangePasswordScreen extends StatelessWidget {
             ),
             child: Center(
               child: Form(
-                key: formKey,
+                key: _productKey,
                 child: Column(
                   children: [
                     Padding(
@@ -175,7 +181,7 @@ class ChangePasswordScreen extends StatelessWidget {
                             builder: (context) => defaultButton(
                                 height: screenHeight / 14,
                                 onPress: () {
-                                  if (formKey.currentState!.validate()) {
+                                  if (_productKey.currentState!.validate()) {
                                     AppCubit.get(context).updatePasswordData(
                                         oldPassword: oldPasswordController.text,
                                         newPassword: newPasswordController.text,
@@ -185,7 +191,7 @@ class ChangePasswordScreen extends StatelessWidget {
                                 },
                                 text: 'Update'),
                             fallback: (context) =>
-                                const CircularProgressIndicator(),
+                                Center(child: buildLoading()),
                           ),
                         ],
                       ),

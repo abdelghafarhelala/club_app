@@ -92,8 +92,8 @@ ThemeData lightTheme = ThemeData(
         color: Colors.black87,
       ),
       caption: TextStyle(
-        fontSize: 15,
-        fontWeight: FontWeight.w600,
+        fontSize: 16,
+        fontWeight: FontWeight.w500,
         color: Colors.grey,
       )),
   cardColor: Colors.white,

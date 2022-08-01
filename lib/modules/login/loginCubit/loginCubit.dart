@@ -5,6 +5,8 @@ import 'package:club_app/modules/login/loginCubit/loginStates.dart';
 import 'package:club_app/network/endpoints.dart';
 import 'package:club_app/network/local/cache_Helper.dart';
 import 'package:club_app/network/remote/dio_helper.dart';
+import 'package:club_app/shared/appCubit/app_cubit.dart';
+import 'package:club_app/shared/const.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -30,7 +32,10 @@ class LoginCubit extends Cubit<LoginStates> {
       'password': password,
     }).then((value) {
       loginModel = UserModel.fromJson(value.data);
+      print(value.data);
       CacheHelper.saveData(key: 'token', value: loginModel?.token);
+      token = loginModel?.token;
+      AppCubit.get(context).getUserData();
       emit(LoginSuccessState(loginModel));
     }).catchError((error) {
       print(error.toString());

@@ -22,7 +22,7 @@ var emailVerificationController3 = TextEditingController();
 var emailVerificationController5 = TextEditingController();
 StreamController<ErrorAnimationType> errorController =
     StreamController<ErrorAnimationType>();
-var formKey = GlobalKey<FormState>();
+var formKeyVerfication = GlobalKey<FormState>();
 
 class VerificationScreen extends StatefulWidget {
   final String? email;
@@ -72,7 +72,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
           ),
           child: Center(
             child: Form(
-              key: formKey,
+              key: formKeyVerfication,
               child: Column(
                 children: [
                   Padding(
@@ -145,7 +145,8 @@ class _VerificationScreenState extends State<VerificationScreen> {
                           builder: (context) => defaultButton(
                               height: screenHeight / 16,
                               onPress: () {
-                                if (formKey.currentState!.validate()) {
+                                if (formKeyVerfication.currentState!
+                                    .validate()) {
                                   print(emailVerificationController1.text);
                                   print(email);
                                   AppCubit.get(context).sendOpt(
@@ -154,8 +155,7 @@ class _VerificationScreenState extends State<VerificationScreen> {
                                 } else {}
                               },
                               text: 'Confirm'),
-                          fallback: (context) =>
-                              const CircularProgressIndicator(),
+                          fallback: (context) => Center(child: buildLoading()),
                         ),
                         const SizedBox(
                           height: 20,

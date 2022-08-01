@@ -17,11 +17,12 @@ var selectedItem;
 var selectedItem2;
 int? depid;
 var emailController = TextEditingController();
+var jobTitleController = TextEditingController();
 var nameController = TextEditingController();
 var phoneController = TextEditingController();
 var passwordController = TextEditingController();
 var confirmPasswordController = TextEditingController();
-var formKey = GlobalKey<FormState>();
+var formKeyRegister = GlobalKey<FormState>();
 
 var selectedValue;
 
@@ -75,24 +76,41 @@ class _RegisterScreenState extends State<RegisterScreen> {
               ),
               child: Center(
                 child: Form(
-                  key: formKey,
+                  key: formKeyRegister,
                   child: Column(
                     children: [
+                      SizedBox(
+                        height: screenHeight / 14,
+                      ),
+                      Row(
+                        children: [
+                          const SizedBox(
+                            width: 15,
+                          ),
+                          IconButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                            },
+                            icon: const Icon(
+                              Icons.arrow_back_ios,
+                              color: Colors.black,
+                              size: 30,
+                            ),
+                          ),
+                          Image.asset(
+                            'assets/images/name.png',
+                            height: screenHeight / 11,
+                          ),
+                        ],
+                      ),
+                      SizedBox(
+                        height: screenHeight / 20,
+                      ),
                       Padding(
                         padding:
                             EdgeInsets.symmetric(horizontal: screenHeight / 34),
                         child: Column(
                           children: [
-                            SizedBox(
-                              height: screenHeight / 14,
-                            ),
-                            Image.asset(
-                              'assets/images/name.png',
-                              height: screenHeight / 11,
-                            ),
-                            SizedBox(
-                              height: screenHeight / 20,
-                            ),
                             const Text(
                               'You are one of our team',
                               style: TextStyle(
@@ -116,7 +134,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                     }
                                   },
                                   context: context,
-                                  type: TextInputType.emailAddress),
+                                  type: TextInputType.text),
                             ),
                             const SizedBox(
                               height: 5,
@@ -150,7 +168,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               ),
                               elevation: 1.5,
                               child: defaultTextField(
-                                  lable: 'E-mail or Mobile',
+                                  lable: 'E-mail',
                                   controller: emailController,
                                   prefix: Icons.email_outlined,
                                   validate: (String value) {
@@ -194,12 +212,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                               'Dept',
                                               // style: TextStyle(color: Colors.red),
                                             ),
-                                            items:
-                                                listOfValue.map((String val) {
+                                            items: AppCubit.get(context)
+                                                .departData
+                                                .map<DropdownMenuItem<String>>(
+                                                    (val) {
                                               return DropdownMenuItem(
-                                                value: val,
+                                                value: val.name,
                                                 child: Text(
-                                                  val,
+                                                  val.name!,
                                                 ),
                                               );
                                             }).toList(),
@@ -221,56 +241,22 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               height: 5,
                             ),
                             Card(
-                              elevation: 1.5,
-                              child: Container(
-                                width: double.infinity,
-                                height: screenHeight / 16,
-                                child: Padding(
-                                  padding: const EdgeInsets.all(12.0),
-                                  child: Row(
-                                    children: [
-                                      const ImageIcon(
-                                        AssetImage("assets/images/job.png"),
-                                      ),
-                                      const SizedBox(
-                                        width: 10,
-                                      ),
-                                      Expanded(
-                                        child: Container(
-                                          child: DropdownButton(
-                                            iconSize: 30,
-                                            autofocus: false,
-                                            underline: Container(
-                                              height: 0,
-                                            ),
-                                            onTap: () {},
-                                            isExpanded: true,
-                                            hint: const Text(
-                                              'Job Title',
-                                              // style: TextStyle(color: Colors.red),
-                                            ),
-                                            items:
-                                                listOfValue2.map((String val) {
-                                              return DropdownMenuItem(
-                                                value: val,
-                                                child: Text(
-                                                  val,
-                                                ),
-                                              );
-                                            }).toList(),
-                                            onChanged: (val) {
-                                              setState(() {
-                                                selectedItem2 = val;
-                                              });
-                                            },
-                                            value: selectedItem2,
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
+                              shape: BeveledRectangleBorder(
+                                borderRadius: BorderRadius.circular(4.0),
                               ),
+                              elevation: 1.5,
+                              child: defaultTextFieldWithCustomIconImage(
+                                  lable: 'Job Title',
+                                  controller: jobTitleController,
+                                  prefix: ImageIcon(
+                                      AssetImage("assets/images/job.png")),
+                                  validate: (String value) {
+                                    if (value.isEmpty) {
+                                      return 'Job Title can\'t be Empty  ';
+                                    }
+                                  },
+                                  context: context,
+                                  type: TextInputType.text),
                             ),
                             const SizedBox(
                               height: 5,
@@ -306,7 +292,8 @@ class _RegisterScreenState extends State<RegisterScreen> {
                               builder: (context) => defaultButton(
                                   height: screenHeight / 16,
                                   onPress: () {
-                                    if (formKey.currentState!.validate()) {
+                                    if (formKeyRegister.currentState!
+                                        .validate()) {
                                       if (selectedItem == 'HR') {
                                         depid = 1;
                                       } else if (selectedItem == 'CEO') {
@@ -321,13 +308,14 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                           phone: phoneController.text,
                                           name: nameController.text,
                                           password: passwordController.text,
-                                          jobTitle: selectedItem2,
-                                          departmentId: depid!);
+                                          jobTitle: jobTitleController.text,
+                                          departmentId: depid!,
+                                          context: context);
                                     } else {}
                                   },
                                   text: 'Register'),
                               fallback: (context) =>
-                                  const CircularProgressIndicator(),
+                                  Center(child: buildLoading()),
                             ),
                           ],
                         ),

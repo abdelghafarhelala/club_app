@@ -1,10 +1,14 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:club_app/models/remarker/remarker_model.dart';
 import 'package:club_app/models/userModel/userModel.dart';
+import 'package:club_app/modules/full_screen_image/full_screen_image.dart';
 import 'package:club_app/modules/replay/replay.dart';
+import 'package:club_app/modules/vedio/vedio.dart';
 import 'package:club_app/network/endpoints.dart';
 import 'package:club_app/shared/appCubit/app_cubit.dart';
 import 'package:club_app/shared/appCubit/app_states.dart';
 import 'package:club_app/shared/components/components.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/src/foundation/key.dart';
 import 'package:flutter/src/widgets/framework.dart';
@@ -12,10 +16,17 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:hexcolor/hexcolor.dart';
 import 'package:intl/intl.dart';
 
+String ay = '';
+
 final f = new DateFormat('dd/MM/yyyy HH:mm');
+var decController = TextEditingController();
 
 class Remarker extends StatelessWidget {
-  const Remarker({Key? key}) : super(key: key);
+  final int club_id;
+  final int noteCategory_id;
+  const Remarker(
+      {Key? key, required this.club_id, required this.noteCategory_id})
+      : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -25,6 +36,7 @@ class Remarker extends StatelessWidget {
     return BlocConsumer<AppCubit, AppStates>(
       builder: (BuildContext context, state) {
         return Scaffold(
+            resizeToAvoidBottomInset: false,
             appBar: AppBar(
               leading: IconButton(
                 onPressed: () {
@@ -46,8 +58,11 @@ class Remarker extends StatelessWidget {
               centerTitle: true,
               actions: [
                 IconButton(
-                    onPressed: () {},
-                    icon: const Icon(Icons.notifications_none_rounded))
+                  onPressed: () {},
+                  icon: const Icon(Icons.notifications_none_rounded),
+                  color: Colors.black,
+                  iconSize: 30,
+                )
               ],
             ),
             body: Column(
@@ -60,25 +75,16 @@ class Remarker extends StatelessWidget {
                       padding: const EdgeInsets.all(12.0),
                       child: Row(
                         children: [
-                          Center(
-                            child: Container(
-                              color: Colors.white,
-                              padding: EdgeInsets.all(12),
-                              width: 118,
-                              height: 61,
-                              // padding: EdgeInsets.only(bottom: 40),
-                              child: Container(
-                                child: Image(
-                                  image: NetworkImage(
-                                    // project.logo ??
-                                    'https://estadat.ivas.com.eg/uploads/projects/l8QABPuCRmkeDEdAoZYHIk99lEgl0WjvmhtxRIK8.png',
+                          Container(
+                            height: 70,
+                            width: 100,
+                            decoration: const BoxDecoration(
+                                color: Colors.white,
+                                image: DecorationImage(
+                                  image: AssetImage(
+                                    'assets/images/est.jpg',
                                   ),
-                                  width: 50,
-                                  height: 38,
-                                  fit: BoxFit.fill,
-                                ),
-                              ),
-                            ),
+                                )),
                           ),
                           const SizedBox(
                             width: 5,
@@ -121,7 +127,12 @@ class Remarker extends StatelessWidget {
                   alignment: Alignment.bottomCenter,
                   child: InkWell(
                     onTap: () {
-                      navigateTo(context, Replay());
+                      navigateTo(
+                          context,
+                          Replay(
+                            clubId: club_id,
+                            NoteCategoryId: noteCategory_id,
+                          ));
                     },
                     child: Container(
                       width: double.infinity,
@@ -143,96 +154,316 @@ class Remarker extends StatelessWidget {
   }
 }
 
-Widget buildRemarkerItem(context, Data? remarkerData) => InkWell(
-      onTap: () {
-        print(remarkerData?.filePath);
-      },
-      child: Column(
-        children: [
-          Padding(
-            padding: const EdgeInsets.all(12.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.start,
+Widget buildRemarkerItem(context, Data? remarkerData) {
+  Widget buildDialog(
+    context,
+  ) {
+    return Dialog(
+      backgroundColor: Colors.black.withOpacity(.001),
+      insetPadding: EdgeInsets.all(20),
+      insetAnimationCurve: Curves.linearToEaseOut,
+      // shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12.0)),
+      child: Container(
+        // padding: EdgeInsets.all(20),
+        height: 400,
+        width: 450,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Container(
+              // color: Colors.black.withOpacity(.0),
+              margin: EdgeInsets.all(0),
+              padding: EdgeInsets.all(0),
 
-              // crossAxisAlignment: CrossAxisAlignment.start,
-
-              children: [
-                Container(
-                  child: Center(
-                      child: Text(
-                    remarkerData?.employee?[0] ?? ''.toUpperCase(),
-                    style: TextStyle(fontSize: 30),
+              height: 30,
+              child: IconButton(
+                  padding: EdgeInsets.zero,
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
+                  icon: ImageIcon(
+                    AssetImage('assets/images/Path 11627.png'),
+                    color: Colors.white,
+                    size: 30,
                   )),
-                  height: 38,
-                  width: 38,
-                  decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Colors.white,
-                      border: Border.all(width: 1, color: Colors.black)),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Container(
+              width: 400,
+              height: 260,
+              decoration: BoxDecoration(
+                  image: DecorationImage(
+                      image: NetworkImage(remarkerData
+                              ?.listGallery?[AppCubit.get(context).index]
+                              .file ??
+                          ''),
+                      fit: BoxFit.cover)),
+            ),
+            SizedBox(
+              height: 20,
+            ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                IconButton(
+                    onPressed: () {
+                      if (AppCubit.get(context).index > 0) {
+                        if (remarkerData!
+                                .listGallery?[AppCubit.get(context).index - 1]
+                                .fileType ==
+                            'Video') {
+                          print(
+                              '************************************************88');
+                          print(AppCubit.get(context).index);
+                          AppCubit.get(context).count2Index();
+                          AppCubit.get(context).count2Index();
+                        } else {
+                          AppCubit.get(context).count2Index();
+                        }
+                      }
+                    },
+                    icon: Icon(Icons.arrow_back),
+                    color: Colors.white),
+                SizedBox(
+                  width: 30,
                 ),
-                const SizedBox(
-                  width: 10,
-                ),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      remarkerData?.employee ?? '',
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                    SizedBox(
-                      height: 2,
-                    ),
-                    Text(
-                      '${DateTime.parse(remarkerData!.createdAt!).day.toString()}-${DateTime.parse(remarkerData.createdAt!).month.toString()}-${DateTime.parse(remarkerData.createdAt!).year.toString()} ${DateTime.parse(remarkerData.createdAt!).hour.toString()}:${DateTime.parse(remarkerData.createdAt!).second.toString()} ',
-                      style: Theme.of(context).textTheme.bodyText2,
-                    ),
-                  ],
-                ),
-                const Spacer(),
-                if (remarkerData.fileType == 'Video')
-                  const Image(
-                      image:
-                          AssetImage("assets/images/Icon feather-video.png")),
-                const SizedBox(
-                  width: 5,
-                ),
-                const SizedBox(
-                  width: 5,
-                ),
-                if (remarkerData.fileType == 'Image')
-                  const Image(
+                IconButton(
+                    onPressed: () {
+                      if (AppCubit.get(context).index == 0 ||
+                          AppCubit.get(context).index <
+                              remarkerData!.listGallery!.length - 1) {
+                        if (remarkerData!
+                                .listGallery?[AppCubit.get(context).index + 1]
+                                .fileType ==
+                            'Video') {
+                          AppCubit.get(context).countIndex();
+                          AppCubit.get(context).countIndex();
+                        } else {
+                          AppCubit.get(context).countIndex();
+                        }
+                      }
+                    },
+                    icon: Icon(Icons.arrow_forward),
+                    color: Colors.white),
+              ],
+            )
+          ],
+        ),
+      ),
+    );
+  }
+
+  return InkWell(
+    onTap: () {
+      // print(remarkerData?.filePath);
+    },
+    child: Column(
+      children: [
+        Padding(
+          padding: const EdgeInsets.all(12.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+
+            // crossAxisAlignment: CrossAxisAlignment.start,
+
+            children: [
+              Container(
+                child: Center(
+                    child: Text(
+                  remarkerData?.employee?[0] ?? ''.toUpperCase(),
+                  style: TextStyle(fontSize: 30),
+                )),
+                height: 38,
+                width: 38,
+                decoration: BoxDecoration(
+                    shape: BoxShape.circle,
+                    color: Colors.white,
+                    border: Border.all(width: 1, color: Colors.black)),
+              ),
+              const SizedBox(
+                width: 10,
+              ),
+              Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text(
+                    remarkerData?.employee ?? '',
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                  SizedBox(
+                    height: 2,
+                  ),
+                  Text(
+                    '${DateTime.parse(remarkerData!.createdAt!).day.toString()}-${DateTime.parse(remarkerData.createdAt!).month.toString()}-${DateTime.parse(remarkerData.createdAt!).year.toString()} ${DateTime.parse(remarkerData.createdAt!).hour.toString()}:${DateTime.parse(remarkerData.createdAt!).second.toString()} ',
+                    style: Theme.of(context).textTheme.bodyText2,
+                  ),
+                ],
+              ),
+              const Spacer(),
+              if (remarkerData.listGallery!.length == 1)
+                if (remarkerData.listGallery!.isNotEmpty &&
+                    remarkerData.listGallery?[0].fileType == 'Video')
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          navigateTo(
+                              context,
+                              VideoPlayerScreen(
+                                url: remarkerData.listGallery?[0].file ?? '',
+                              ));
+                        },
+                        child: const Image(
+                          height: 20,
+                          image: AssetImage(
+                              "assets/images/Icon feather-video.png"),
+                        ),
+                      ),
+                      Container(
+                        width: 1,
+                        height: 25,
+                        color: Colors.grey,
+                      ),
+                    ],
+                  ),
+              if (remarkerData.listGallery!.length > 1 &&
+                  remarkerData.listGallery!.length > 2 &&
+                  remarkerData.listGallery!.length < 4)
+                if ((remarkerData.listGallery!.isNotEmpty &&
+                        remarkerData.listGallery?[0].fileType == 'Video') ||
+                    remarkerData.listGallery?[1].fileType == 'Video' ||
+                    remarkerData.listGallery?[2].fileType == 'Video')
+                  Row(
+                    children: [
+                      InkWell(
+                        onTap: () {
+                          remarkerData.listGallery!.forEach((element) {
+                            if (element.fileType == 'Video') {
+                              navigateTo(
+                                  context,
+                                  VideoPlayerScreen(
+                                    url: element.file ?? '',
+                                  ));
+                            }
+                          });
+                        },
+                        child: const Image(
+                            height: 20,
+                            image: AssetImage(
+                                "assets/images/Icon feather-video.png")),
+                      ),
+                      SizedBox(
+                        width: 5,
+                      ),
+                      Container(
+                        width: 1,
+                        height: 25,
+                        color: Colors.grey,
+                      ),
+                    ],
+                  ),
+              const SizedBox(
+                width: 5,
+              ),
+              if (remarkerData.listGallery!.isNotEmpty &&
+                  remarkerData.listGallery?[0].fileType == 'Image')
+                InkWell(
+                  onTap: () {
+                    AppCubit.get(context).index = 0;
+                    showDialog(
+                      context: context,
+                      builder: (context) => buildDialog(context),
+                    );
+                    // navigateTo(
+                    //     context,
+                    //     FullScreenImageScreen(
+                    //         imagePath: remarkerData.filePath ?? ''));
+
+                    // Navigator.of(context).push(
+                    //   PageRouteBuilder(
+                    //     opaque: true,
+                    //     barrierDismissible: false,
+                    //     pageBuilder: (BuildContext context, _, __) {
+                    //       return Scaffold(
+                    //         body: SafeArea(
+                    //           child: Column(
+                    //             mainAxisAlignment: MainAxisAlignment.center,
+                    //             children: <Widget>[
+                    //               Align(
+                    //                 alignment: Alignment.topRight,
+                    //                 child: IconButton(
+                    //                     onPressed: () =>
+                    //                         Navigator.of(context).pop(),
+                    //                     icon: const Icon(Icons.cancel_sharp)),
+                    //               ),
+                    //               Expanded(
+                    //                 child: InteractiveViewer(
+                    //                   scaleEnabled: true,
+                    //                   panEnabled: true,
+                    //                   child: Hero(
+                    //                     tag: remarkerData
+                    //                       ..listGallery?[0].file!,
+                    //                     child: Center(
+                    //                         child: Image(
+                    //                             image: NetworkImage(
+                    //                                 remarkerData
+                    //                                     .listGallery![0]
+                    //                                     .file!))),
+                    //                   ),
+                    //                 ),
+                    //               ),
+                    //             ],
+                    //           ),
+                    //         ),
+                    //       );
+                    //     },
+                    //   ),
+                    // );
+                  },
+                  child: const Image(
+                      height: 30,
                       image:
                           AssetImage("assets/images/Icon feather-image.png")),
-              ],
-            ),
+                ),
+            ],
           ),
-          Card(
+        ),
+        Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Card(
             elevation: 4,
             borderOnForeground: true,
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.only(
-              topLeft: Radius.circular(7),
-              topRight: Radius.circular(7),
-            )),
+            // shape: RoundedRectangleBorder(
+            // borderRadius: BorderRadius.circular(10)),
             clipBehavior: Clip.antiAlias,
             child: Container(
               width: double.infinity,
-              height: 170,
+              height: 110,
               child: Column(
                 children: [
                   Container(
-                    height: 170,
-                    decoration: BoxDecoration(
-                        image: DecorationImage(
-                            image: NetworkImage(remarkerData.filePath ??
-                                'https://t4.ftcdn.net/jpg/02/51/95/53/240_F_251955356_FAQH0U1y1TZw3ZcdPGybwUkH90a3VAhb.jpg'),
-                            fit: BoxFit.contain)),
+                    // decoration: BoxDecoration(
+                    //     border: Border.all(width: 1, color: Colors.grey[300]!)),
+                    child: TextFormField(
+                      maxLines: 3,
+                      controller:
+                          TextEditingController(text: remarkerData.desc),
+                      enabled: false,
+                      decoration: InputDecoration(
+                          border: InputBorder.none,
+                          disabledBorder: InputBorder.none,
+                          contentPadding: EdgeInsets.all(8)),
+                    ),
                   ),
                 ],
               ),
             ),
           ),
-        ],
-      ),
-    );
+        ),
+      ],
+    ),
+  );
+}

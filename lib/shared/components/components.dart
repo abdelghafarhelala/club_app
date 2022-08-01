@@ -1,3 +1,4 @@
+import 'package:club_app/modules/drawer_unapproved/drawer_unapproved.dart';
 import 'package:club_app/modules/myDrawer/myDrawer.dart';
 import 'package:club_app/shared/colors.dart';
 import 'package:club_app/shared/colors.dart';
@@ -41,11 +42,34 @@ Widget defaultButton({
         style: const TextStyle(color: Colors.white, fontSize: 25),
       ),
     );
+Widget defaultButton2({
+  required double width,
+  required double height,
+  required Color color,
+  required Function onPress,
+  required String text,
+  double radius = 0.0,
+  bool isUpper = false,
+}) =>
+    MaterialButton(
+      color: color,
+      minWidth: width,
+      height: height,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.all(Radius.circular(27.0))),
+      onPressed: () {
+        onPress();
+      },
+      child: Text(
+        isUpper ? text.toUpperCase() : text,
+        style: const TextStyle(color: Colors.white, fontSize: 25),
+      ),
+    );
 
 Widget defaultTextField({
   required String lable,
   required IconData prefix,
-  required Function? validate,
+  Function? validate,
   required context,
   IconData? suffix,
   ImageIcon? imageIcon,
@@ -54,7 +78,7 @@ Widget defaultTextField({
   required TextInputType type,
   List<TextInputFormatter> formats = const [],
   required var controller,
-  // Function? ontap,
+  Function? ontap,
   // Function? onChange,
 }) =>
     TextFormField(
@@ -76,7 +100,7 @@ Widget defaultTextField({
       },
       controller: controller,
       onTap: () {
-        // ontap!();
+        ontap!();
       },
       // onChanged: (String s){
       //     onChange!(s);
@@ -102,6 +126,8 @@ Widget defaultTextFieldWithCustomIconImage({
       decoration: InputDecoration(
         labelText: lable,
         prefixIcon: prefix,
+        prefixIconConstraints:
+            BoxConstraints(maxHeight: 40, maxWidth: 50, minWidth: 50),
         suffixIcon: IconButton(
             icon: Icon(suffix),
             onPressed: () {
@@ -130,7 +156,7 @@ void showToast({@required String? text, @required ToastStates? state}) =>
         timeInSecForIosWeb: 7,
         backgroundColor: toastColor(state!),
         textColor: Colors.white,
-        fontSize: 20.0);
+        fontSize: 16.0);
 
 enum ToastStates { success, error, Warrnaing }
 
@@ -163,6 +189,18 @@ Widget defaultDrawer(context) => Container(
         ),
       ),
     );
+Widget notDefaultDrawer(context) => Container(
+      padding: EdgeInsets.all(0),
+      width: 250,
+      child: Drawer(
+        child: Column(
+          children: [
+            const DrawerUnapproved(),
+            const DrawerUnapproved().DrawerUnapprovedList(context),
+          ],
+        ),
+      ),
+    );
 
 PreferredSizeWidget defaultAppBar(context, String title, isFirst) => AppBar(
       title: Text(title),
@@ -174,4 +212,34 @@ PreferredSizeWidget defaultAppBar(context, String title, isFirst) => AppBar(
               },
               icon: const Icon(Icons.arrow_forward))
       ],
+    );
+buildIndicator(context) => showDialog(
+      context: context,
+      // barrierColor: _backgroundColor,
+      builder: (BuildContext dialogContext) {
+        return AlertDialog(
+          // backgroundColor: _backgroundColor,
+          content: Container(
+            child: Center(
+              child: Image.asset(
+                'assets/images/ind.gif', // Put your gif into the assets folder
+                width: 100,
+              ),
+            ),
+          ),
+        );
+      },
+    );
+
+Widget buildLoading() => Container(
+      // width: double.infinity,
+      // height: double.infinity,
+      color: Colors.white,
+      child: Center(
+        child: Image(
+            width: 80,
+            image: AssetImage(
+              'assets/images/ind.gif',
+            )),
+      ),
     );

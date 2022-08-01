@@ -3,6 +3,7 @@ import 'package:club_app/modules/home/home_screen.dart';
 import 'package:club_app/modules/login/loginCubit/loginCubit.dart';
 import 'package:club_app/modules/login/loginCubit/loginStates.dart';
 import 'package:club_app/modules/register/register.dart';
+import 'package:club_app/modules/wait_manager/wait_manager.dart';
 import 'package:club_app/network/local/cache_Helper.dart';
 import 'package:club_app/shared/appCubit/app_cubit.dart';
 import 'package:club_app/shared/colors.dart';
@@ -16,7 +17,7 @@ import 'package:hexcolor/hexcolor.dart';
 
 var phoneController = TextEditingController();
 var passwordController = TextEditingController();
-var formKey = GlobalKey<FormState>();
+var formKeyLogin = GlobalKey<FormState>();
 
 class LoginScreen extends StatelessWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -32,16 +33,21 @@ class LoginScreen extends StatelessWidget {
               CacheHelper.saveData(key: "token", value: state.model?.token)
                   .then((value) {
                 token = state.model?.token;
-                AppCubit.get(context).getClubs();
-                navigateAndFinish(context, HomeScreen());
-                AppCubit.get(context).getUserData();
-                AppCubit.get(context).getgovernorates();
-                AppCubit.get(context).getCount();
-                AppCubit.get(context).getproject();
-                AppCubit.get(context).getDepartment();
-                AppCubit.get(context).getReMarkerData();
-                AppCubit.get(context).getNoteCategoryData();
-                AppCubit.get(context).getDepartment();
+                if (state.model!.user!.active == 'pending') {
+                  navigateAndFinish(context, WaitManagerApproveScreen());
+                } else {
+                  AppCubit.get(context).getClubs();
+                  navigateAndFinish(context, HomeScreen());
+                  AppCubit.get(context).getUserData();
+                  AppCubit.get(context).getgovernorates();
+                  AppCubit.get(context).getCount();
+                  AppCubit.get(context).getproject();
+                  AppCubit.get(context).getDepartment();
+                  AppCubit.get(context).getReMarkerData();
+                  AppCubit.get(context).getNoteCategoryData();
+                  AppCubit.get(context).getDepartment();
+                  AppCubit.get(context).getLastClubs();
+                }
                 showToast(
                     text: 'Login successfully', state: ToastStates.success);
                 // print(state.model?.data!.name);
@@ -71,7 +77,7 @@ class LoginScreen extends StatelessWidget {
               ),
               child: Center(
                 child: Form(
-                  key: formKey,
+                  key: formKeyLogin,
                   child: Column(
                     children: [
                       Padding(
@@ -168,7 +174,7 @@ class LoginScreen extends StatelessWidget {
                               builder: (context) => defaultButton(
                                   height: screenHeight / 14,
                                   onPress: () {
-                                    if (formKey.currentState!.validate()) {
+                                    if (formKeyLogin.currentState!.validate()) {
                                       LoginCubit.get(context).userLogin(
                                           phone: phoneController.text,
                                           password: passwordController.text,
@@ -177,7 +183,7 @@ class LoginScreen extends StatelessWidget {
                                   },
                                   text: 'Login'),
                               fallback: (context) =>
-                                  const CircularProgressIndicator(),
+                                  Center(child: buildLoading()),
                             ),
                             // Container(
                             //   width: double.infinity,
@@ -219,7 +225,7 @@ class LoginScreen extends StatelessWidget {
                             SizedBox(height: screenHeight / 30),
                             MaterialButton(
                               onPressed: () {
-                                navigateAndFinish(context, RegisterScreen());
+                                navigateTo(context, RegisterScreen());
                               },
                               hoverColor: primaryColor,
                               shape: const RoundedRectangleBorder(
