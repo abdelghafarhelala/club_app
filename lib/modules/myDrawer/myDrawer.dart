@@ -50,7 +50,7 @@ class MyDrawer extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        userData?.user?.name ?? 'User Name',
+                        userData?.data?.name ?? 'User Name',
                         style:
                             const TextStyle(color: Colors.white, fontSize: 21),
                       ),
@@ -58,7 +58,7 @@ class MyDrawer extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        userData?.user?.jobTitle ?? 'Job Title',
+                        userData?.data?.jobTitle ?? 'Job Title',
                         style:
                             const TextStyle(color: Colors.white, fontSize: 15),
                       ),
@@ -96,11 +96,11 @@ class MyDrawer extends StatelessWidget {
           menuItem(context, 'assets/images/pers.png', 'Update Profile',
               UpdateProfileScreen(),
               index: 1),
-          if (AppCubit.get(context).profile?.user?.role == 'Super Admin')
+          if (AppCubit.get(context).profile?.data?.role == 'Super Admin')
             menuItem(
                 context, 'assets/images/add.png', 'Add Project ', HomeScreen(),
                 index: 3),
-          if (AppCubit.get(context).profile?.user?.role == 'Super Admin')
+          if (AppCubit.get(context).profile?.data?.role == 'Super Admin')
             menuItem(
                 context, 'assets/images/user.png', ' Add Users', HomeScreen(),
                 index: 2),

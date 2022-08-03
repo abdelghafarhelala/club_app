@@ -35,7 +35,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    var profileData = AppCubit.get(context).profile?.user;
+    var profileData = AppCubit.get(context).profile?.data;
 
     emailController.text = profileData?.email ?? '';
     jobTitleController.text = profileData?.jobTitle ?? '';
@@ -50,6 +50,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
             AppCubit.get(context).getUserData();
             showToast(
                 text: state.model?.message ?? '', state: ToastStates.success);
+
             navigateAndFinish(context, HomeScreen());
             print(state.model?.user!.name);
           } else {
@@ -342,9 +343,7 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                                             email: emailController.text,
                                             phone: phoneController.text,
                                             name: nameController.text,
-                                            jobTitle: AppCubit.get(context)
-                                                    .selectedItem2 ??
-                                                '',
+                                            jobTitle: jobTitleController.text,
                                             departmentId: depid ?? 1);
                                       } else {}
                                     },
@@ -353,24 +352,6 @@ class _UpdateProfileScreenState extends State<UpdateProfileScreen> {
                           ],
                         ),
                       ),
-                      Spacer(),
-                      InkWell(
-                        onTap: () {},
-                        child: Container(
-                          color: HexColor('#6F6F6F'),
-                          height: screenHeight / 14,
-                          width: double.infinity,
-                          child: const Center(
-                            child: Text(
-                              'Submit',
-                              style: TextStyle(
-                                  fontSize: 25,
-                                  fontWeight: FontWeight.w300,
-                                  color: Colors.white),
-                            ),
-                          ),
-                        ),
-                      )
                     ],
                   ),
                 ),

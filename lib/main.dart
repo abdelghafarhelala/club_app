@@ -38,7 +38,11 @@ void main() async {
     backgroundImage: AssetImage('assets/images/splash.png'),
     showLoader: false,
     // loadingText: Text("Loading..."),
-    navigator: token == null ? LoginScreen() : HomeScreen(),
+    navigator: token == null
+        ? LoginScreen()
+        : token == ''
+            ? LoginScreen()
+            : HomeScreen(),
     durationInSeconds: 3,
   );
   startWidget = examp;
@@ -97,6 +101,8 @@ class MyApp extends StatelessWidget {
             home: startWidget,
             // home: LoginScreen(),
             builder: (context, child) {
+              // print('____________________________-------------------------');
+              // print(token);
               return MediaQuery(
                 child: child!,
                 data: MediaQuery.of(context).copyWith(textScaleFactor: 1.0),

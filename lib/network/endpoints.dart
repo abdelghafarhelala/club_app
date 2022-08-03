@@ -1,6 +1,6 @@
 const String registerUrl = 'register';
 const String loginUrl = 'login';
-const String profileUrl = 'users/1';
+const String profileUrl = 'details';
 const String updateProfile = 'profile/info';
 const String sendEmailUrl = 'password/forget';
 const String checkOptUrl = 'password/check-opt';

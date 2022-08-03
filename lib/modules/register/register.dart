@@ -51,7 +51,7 @@ class _RegisterScreenState extends State<RegisterScreen> {
                 showToast(
                     text: 'Register successfully', state: ToastStates.success);
                 navigateAndFinish(context, LoginScreen());
-                print(state.model?.user!.name);
+                // print(state.model?.user!.name);
               });
             } else {
               showToast(text: state.model?.message, state: ToastStates.error);
@@ -294,23 +294,30 @@ class _RegisterScreenState extends State<RegisterScreen> {
                                   onPress: () {
                                     if (formKeyRegister.currentState!
                                         .validate()) {
-                                      if (selectedItem == 'HR') {
-                                        depid = 1;
-                                      } else if (selectedItem == 'CEO') {
-                                        depid = 2;
-                                      } else if (selectedItem == 'Employee') {
-                                        depid = 3;
-                                      } else if (selectedItem == 'Legal') {
-                                        depid = 4;
-                                      }
+                                      // if (selectedItem == 'HR') {
+                                      //   depid = 1;
+                                      // } else if (selectedItem == 'CEO') {
+                                      //   depid = 2;
+                                      // } else if (selectedItem == 'Employee') {
+                                      //   depid = 3;
+                                      // } else if (selectedItem == 'Legal') {
+                                      //   depid = 4;
+                                      // }
+                                      AppCubit.get(context)
+                                          .departData
+                                          .forEach((element) {
+                                        if (selectedItem == element.name) {
+                                          depid = element.id;
+                                        }
+                                      });
                                       RegisterCubit.get(context).userRegister(
-                                          email: emailController.text,
-                                          phone: phoneController.text,
-                                          name: nameController.text,
-                                          password: passwordController.text,
-                                          jobTitle: jobTitleController.text,
-                                          departmentId: depid!,
-                                          context: context);
+                                        email: emailController.text,
+                                        phone: phoneController.text,
+                                        name: nameController.text,
+                                        password: passwordController.text,
+                                        jobTitle: jobTitleController.text,
+                                        departmentId: depid!,
+                                      );
                                     } else {}
                                   },
                                   text: 'Register'),

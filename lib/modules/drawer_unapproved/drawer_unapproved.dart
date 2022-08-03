@@ -50,7 +50,7 @@ class DrawerUnapproved extends StatelessWidget {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
-                        userData?.user?.name ?? '',
+                        userData?.data?.name ?? 'Wait for approval',
                         style:
                             const TextStyle(color: Colors.white, fontSize: 21),
                       ),
@@ -58,7 +58,7 @@ class DrawerUnapproved extends StatelessWidget {
                         height: 5,
                       ),
                       Text(
-                        userData?.user?.jobTitle ?? '',
+                        userData?.data?.jobTitle ?? '',
                         style:
                             const TextStyle(color: Colors.white, fontSize: 15),
                       ),

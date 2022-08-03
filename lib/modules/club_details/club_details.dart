@@ -635,7 +635,7 @@ class ClubDetails extends StatelessWidget {
                                         children: [
                                           Expanded(
                                             child: Text(
-                                              '10',
+                                              '${Model?.shopsNumber}',
                                               maxLines: 1,
                                               overflow: TextOverflow.ellipsis,
                                               textAlign: TextAlign.center,
@@ -774,7 +774,7 @@ class ClubDetails extends StatelessWidget {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            '5',
+                                            '${Model?.gallery}',
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             textAlign: TextAlign.center,
@@ -846,7 +846,7 @@ class ClubDetails extends StatelessWidget {
                                       children: [
                                         Expanded(
                                           child: Text(
-                                            '10',
+                                            '${Model?.facilities}',
                                             maxLines: 1,
                                             overflow: TextOverflow.ellipsis,
                                             textAlign: TextAlign.center,

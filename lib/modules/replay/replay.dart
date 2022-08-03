@@ -118,7 +118,9 @@ class Replay extends StatelessWidget {
                     // crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Container(
-                        child: Center(child: Text("  H S ")),
+                        child: Center(
+                            child: Text(
+                                "  ${AppCubit.get(context).profile?.data?.name?[0].toUpperCase()} ")),
                         height: 80,
                         decoration: BoxDecoration(
                             shape: BoxShape.circle,
@@ -128,7 +130,7 @@ class Replay extends StatelessWidget {
                       SizedBox(
                         width: 5,
                       ),
-                      Text("Haitham Shaker"),
+                      Text(AppCubit.get(context).profile?.data?.name ?? ''),
                     ],
                   ),
                   Container(
@@ -403,7 +405,7 @@ class Replay extends StatelessWidget {
                                   ClubId: clubId,
                                   catId: NoteCategoryId,
                                   EmployeeId:
-                                      AppCubit.get(context).profile?.user?.id ??
+                                      AppCubit.get(context).profile?.data?.id ??
                                           1,
                                   description: replyController.text);
                             } else {
@@ -411,7 +413,7 @@ class Replay extends StatelessWidget {
                                   priorityId: clicked,
                                   ClubId: 1,
                                   EmployeeId:
-                                      AppCubit.get(context).profile?.user?.id ??
+                                      AppCubit.get(context).profile?.data?.id ??
                                           1,
                                   description: replyController.text);
                             }

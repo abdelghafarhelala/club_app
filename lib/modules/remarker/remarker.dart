@@ -32,7 +32,7 @@ class Remarker extends StatelessWidget {
   Widget build(BuildContext context) {
     var screenHeight = MediaQuery.of(context).size.height;
     AppCubit.get(context).remarkerModel!.data![0].createdAt!.split('T');
-    print(AppCubit.get(context).profile?.user?.name);
+    print(AppCubit.get(context).profile?.data?.name);
     return BlocConsumer<AppCubit, AppStates>(
       builder: (BuildContext context, state) {
         return Scaffold(

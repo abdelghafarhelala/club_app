@@ -9,6 +9,7 @@ import 'package:club_app/models/governoratesModel/governorates.dart';
 import 'package:club_app/models/lsat_clubs/last_clubs_model.dart';
 import 'package:club_app/models/note_category/note_category_model.dart';
 import 'package:club_app/models/notes/notes_model.dart';
+import 'package:club_app/models/profile/profileModel.dart';
 import 'package:club_app/models/projectModel/project.dart';
 import 'package:club_app/models/remarker/remarker_model.dart';
 import 'package:club_app/models/reset_password/reset_password.dart';
@@ -72,12 +73,14 @@ class AppCubit extends Cubit<AppStates> {
 
 //get user
 
-  UserModel? profile;
+  ProfileModel? profile;
   void getUserData() {
     emit(AppGetUserDataLoadingState());
     DioHelper.getData(url: profileUrl, token: token).then((value) {
-      profile = UserModel.fromJson(value.data);
-      print(profile!.user!.name);
+      // print(value.data);
+
+      profile = ProfileModel.fromJson(value.data);
+      print(profile?.data?.name);
       emit(AppGetUserDataSuccessState());
     }).catchError((error) {
       emit(AppGetUserDataErrorState());
